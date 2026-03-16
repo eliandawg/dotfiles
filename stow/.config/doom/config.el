@@ -79,9 +79,9 @@
   (interactive)
   (dirvish))
 
-(setq doom-font-increment 1)
-(setq doom-theme 'doom-monokai-spectrum)
-(setq doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
+(setopt doom-font-increment 1)
+(setopt doom-theme 'doom-monokai-spectrum)
+(setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (setopt catppuccin-flavor 'mocha
         catppuccin-italic-comments t
@@ -141,8 +141,7 @@
   :config
   (flash-isearch-mode 1)
   (flash-evil-setup)
-  (setopt flash-autojump t
-          flash-rainbow t
+  (setopt flash-rainbow t
           flash-char-multi-line t
           flash-char-jump-labels t)
 
@@ -160,7 +159,7 @@
 
 (use-package indent-bars
   :config
-  (setq indent-bars-pattern "."
+  (setopt indent-bars-pattern "."
         indent-bars-width-frac 0.5
         indent-bars-pad-frac 0.25
         indent-bars-zigzag 0.1
@@ -450,15 +449,15 @@
    '(:application tramp :protocol "scp")
    'remote-direct-async-process)
 
-  (setq magit-tramp-pipe-stty-settings 'pty)
-  (setq vc-ignore-dir-regexp
+  (setopt magit-tramp-pipe-stty-settings 'pty)
+  (setopt vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
                 vc-ignore-dir-regexp
                 tramp-file-name-regexp)))
 
 (use-package! remember
   :config
-  (setq remember-notes-initial-major-mode 'org-mode))
+  (setopt remember-notes-initial-major-mode 'org-mode))
 
 (use-package verb
   :after org
