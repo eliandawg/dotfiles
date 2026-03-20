@@ -1,4 +1,4 @@
-personal_ws-1.1 en 490
+personal_ws-1.1 en 492
 aadct
 acl
 acls
@@ -110,6 +110,7 @@ dhcp
 dirvish
 distro
 dl
+dnf
 dns
 dnsdist
 dockerfile
@@ -262,6 +263,7 @@ nameserver
 nameservers
 namespaces
 nano
+natively
 nautobot
 nedi
 neighborship
