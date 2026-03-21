@@ -1,6 +1,5 @@
 if test -d /home/linuxbrew/.linuxbrew
-    # Homebrew is installed on Linux
-
+    # If Homebrew is installed on Linux
     set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
     set -gx HOMEBREW_CELLAR "/home/linuxbrew/.linuxbrew/Cellar"
     set -gx HOMEBREW_REPOSITORY "/home/linuxbrew/.linuxbrew/Homebrew"
