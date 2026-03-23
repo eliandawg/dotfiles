@@ -1,4 +1,4 @@
-personal_ws-1.1 en 492
+personal_ws-1.1 en 495
 aadct
 acl
 acls
@@ -169,6 +169,7 @@ fsfips
 fslogix
 fw
 gcp
+geist
 gigabitethernet
 globalrouter
 godaddy
@@ -287,6 +288,7 @@ notequals
 nps
 oarnet
 odata
+ofc
 omnissa
 omnissa's
 onboarding
@@ -456,6 +458,7 @@ vdis
 vds
 veaam
 vertico
+vertiv
 vids
 virt
 virtualized
