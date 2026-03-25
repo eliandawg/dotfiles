@@ -12,6 +12,7 @@
 (package! flash)
 (disable-packages! evil-snipe avy)
 
+(package! vundo)
 ;;; Org
 (package! org-download)
 (package! org-appear)

@@ -467,6 +467,8 @@
    '((verb . t)))
   :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
+(use-package vundo)
+
 (use-package vertico
   :defer t
   :config
