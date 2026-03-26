@@ -1,4 +1,4 @@
-personal_ws-1.1 en 495
+personal_ws-1.1 en 499
 aadct
 acl
 acls
@@ -317,6 +317,7 @@ pgsql
 pgtst
 pingplotter
 poller
+posix
 postgres
 powerdns
 powershell
@@ -347,6 +348,7 @@ retranmissions
 retransmission
 retransmissions
 retransmitted
+rhel
 ro
 rodc
 rodcs
@@ -391,6 +393,7 @@ subinterface
 subinterfaces
 subnet
 subnets
+sudo
 summarization
 sunsetting
 superadmin
@@ -428,6 +431,7 @@ udp
 ufw
 ui
 umask
+unarchive
 uncompress
 unconfigure
 unicast

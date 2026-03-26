@@ -202,6 +202,14 @@
 (setopt ispell-dictionary "english")
 (setopt ispell-personal-dictionary "~/.config/doom/dict/.pws")
 
+(use-package! spell-fu
+  :config
+  (setopt spell-fu-ignore-modes '(prog-mode
+                                  yaml-ts-mode
+                                  yaml-mode
+                                  json-ts-mode
+                                  json-mode)))
+
 (setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
 
@@ -420,11 +428,6 @@
 (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
 (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 
-(use-package tramp-hlo
-  :defer t
-  :config
-  (tramp-hlo-setup))
-
 (use-package ssh-config-mode
   :defer t
   :config
@@ -435,6 +438,13 @@
 
 (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
+(use-package tramp-hlo
+  :defer t
+  :config
+  (tramp-hlo-setup))
+
+;; Most of this is from *Making TRAMP go Brrrr*
+;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 (use-package tramp
   :init
   (with-eval-after-load 'tramp
@@ -445,11 +455,16 @@
    'remote-direct-async-process
    '((tramp-direct-async-process . t)))
 
-  (connection-local-set-profiles
-   '(:application tramp :protocol "scp")
-   'remote-direct-async-process)
+  ;; (connection-local-set-profiles
+  ;;  '(:application tramp :protocol "scp")
+  ;;  'remote-direct-async-process)
+
+  ;; (connection-local-set-profiles
+  ;;  '(:application tramp :protocol "ssh")
+  ;;  'remote-direct-async-process)
 
   (setopt magit-tramp-pipe-stty-settings 'pty)
+
   (setopt vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
                 vc-ignore-dir-regexp
