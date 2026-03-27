@@ -468,7 +468,8 @@
   (setopt vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
                 vc-ignore-dir-regexp
-                tramp-file-name-regexp)))
+                tramp-file-name-regexp))
+  (setopt enable-remote-dir-locals t))
 
 (use-package! remember
   :config
