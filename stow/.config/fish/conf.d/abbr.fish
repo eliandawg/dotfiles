@@ -1,6 +1,8 @@
-abbr -a ls 'eza -lhaF --color=auto --icons=always'
-abbr -a l 'eza -lhaF --color=auto --icons=always'
-abbr -a lt 'eza --tree'
+if type -q eza
+  abbr -a ls 'eza -lhaF --color=auto --icons=always'
+  abbr -a l 'eza -lhaF --color=auto --icons=always'
+  abbr -a lt 'eza --tree'
+end
 
 abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'

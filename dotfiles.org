@@ -12,9 +12,11 @@ zoxide init fish | source
 *** Conf.d
 **** Abbreviations
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
-abbr -a ls 'eza -lhaF --color=auto --icons=always'
-abbr -a l 'eza -lhaF --color=auto --icons=always'
-abbr -a lt 'eza --tree'
+if type -q eza
+  abbr -a ls 'eza -lhaF --color=auto --icons=always'
+  abbr -a l 'eza -lhaF --color=auto --icons=always'
+  abbr -a lt 'eza --tree'
+end
 
 abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'
@@ -193,10 +195,17 @@ function fish_prompt --description 'Write out the prompt; do not replace this. I
 end
 
 #+end_src
+**** ssh-agent
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/ssh-agent.fish
+eval (ssh-agent -c)
+#+end_src
 **** WSL
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/wsl.fish
 if test -f /proc/sys/fs/binfmt_misc/WSLInterop
     set -x DISPLAY (route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+    abbr ssh ssh.exe -F ~/.ssh/config
+    abbr ssh-add 'ssh-add.exe -L'
+    abbr scp 'scp.exe'
 end
 #+end_src
 ** Homebrew
