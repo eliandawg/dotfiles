@@ -102,6 +102,12 @@ else if test -d /opt/homebrew
     /opt/homebrew/bin/brew shellenv | source
 end
 #+end_src
+**** Bitwarden SSH Agent
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/bw.fish
+if type -q bitwarden-desktop
+  set -U SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
+end
+#+end_src
 **** Misc
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
 set -U LSP_USE_PLISTS true
@@ -119,6 +125,12 @@ switch (uname)
         fish_add_path "/home/elian/.local/bin"
         fish_add_path "/home/elian/.config/emacs/bin/"
         fish_add_path "/home/elian/.cargo/bin/"
+end
+#+end_src
+**** trash-put
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
+if type -q trash-put
+    abbr rm trash-put
 end
 #+end_src
 **** Vterm
@@ -194,10 +206,6 @@ function fish_prompt --description 'Write out the prompt; do not replace this. I
     vterm_prompt_end
 end
 
-#+end_src
-**** ssh-agent
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/ssh-agent.fish
-eval (ssh-agent -c)
 #+end_src
 **** WSL
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/wsl.fish

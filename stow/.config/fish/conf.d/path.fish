@@ -8,3 +8,7 @@ switch (uname)
         fish_add_path "/home/elian/.config/emacs/bin/"
         fish_add_path "/home/elian/.cargo/bin/"
 end
+
+if type -q trash-put
+    abbr rm trash-put
+end

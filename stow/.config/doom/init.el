@@ -64,7 +64,7 @@
        ;;objed             ; text object editing for the innocent
        parinfer                     ; turn lisp into python, sort of
        rotate-text                  ; cycle region at point between text candidates
-       snippets                     ; my elves. They type so I don't have to
+       snippets                     ; my elves . They type so I don't have to
        word-wrap                    ; soft wrapping with language-aware indent
        (whitespace +guess +trim)    ; a butler for your whitespace
 
@@ -84,7 +84,7 @@
        vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax +icons +childframe); tasing you for every semicolon you forget
+       (syntax +icons +childframe) ; tasing you for every semicolon you forget
        (spell +hunspell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
@@ -107,7 +107,7 @@
        pdf               ; pdf enhancements
        (terraform +lsp)         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       tree-sitter       ; syntax and parsing, sitting in a tree...
+       tree-sitter       ; syntax and parsing, sitting in a tree . ..
        upload            ; map local nitto remote projects via ssh/ftp
 
        :os
@@ -115,7 +115,7 @@
        (tty +osc)               ; improve the terminal Emacs experience
 
        :lang
-       ;;agda              ; types of types of types of types...
+       ;;agda              ; types of types of types of types.           . .
        ;;beancount         ; mind the GAAP
        ;;(cc +lsp)         ; C > C++ == 1
        ;;clojure           ; java with a lisp
@@ -166,14 +166,14 @@
        (rest +jq)       ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp +tree-sitter)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp +tree-sitter)       ; Fe2O3                            . unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
        (sh +powershell +fish +tree-sitter)                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
-       ;;solidity          ; do you need a blockchain? No.
+       ;;solidity          ; do you need a blockchain? No                .
        ;;swift             ; who asked for emoji variables?
-       ;;terra             ; Earth and Moon in alignment for performance.
+       ;;terra             ; Earth and Moon in alignment for performance .
        ;;web               ; the tubes
        (yaml +lsp +tree-sitter)              ; JSON, but readable
        ;;zig               ; C, but simpler

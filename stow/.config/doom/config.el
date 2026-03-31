@@ -51,9 +51,6 @@
 
 (setopt lsp-pyright-langserver-command "basedpyright")
 
-(use-package flymake-ruff
-  :hook (python-mode . flymake-ruff-load))
-
 (setopt lsp-rust-analyzer-display-chaining-hints t)
 (setopt lsp-rust-analyzer-display-closure-return-type-hints t)
 (setopt lsp-rust-analyzer-display-parameter-hints t)

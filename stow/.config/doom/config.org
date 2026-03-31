@@ -108,6 +108,15 @@
   (flycheck-posframe-configure-pretty-defaults)
   (setopt flycheck-posframe-mode t))
 #+end_src
+** ~flymake~
+#+begin_src emacs-lisp :tangle no
+(use-package flymake-ruff
+  :ensure t
+  :hook (python-mode . flymake-ruff-load)
+  :config
+  (setq flymake-show-diagnostics-at-end-of-line 'fancy
+        flymake-popon-mode nil))
+#+end_src
 ** ~mason~
 #+begin_src emacs-lisp :tangle no
 (use-package mason
@@ -127,11 +136,6 @@
 *** lsp-pyright
 #+begin_src emacs-lisp :tangle yes
 (setopt lsp-pyright-langserver-command "basedpyright")
-#+end_src
-*** flymake-ruff
-#+begin_src emacs-lisp :tangle yes
-(use-package flymake-ruff
-  :hook (python-mode . flymake-ruff-load))
 #+end_src
 ** ~rust-mode~
 *** Inlay hints
