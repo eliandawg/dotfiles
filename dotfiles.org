@@ -105,7 +105,7 @@ end
 **** Bitwarden SSH Agent
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/bw.fish
 if type -q bitwarden-desktop
-  set -U SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
+  set -g SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
 end
 #+end_src
 **** Misc
