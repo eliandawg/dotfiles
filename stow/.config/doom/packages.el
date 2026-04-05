@@ -11,6 +11,7 @@
 ;; Emacs
 (package! flash)
 (disable-packages! evil-snipe avy)
+(unpin! tramp)
 
 (package! vundo)
 ;;; Org
