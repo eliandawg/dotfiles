@@ -173,7 +173,7 @@ Enable inlay hints in Rust
 * Doom
 #+begin_src emacs-lisp :tangle yes
 (setopt doom-font-increment 1)
-(setopt doom-theme 'doom-monokai-spectrum)
+(setopt doom-theme 'kaolin-galaxy)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 #+end_src
 ** Themes
