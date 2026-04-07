@@ -11,10 +11,11 @@
 ;; Emacs
 (package! flash)
 (disable-packages! evil-snipe avy)
-(unpin! tramp)
 
 (package! vundo)
 ;;; Org
+(unpin! (:lang org))
+(unpin! :emacs :tools)
 (package! org-download)
 (package! org-appear)
 (package! git-auto-commit-mode)

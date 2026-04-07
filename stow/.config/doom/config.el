@@ -396,6 +396,10 @@
           ("NOTE" :inverse-video t :inherit flymake-note-echo)
           ("[-]" :inverse-video t :inherit +org-todo-active)))
 
+(use-package! remember
+  :config
+  (setopt remember-notes-initial-major-mode 'org-mode))
+
 (setopt explicit-shell-file-name
         (cond
          ((eq system-type 'darwin) "/opt/homebrew/bin/fish")
@@ -468,10 +472,6 @@
                 tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
 
-(use-package! remember
-  :config
-  (setopt remember-notes-initial-major-mode 'org-mode))
-
 (use-package verb
   :after org
   :init
@@ -479,8 +479,6 @@
    'org-babel-load-languages
    '((verb . t)))
   :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
-
-(use-package vundo)
 
 (use-package vertico
   :defer t
@@ -495,3 +493,5 @@
 (use-package vertico-directory
   :after vertico
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package vundo)

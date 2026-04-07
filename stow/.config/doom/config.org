@@ -554,6 +554,12 @@ Focus new windows after splitting
   :config
   (setopt org-supertag-sync-directories '("~/org/roam/")))
 #+end_src
+* ~remember~
+#+begin_src emacs-lisp :tangle yes
+(use-package! remember
+  :config
+  (setopt remember-notes-initial-major-mode 'org-mode))
+#+end_src
 * Shells
 ** ~explicit-shell-file-name~
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -638,12 +644,6 @@ Setting vterm path (if I have to compile manually).
                 tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
 #+end_src
-* ~remember~
-#+begin_src emacs-lisp :tangle yes
-(use-package! remember
-  :config
-  (setopt remember-notes-initial-major-mode 'org-mode))
-#+end_src
 * ~verb~
 #+begin_src emacs-lisp :tangle yes
 (use-package verb
@@ -653,10 +653,6 @@ Setting vterm path (if I have to compile manually).
    'org-babel-load-languages
    '((verb . t)))
   :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
-#+end_src
-* ~vundo~
-#+begin_src emacs-lisp :tangle yes
-(use-package vundo)
 #+end_src
 * ~vertico~
 #+begin_src emacs-lisp :tangle yes
@@ -694,4 +690,8 @@ Draw arrows on candidates
          #(" " 0 1 (display (left-fringe right-triangle vertico-current)))
          cand)
       cand)))
+#+end_src
+* ~vundo~
+#+begin_src emacs-lisp :tangle yes
+(use-package vundo)
 #+end_src
