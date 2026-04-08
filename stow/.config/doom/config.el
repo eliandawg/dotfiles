@@ -157,11 +157,11 @@
 (use-package indent-bars
   :config
   (setopt indent-bars-pattern "."
-        indent-bars-width-frac 0.5
-        indent-bars-pad-frac 0.25
-        indent-bars-zigzag 0.1
-        indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
-        indent-bars-color-by-depth nil))
+          indent-bars-width-frac 0.5
+          indent-bars-pad-frac 0.25
+          indent-bars-zigzag 0.1
+          indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
+          indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")
@@ -467,9 +467,9 @@
   (setopt magit-tramp-pipe-stty-settings 'pty)
 
   (setopt vc-ignore-dir-regexp
-        (format "\\(%s\\)\\|\\(%s\\)"
-                vc-ignore-dir-regexp
-                tramp-file-name-regexp))
+          (format "\\(%s\\)\\|\\(%s\\)"
+                  vc-ignore-dir-regexp
+                  tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
 
 (use-package verb
