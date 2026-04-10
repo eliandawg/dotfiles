@@ -12,7 +12,6 @@
 (package! flash)
 (disable-packages! evil-snipe avy)
 
-(package! vundo)
 ;;; Org
 (unpin! (:lang org))
 (unpin! :emacs :tools)
@@ -24,6 +23,7 @@
 (package! org-super-agenda)
 (package! org-repeat-by-cron)
 (package! verb)
+(package! vundo)
 
 ;; (package! org-supertag
 ;;   :recipe (:host github :repo "yibie/org-supertag"))

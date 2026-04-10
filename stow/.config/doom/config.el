@@ -77,7 +77,7 @@
   (dirvish))
 
 (setopt doom-font-increment 1)
-(setopt doom-theme 'kaolin-galaxy)
+(setopt doom-theme 'doom-moonlight)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (setopt catppuccin-flavor 'mocha
@@ -146,22 +146,17 @@
     (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
-    (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)
-    (define-key evil-motion-state-map "f" #'flash-char-find)
-    (define-key evil-motion-state-map "t" #'flash-char-find-to)
-    (define-key evil-motion-state-map "F" #'flash-char-find-backward)
-    (define-key evil-motion-state-map "T" #'flash-char-find-to-backward)
-    (define-key evil-motion-state-map ";" #'flash-char-repeat)
-    (define-key evil-motion-state-map "," #'flash-char-repeat-reverse)))
+    (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
+
 
 (use-package indent-bars
   :config
   (setopt indent-bars-pattern "."
-          indent-bars-width-frac 0.5
-          indent-bars-pad-frac 0.25
-          indent-bars-zigzag 0.1
-          indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
-          indent-bars-color-by-depth nil))
+        indent-bars-width-frac 0.5
+        indent-bars-pad-frac 0.25
+        indent-bars-zigzag 0.1
+        indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
+        indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")
@@ -337,6 +332,7 @@
 
 (map! :leader "nrp" 'my/org-roam-node-find-prof)
 
+
 (setopt org-roam-capture-templates
         '(("d" "default" plain (file "~/org/roam/templates/default.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
@@ -352,6 +348,7 @@
           ("i" "issue" plain (file "~/org/roam/templates/issue.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
            :unarrowed t)))
+
 
 (with-eval-after-load 'org
   (setopt org-roam-dailies-capture-templates
@@ -467,9 +464,9 @@
   (setopt magit-tramp-pipe-stty-settings 'pty)
 
   (setopt vc-ignore-dir-regexp
-          (format "\\(%s\\)\\|\\(%s\\)"
-                  vc-ignore-dir-regexp
-                  tramp-file-name-regexp))
+        (format "\\(%s\\)\\|\\(%s\\)"
+                vc-ignore-dir-regexp
+                tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
 
 (use-package verb

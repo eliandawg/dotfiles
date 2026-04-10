@@ -173,7 +173,7 @@ Enable inlay hints in Rust
 * Doom
 #+begin_src emacs-lisp :tangle yes
 (setopt doom-font-increment 1)
-(setopt doom-theme 'kaolin-galaxy)
+(setopt doom-theme 'doom-moonlight)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 #+end_src
 ** Themes
@@ -255,13 +255,8 @@ Enable inlay hints in Rust
     (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
-    (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)
-    (define-key evil-motion-state-map "f" #'flash-char-find)
-    (define-key evil-motion-state-map "t" #'flash-char-find-to)
-    (define-key evil-motion-state-map "F" #'flash-char-find-backward)
-    (define-key evil-motion-state-map "T" #'flash-char-find-to-backward)
-    (define-key evil-motion-state-map ";" #'flash-char-repeat)
-    (define-key evil-motion-state-map "," #'flash-char-repeat-reverse)))
+    (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
+
 #+end_src
 
 * ~indent-bars~
