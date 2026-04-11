@@ -77,7 +77,7 @@
   (dirvish))
 
 (setopt doom-font-increment 1)
-(setopt doom-theme 'kaolin-galaxy)
+(setopt doom-theme 'kaolin-aurora)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (setopt catppuccin-flavor 'mocha
