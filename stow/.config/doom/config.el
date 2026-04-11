@@ -195,12 +195,18 @@
 (setopt ispell-personal-dictionary "~/.config/doom/dict/.pws")
 
 (use-package! spell-fu
+  :init
+  (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1)))
   :config
   (setopt spell-fu-ignore-modes '(prog-mode
                                   yaml-ts-mode
                                   yaml-mode
                                   json-ts-mode
-                                  json-mode)))
+                                  json-mode
+                                  ansible-mode)))
 
 (setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
