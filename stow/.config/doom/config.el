@@ -498,3 +498,12 @@
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package vundo)
+
+(use-package popterm
+  :bind (("C-c t t" . popterm-toggle)
+         ("C-c t T" . popterm-toggle-cd)
+         ("C-c t e" . popterm-eshell))
+  :config
+  (setq popterm-scope 'project
+        popterm-auto-cd t)
+  (popterm-global-mode 1))

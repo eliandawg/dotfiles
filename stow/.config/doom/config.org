@@ -696,3 +696,14 @@ Draw arrows on candidates
 #+begin_src emacs-lisp :tangle yes
 (use-package vundo)
 #+end_src
+* ~popterm~
+#+begin_src emacs-lisp :tangle yes
+(use-package popterm
+  :bind (("C-c t t" . popterm-toggle)
+         ("C-c t T" . popterm-toggle-cd)
+         ("C-c t e" . popterm-eshell))
+  :config
+  (setq popterm-scope 'project
+        popterm-auto-cd t)
+  (popterm-global-mode 1))
+#+end_src
