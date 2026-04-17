@@ -30,7 +30,10 @@
                           :new-connection (lsp-stdio-connection '("fish-lsp" "start"))
                           :activation-fn (lsp-activate-on "fish")
                           :server-id 'fish-lsp))
-  (add-to-list 'lsp-language-id-configuration '(fish-mode . "fish")))
+  (add-to-list 'lsp-language-id-configuration '(fish-mode . "fish"))
+  (setopt lsp-semantic-tokens-enable t
+          lsp-log-io nil))
+
 
 (use-package lsp-ui
   :bind (:map lsp-ui-doc-mode-map
@@ -103,6 +106,9 @@
         kaolin-themes-modeline-padded t)
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+(add-hook! '+doom-dashboard-mode-hook (hl-line-mode -1))
+
 
 (defun +eshell-default-prompt-fn ()
   "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
@@ -178,6 +184,7 @@
         +evil-want-move-window-to-wrap-around t
         display-line-numbers-type 'relative
         which-key-idle-delay 0.5
+        which-key-idle-secondary-delay 0.05
         projectile-project-search-path '(("~/projects/" . 3))
         magit-show-long-lines-warning nil
         +whitespace-guess-in-projects t)
@@ -461,13 +468,13 @@
    'remote-direct-async-process
    '((tramp-direct-async-process . t)))
 
-  ;; (connection-local-set-profiles
-  ;;  '(:application tramp :protocol "scp")
-  ;;  'remote-direct-async-process)
+  (connection-local-set-profiles
+   '(:application tramp :protocol "scp")
+   'remote-direct-async-process)
 
-  ;; (connection-local-set-profiles
-  ;;  '(:application tramp :protocol "ssh")
-  ;;  'remote-direct-async-process)
+  (connection-local-set-profiles
+   '(:application tramp :protocol "ssh")
+   'remote-direct-async-process)
 
   (setopt magit-tramp-pipe-stty-settings 'pty)
 
@@ -476,6 +483,9 @@
                 vc-ignore-dir-regexp
                 tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
+
+(with-eval-after-load 'tramp
+  (setenv "SHELL" "/bin/bash"))
 
 (use-package verb
   :after org
