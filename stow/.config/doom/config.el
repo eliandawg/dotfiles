@@ -102,6 +102,8 @@
 (setopt kaolin-themes-italic-comments t
         kaolin-themes-modeline-padded t)
 
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
 (defun +eshell-default-prompt-fn ()
   "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
   (require 'shrink-path)
@@ -498,12 +500,3 @@
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package vundo)
-
-(use-package popterm
-  :bind (("C-c t t" . popterm-toggle)
-         ("C-c t T" . popterm-toggle-cd)
-         ("C-c t e" . popterm-eshell))
-  :config
-  (setq popterm-scope 'project
-        popterm-auto-cd t)
-  (popterm-global-mode 1))
