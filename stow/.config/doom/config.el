@@ -107,8 +107,8 @@
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-(add-hook! '+doom-dashboard-mode-hook (hl-line-mode -1))
-
+(eval-after-load '+doom-dashboard-mode-hook (hl-line-mode -1))
+(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 
 (defun +eshell-default-prompt-fn ()
   "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
@@ -148,7 +148,8 @@
   (flash-evil-setup)
   (setopt flash-rainbow t
           flash-char-multi-line t
-          flash-char-jump-labels t)
+          flash-char-jump-labels t
+          flash-labels ";asdfjklghqwertyuiopzxcvbnm")
 
   (with-eval-after-load 'evil
     (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
@@ -160,11 +161,11 @@
 (use-package indent-bars
   :config
   (setopt indent-bars-pattern "."
-        indent-bars-width-frac 0.5
-        indent-bars-pad-frac 0.25
-        indent-bars-zigzag 0.1
-        indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
-        indent-bars-color-by-depth nil))
+          indent-bars-width-frac 0.5
+          indent-bars-pad-frac 0.25
+          indent-bars-zigzag 0.1
+          indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
+          indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")
@@ -249,20 +250,20 @@
   (setopt org-agenda-overriding-header "")
   (setopt org-agenda-span 14)
 
-  (setopt org-super-agenda-groups
-          '((:name ""
-             :time-grid t)
-            (:name "Projects"
-             :and (:children t :tag "projects"))
-            (:name "Inbox - Important"
-             :and (:tag "inbox" :priority>= "B"))
-            (:name "Inbox - In progress"
-             :and (:tag "inbox" :todo "IN-PROGRESS"))
-            (:name "Inbox"
-             :and (:tag "inbox" :todo "TODO"))
-            (:name "Notes"
-             :todo "NOTE")
-            (:discard (:anything t)))))
+  (setq org-super-agenda-groups
+        '((:name ""
+           :time-grid t)
+          (:name "Projects"
+           :and (:tag "projects" :auto-parent t))
+          (:name "Inbox - Important"
+           :and (:tag "inbox" :priority>= "B"))
+          (:name "Inbox - In progress"
+           :and (:tag "inbox" :todo "IN-PROGRESS"))
+          (:name "Inbox"
+           :and (:tag "inbox" :todo "TODO"))
+          (:name "Notes"
+           :todo "NOTE")
+          (:discard (:anything t)))))
 
 (add-hook 'org-agenda-mode-hook 'org-super-agenda-mode)
 
@@ -303,18 +304,21 @@
           org-ellipsis " ▼"
           org-startup-folded 'show2levels
 
-          org-emphasis-alist '(("*" org-verbatim bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim)
-                               ("~" org-code verbatim) ("+" (:strike-through t)))
 
           org-appear-autolinks t
           org-appear-autoentities t
           org-appear-autokeywords t
+          org-appear-trigger 'on-change
 
           org-directory "~/org/"
           org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)"))
+
+  ;; Supresses warning I get with setopt
+  (setq org-emphasis-alist '(("*" org-verbatim bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim)
+                             ("~" org-code verbatim) ("+" (:strike-through t))))
 
   ;; Multi-line emphasis in org-mode
   (setcar (nthcdr 4 org-emphasis-regexp-components) 20)
@@ -385,7 +389,7 @@
   (setopt +org-capture-todo-file "inbox.org")
 
   (setopt org-todo-keywords
-          '((sequence "TODO(t)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
+          '((sequence "TODO(t)" "PROJECT" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")
             (sequence "NOTE(N)" "HOLD(h)" "|"))))
@@ -479,9 +483,9 @@
   (setopt magit-tramp-pipe-stty-settings 'pty)
 
   (setopt vc-ignore-dir-regexp
-        (format "\\(%s\\)\\|\\(%s\\)"
-                vc-ignore-dir-regexp
-                tramp-file-name-regexp))
+          (format "\\(%s\\)\\|\\(%s\\)"
+                  vc-ignore-dir-regexp
+                  tramp-file-name-regexp))
   (setopt enable-remote-dir-locals t))
 
 (with-eval-after-load 'tramp

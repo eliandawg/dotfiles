@@ -1,4 +1,4 @@
-personal_ws-1.1 en 500
+personal_ws-1.1 en 503
 aadct
 acl
 acls
@@ -66,6 +66,7 @@ cas
 catppuccin
 cbsig
 centos
+certbot
 certsage
 cgroup
 cgroups
@@ -313,6 +314,7 @@ pearsonvue
 percon
 performant
 personalization
+pfx
 pgsql
 pgtst
 pingplotter
@@ -341,6 +343,7 @@ reboot
 recursor
 reddit
 rekey
+remoting
 repo
 resolver's
 resolvers
