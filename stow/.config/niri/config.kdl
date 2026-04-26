@@ -5,6 +5,7 @@
 config-notification {
     disable-failed
 }
+
 // Outputs from existing configuration
 /-output "eDP-1" {
     // Uncomment this line to disable this output.
@@ -193,8 +194,12 @@ overview {
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
 environment {
-  XDG_CURRENT_DESKTOP "niri"
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_MENU_PREFIX "plasma-"
 }
+
+spawn-at-startup "kded6"
+
 hotkey-overlay {
     skip-at-startup
 }
@@ -310,3 +315,5 @@ include "dms/alttab.kdl"
 include "dms/binds.kdl"
 include "dms/outputs.kdl"
 include "dms/cursor.kdl"
+include "dms/windowrules.kdl"
+include "dms/wpblur.kdl"

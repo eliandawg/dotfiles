@@ -6,3 +6,9 @@ window-rule {
     match app-id="^steam_app_2357570$"
     open-fullscreen true
 }
+
+// @id=wr_1777184839596634407 @name=Horizon-client
+window-rule {
+    match app-id="^Horizon-client$" title="^Omnissa Horizon Client$"
+    open-floating true
+}
