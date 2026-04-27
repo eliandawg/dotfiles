@@ -304,7 +304,6 @@
           org-ellipsis " ▼"
           org-startup-folded 'show2levels
 
-
           org-appear-autolinks t
           org-appear-autoentities t
           org-appear-autokeywords t
