@@ -241,7 +241,7 @@
           org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
 
 (use-package org-super-agenda
-  :after org
+  :hook (org-agenda-mode . org-super-agenda-mode)
   :config
   (setopt org-agenda-start-on-weekday 0)
   (setopt org-super-agenda-header-map (make-sparse-keymap))
@@ -253,14 +253,14 @@
   (setq org-super-agenda-groups
         '((:name ""
            :time-grid t)
-          (:name "Projects"
-           :and (:tag "projects" :auto-parent t))
           (:name "Inbox - Important"
            :and (:tag "inbox" :priority>= "B"))
           (:name "Inbox - In progress"
            :and (:tag "inbox" :todo "IN-PROGRESS"))
           (:name "Inbox"
            :and (:tag "inbox" :todo "TODO"))
+          (:name "Projects"
+           :ancestor-with-todo "PROJECT")
           (:name "Notes"
            :todo "NOTE")
           (:discard (:anything t)))))
