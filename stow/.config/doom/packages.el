@@ -24,6 +24,7 @@
 (package! org-repeat-by-cron)
 (package! verb)
 (package! vundo)
+(package! org-tidy)
 
 ;; (package! org-supertag
 ;;   :recipe (:host github :repo "yibie/org-supertag"))

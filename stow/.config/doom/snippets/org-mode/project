@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: project
+# key: trigger-key
+# condition: t
+# --
+
+* PROJECT ${1:}
+- /Created/ `(let ((time (current-time))) (format-time-string "[%Y-%m-%d %a %H:%M]" time))`
+** Notes

@@ -241,7 +241,7 @@
           org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
 
 (use-package org-super-agenda
-  :hook (org-agenda-mode . org-super-agenda-mode)
+  :hook (org-agenda . org-super-agenda-mode)
   :config
   (setopt org-agenda-start-on-weekday 0)
   (setopt org-super-agenda-header-map (make-sparse-keymap))
@@ -334,6 +334,13 @@
           org-modern-table t
           org-modern-todo t))
 
+(use-package org-tidy
+  :defer t
+  :config
+  (setopt org-tidy-properties-style 'invisible))
+
+(map! "C-c t" #'org-tidy-mode)
+
 (use-package org-repeat-by-cron
   :config
   (global-org-repeat-by-cron-mode))
@@ -388,28 +395,28 @@
   (setopt +org-capture-todo-file "inbox.org")
 
   (setopt org-todo-keywords
-          '((sequence "TODO(t)" "PROJECT" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
+          '((sequence "TODO(t)" "PROJECT(p)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")
-            (sequence "NOTE(N)" "HOLD(h)" "|"))))
+            (sequence "NOTE(N)" "HOLD(h)" "|")))
 
-(setopt org-todo-keyword-faces
-        '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
-          ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
-          ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
-          ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
-          ("NOTE" . flymake-note-echo)))
+  (setopt org-todo-keyword-faces
+          '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
+            ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
+            ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
+            ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
+            ("NOTE" . flymake-note-echo)))
 
-(setopt org-modern-todo-faces
-        '(("KILL" :inverse-video t :inherit +org-todo-cancel)
-          ("NO" :inverse-video t :inherit +org-todo-cancel)
-          ("PROJ" :inverse-video t :inherit +org-todo-project)
-          ("HOLD" :inverse-video t :inherit +org-todo-onhold)
-          ("WAIT" :inverse-video t :inherit +org-todo-onhold)
-          ("[?]" :inverse-video t :inherit +org-todo-onhold)
-          ("STRT" :inverse-video t :inherit +org-todo-active)
-          ("NOTE" :inverse-video t :inherit flymake-note-echo)
-          ("[-]" :inverse-video t :inherit +org-todo-active)))
+  (setopt org-modern-todo-faces
+          '(("KILL" :inverse-video t :inherit +org-todo-cancel)
+            ("NO" :inverse-video t :inherit +org-todo-cancel)
+            ("PROJ" :inverse-video t :inherit +org-todo-project)
+            ("HOLD" :inverse-video t :inherit +org-todo-onhold)
+            ("WAIT" :inverse-video t :inherit +org-todo-onhold)
+            ("[?]" :inverse-video t :inherit +org-todo-onhold)
+            ("STRT" :inverse-video t :inherit +org-todo-active)
+            ("NOTE" :inverse-video t :inherit flymake-note-echo)
+            ("[-]" :inverse-video t :inherit +org-todo-active))))
 
 (use-package! remember
   :config
