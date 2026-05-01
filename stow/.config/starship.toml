@@ -95,8 +95,8 @@ symbol = ' '
 
 [character]
 format = "$symbol "
-success_symbol = "[◎](bold italic bright-yellow)"
-error_symbol = "[○](italic purple)"
+success_symbol = "[>](bold italic bright-yellow)"
+error_symbol = "[x](italic purple)"
 vimcmd_symbol = "[■](italic dimmed green)"
 
 # not supported in zsh
@@ -109,10 +109,10 @@ format = "[$env_value]($style)"
 style = 'green italic'
 
 [sudo]
-format = "[$symbol]($style)"
+format = "as root "
 style = "bold italic bright-purple"
-symbol = "⋈┈"
-disabled = false
+symbol = "⋈"
+disabled = true
 
 [hostname]
 format = "[$hostname]($style) "
@@ -133,7 +133,7 @@ style = "italic blue"
 format = 'in [$path]($style)[$read_only]($read_only_style) '
 
 [cmd_duration]
-format = "[◄ $duration ](italic white)"
+format = "[$duration ](italic white)"
 
 [jobs]
 format = "[$symbol$number]($style) "
@@ -142,8 +142,8 @@ symbol = "[▶](blue italic)"
 
 [localip]
 ssh_only = true
-format = " ◯[$localipv4](bold magenta)"
-disabled = false
+format = " [$localipv4](bold magenta) "
+disabled = true
 
 [time]
 disabled = false
@@ -173,16 +173,16 @@ threshold = 70
 style = "italic dimmed yellow"
 
 [git_branch]
-format = " [$branch(:$remote_branch)]($style)"
-symbol = "[△](bold italic bright-blue) "
+format = " branch:[$branch(:$remote_branch)]($style) "
+# symbol = "[git ](bold italic bright-blue) "
 style = "italic bright-blue"
 truncation_symbol = "⋯"
 truncation_length = 11
-ignore_branches = ["main", "master"]
+# ignore_branches = ["main", "master"]
 only_attached = true
 
 [git_metrics]
-format = '([▴$added]($added_style))([▿$deleted]($deleted_style))'
+format = '([+$added]($added_style))([-$deleted]($deleted_style))'
 added_style = 'italic dimmed green'
 deleted_style = 'italic dimmed red'
 ignore_submodules = true
@@ -191,15 +191,15 @@ disabled = false
 [git_status]
 style = "bold italic bright-blue"
 format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
-conflicted = "[◪◦](italic bright-magenta)"
-ahead = "[▴ │[${count}](bold white)│](italic green)"
-behind = "[▿│[${count}](bold white)│](italic red)"
-diverged = "[◇ ┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
-untracked = "[◌](italic bright-yellow)"
-stashed = "[◃](italic white)"
-modified = "[●](italic yellow)"
-staged = "[▪┤[$count](bold white)│](italic bright-cyan)"
-renamed = "[◎◦](italic bright-blue)"
+conflicted = "[X(italic red)${count}"
+ahead = "[>[${count}](bold white)](italic green)"
+behind = "[<[${count}](bold white)](italic red)"
+diverged = "[>[${ahead_count}](regular white)<[${behind_count}](regular white)](italic bright-magenta)"
+untracked = "[?](italic bright-yellow)${count}"
+stashed = "[=](italic white)${count}"
+modified = "[!](italic yellow)${count}"
+staged = "[+[$count](bold white)](italic bright-cyan)"
+renamed = "[r](italic bright-blue)${count}"
 deleted = "[✕](italic red)"
 
 [deno]
@@ -220,7 +220,7 @@ detect_folders = ["node_modules"]
 detect_extensions = []
 
 [python]
-format = " [py](italic) [${symbol}${version}]($style)"
+format = " [python](italic) [${version}]($style)"
 symbol = "[⌉](bold bright-blue)⌊ "
 version_format = "${raw}"
 style = "bold bright-yellow"
