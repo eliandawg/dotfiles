@@ -124,10 +124,9 @@ show_always = true
 
 [directory]
 truncation_length = 2
-read_only = " ◈"
+read_only = " ro"
 use_os_path_sep = true
-# style = "italic blue"
-style = "bright-green bold"
+style = "italic blue"
 format = 'in [$path]($style)[$read_only]($read_only_style) '
 
 [cmd_duration]
