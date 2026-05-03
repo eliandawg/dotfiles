@@ -293,8 +293,6 @@
 
 (use-package org
   :defer t
-  :bind (:map org-mode-map
-              ("M-o" . org-appear-mode))
   :config
   (setopt org-hide-emphasis-markers t
           org-fontify-quote-and-verse-blocks t

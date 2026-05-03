@@ -1,24 +1,19 @@
 if type -q eza
-    abbr -a ls 'eza -lhaF --color=auto --icons=always'
-    abbr -a l 'eza -lhaF --color=auto --icons=always'
-    abbr -a lt 'eza --tree'
+  abbr -a ls 'eza -lhaF --color=auto --icons=always'
+  abbr -a l 'eza -lhaF --color=auto --icons=always'
+  abbr -a lt 'eza --tree'
 end
 
 abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'
 
 if type -q nvim
-    abbr -a vi nvim
-    abbr -a vim nvim
+    abbr -a vi 'nvim'
+    abbr -a vim 'nvim'
 end
 
 if type -q zoxide
     abbr -a cd z
-end
-
-# Detect if kitty is running, if so use SSH kitten
-if test (printenv KITTY_WINDOW_ID)
-    abbr -a ssh "kitten ssh"
 end
 
 abbr -a gst git status

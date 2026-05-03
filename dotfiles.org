@@ -103,7 +103,7 @@ else if test -d /opt/homebrew
 end
 #+end_src
 **** Bitwarden SSH Agent
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/bw.fish
+#+begin_src fish :tangle no
 if type -q bitwarden-desktop
   set -g SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
 end
@@ -113,6 +113,14 @@ end
 set -U LSP_USE_PLISTS true
 set -U fish_key_bindings fish_vi_key_bindings
 set -gx GUIX_PROFILE "/home/elian/.config/guix/current"
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+#+end_src
+**** Kitty
+#+begin_src fish :tangle ./stow/.config/fish/kitty.fish
+# Detect if kitty is running, if so use SSH kitten
+if test (printenv KITTY_WINDOW_ID)
+    abbr -a ssh "kitten ssh"
+end
 #+end_src
 **** Paths
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
@@ -135,7 +143,6 @@ end
 #+end_src
 **** Vterm
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/vterm.fish
-
 # Some of the most useful features in emacs-libvterm require shell-side
 # configurations. The main goal of these additional functions is to enable the
 # shell to send information to `vterm` via properly escaped sequences. A
