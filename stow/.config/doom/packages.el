@@ -59,3 +59,7 @@
                    ("terminfo/65" "terminfo/65/*")
                    ("integration" "integration/*")
                    (:exclude ".dir-locals.el" "*-tests.el"))))
+
+(package! buffer-to-pdf
+  :recipe (:host github
+           :repo "protesilaos/buffer-to-pdf"))

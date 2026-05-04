@@ -217,6 +217,13 @@ Enable inlay hints in Rust
 (eval-after-load '+doom-dashboard-mode-hook (hl-line-mode -1))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 #+end_src
+* ~buffer-to-pdf~
+#+begin_src emacs-lisp :tangle yes
+(use-package buffer-to-pdf
+  :ensure nil
+  :config
+  (setq buffer-to-pdf-directory (expand-file-name "~/")))
+#+end_src
 * ~eshell~
 #+begin_src emacs-lisp :tangle yes
 (defun +eshell-default-prompt-fn ()

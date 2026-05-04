@@ -110,6 +110,11 @@
 (eval-after-load '+doom-dashboard-mode-hook (hl-line-mode -1))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 
+(use-package buffer-to-pdf
+  :ensure nil
+  :config
+  (setq buffer-to-pdf-directory (expand-file-name "~/")))
+
 (defun +eshell-default-prompt-fn ()
   "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
   (require 'shrink-path)
