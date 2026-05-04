@@ -13,8 +13,6 @@
 (disable-packages! evil-snipe avy)
 
 ;;; Org
-(unpin! (:lang org))
-(unpin! :emacs :tools)
 (package! org-download)
 (package! org-appear)
 (package! git-auto-commit-mode)
