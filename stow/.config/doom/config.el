@@ -522,4 +522,9 @@
   :after vertico
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+(use-package vertico-posframe-preview
+  :after vertico
+  :config
+  (vertico-posframe-preview-mode 1))
+
 (use-package vundo)

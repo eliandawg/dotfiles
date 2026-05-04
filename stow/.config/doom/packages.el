@@ -63,3 +63,7 @@
 (package! buffer-to-pdf
   :recipe (:host github
            :repo "protesilaos/buffer-to-pdf"))
+
+(package! vertico-posframe-preview
+  :recipe (:host github
+           :repo "kn66/vertico-posframe-preview"))
