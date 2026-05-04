@@ -162,7 +162,6 @@
     (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
 
-
 (use-package indent-bars
   :config
   (setopt indent-bars-pattern "."
@@ -360,7 +359,6 @@
 
 (map! :leader "nrp" 'my/org-roam-node-find-prof)
 
-
 (setopt org-roam-capture-templates
         '(("d" "default" plain (file "~/org/roam/templates/default.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
@@ -376,7 +374,6 @@
           ("i" "issue" plain (file "~/org/roam/templates/issue.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
            :unarrowed t)))
-
 
 (with-eval-after-load 'org
   (setopt org-roam-dailies-capture-templates

@@ -706,7 +706,7 @@ Setting vterm path (if I have to compile manually).
   :after vertico
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 #+end_src
-** ~vertico-posframe~
+** ~vertico-posframe-preview~
 #+begin_src emacs-lisp :tangle yes
 (use-package vertico-posframe-preview
   :after vertico
