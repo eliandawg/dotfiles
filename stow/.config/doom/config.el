@@ -115,32 +115,7 @@
   :config
   (setq buffer-to-pdf-directory (expand-file-name "~/")))
 
-(defun +eshell-default-prompt-fn ()
-  "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
-  (require 'shrink-path)
-  (concat (if (bobp) "" "\n")
-          (propertize (eshell-user-login-name) 'face 'nerd-icons-green)
-          (propertize " in " 'face '+eshell-prompt-pwd)
-
-          (let ((pwd (eshell/pwd)))
-            (propertize (if (equal pwd "~")
-                            pwd
-                          (abbreviate-file-name pwd))
-                        'face 'nerd-icons-green))
-
-          "\n"
-          (propertize "$" 'face (if (zerop eshell-last-command-status) 'success 'error))
-          " "))
-
-(if (executable-find "eza")
-    (set-eshell-alias!
-     "ls" "eza -lhaF --color=auto"
-     "gst" "git status"
-     "gcsm" "git commit --signoff --message")
-  (set-eshell-alias!
-   "ls" "ls -lhaF --color=auto"
-   "gst" "git status"
-   "gcsm" "git commit --signoff --message"))
+(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 
 (require 'flash-isearch)
 (require 'flash-evil)
@@ -186,6 +161,7 @@
         evil-want-fine-undo t
         evil-shift-width 2
         evil-want-C-i-jump t
+
         +evil-want-move-window-to-wrap-around t
         display-line-numbers-type 'relative
         which-key-idle-delay 0.5
@@ -440,16 +416,17 @@
 
 (add-load-path! "~/emacs-libvterm")
 
-(use-package eat
+(use-package ghostel
   :defer t
-  :init
-  (setopt process-adaptive-read-buffering nil) ; makes EAT a lot quicker!
-  (setopt eat-term-name "xterm-256color") ; https://codeberg.org/akib/emacs-eat/issues/119"
-  (setopt eat-shell "/bin/bash"))
+  :config
+  (setopt ghostel-enable-osc52 t
+          ghostel-tramp-sehell-integration t))
 
-(add-hook 'eshell-load-hook #'eat-eshell-mode)
-(add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
-(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
+
+(add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
 
 (use-package ssh-config-mode
   :defer t

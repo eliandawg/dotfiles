@@ -11,6 +11,8 @@
 ;; Emacs
 (package! flash)
 (disable-packages! evil-snipe avy)
+;; (package! doom-snippets :ignore t)
+;; (package! yasnippet-snippets)
 
 ;;; Org
 (package! org-download)
@@ -57,6 +59,8 @@
                    ("terminfo/65" "terminfo/65/*")
                    ("integration" "integration/*")
                    (:exclude ".dir-locals.el" "*-tests.el"))))
+(package! ghostel)
+(package! evil-ghostel)
 
 (package! buffer-to-pdf
   :recipe (:host github

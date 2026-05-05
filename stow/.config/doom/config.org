@@ -226,32 +226,7 @@ Enable inlay hints in Rust
 #+end_src
 * ~eshell~
 #+begin_src emacs-lisp :tangle yes
-(defun +eshell-default-prompt-fn ()
-  "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
-  (require 'shrink-path)
-  (concat (if (bobp) "" "\n")
-          (propertize (eshell-user-login-name) 'face 'nerd-icons-green)
-          (propertize " in " 'face '+eshell-prompt-pwd)
-
-          (let ((pwd (eshell/pwd)))
-            (propertize (if (equal pwd "~")
-                            pwd
-                          (abbreviate-file-name pwd))
-                        'face 'nerd-icons-green))
-
-          "\n"
-          (propertize "$" 'face (if (zerop eshell-last-command-status) 'success 'error))
-          " "))
-
-(if (executable-find "eza")
-    (set-eshell-alias!
-     "ls" "eza -lhaF --color=auto"
-     "gst" "git status"
-     "gcsm" "git commit --signoff --message")
-  (set-eshell-alias!
-   "ls" "ls -lhaF --color=auto"
-   "gst" "git status"
-   "gcsm" "git commit --signoff --message"))
+(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 #+end_src
 * ~flash~
 #+begin_src emacs-lisp :tangle yes
@@ -305,6 +280,7 @@ Enable inlay hints in Rust
         evil-want-fine-undo t
         evil-shift-width 2
         evil-want-C-i-jump t
+
         +evil-want-move-window-to-wrap-around t
         display-line-numbers-type 'relative
         which-key-idle-delay 0.5
@@ -615,7 +591,7 @@ Setting vterm path (if I have to compile manually).
 (add-load-path! "~/emacs-libvterm")
 #+end_src
 ** ~eat~
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package eat
   :defer t
   :init
@@ -626,6 +602,21 @@ Setting vterm path (if I have to compile manually).
 (add-hook 'eshell-load-hook #'eat-eshell-mode)
 (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
 (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+#+end_src
+** ~ghostel~
+#+begin_src emacs-lisp :tangle yes
+(use-package ghostel
+  :defer t
+  :config
+  (setopt ghostel-enable-osc52 t
+          ghostel-tramp-sehell-integration t))
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
+
+(add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
+
 #+end_src
 * ~ssh-config-mode~
 #+begin_src emacs-lisp :tangle yes
