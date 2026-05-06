@@ -218,9 +218,9 @@ end
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/wsl.fish
 if test -f /proc/sys/fs/binfmt_misc/WSLInterop
     set -x DISPLAY (route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
-    abbr ssh ssh.exe -F ~/.ssh/config
-    abbr ssh-add 'ssh-add.exe -L'
-    abbr scp 'scp.exe'
+    abbr winssh ssh.exe -F ~/.ssh/config
+    abbr winssh-add 'ssh-add.exe -L'
+    abbr winscp 'scp.exe'
 end
 #+end_src
 ** Homebrew
