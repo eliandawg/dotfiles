@@ -427,6 +427,8 @@
   :hook (ghostel-mode . evil-ghostel-mode))
 
 (add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
+(map! :leader "ot" #'ghostel)
+(map! :leader "oT" #'ghostel-project)
 
 (use-package ssh-config-mode
   :defer t

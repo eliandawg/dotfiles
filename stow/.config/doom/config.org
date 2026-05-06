@@ -616,6 +616,8 @@ Setting vterm path (if I have to compile manually).
   :hook (ghostel-mode . evil-ghostel-mode))
 
 (add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
+(map! :leader "ot" #'ghostel)
+(map! :leader "oT" #'ghostel-project)
 
 #+end_src
 * ~ssh-config-mode~
