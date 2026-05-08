@@ -1,9 +1,3 @@
-(use-package flyover
-  :config
-  (setopt flyover-virtual-line-type nil
-          flyover-show-at-eol t
-          flyover-base-height 1))
-
 (with-eval-after-load 'lsp-mode
   (lsp-register-custom-settings
    '(("gopls.hints" ((assignVariableTypes . t)
@@ -25,6 +19,7 @@
   :mode ("\\.kdl\\'" . kdl-mode))
 
 (use-package lsp-mode
+  :defer t
   :config
   (lsp-register-client   (make-lsp-client
                           :new-connection (lsp-stdio-connection '("fish-lsp" "start"))
@@ -42,6 +37,7 @@
   (setopt lsp-ui-sideline-show-diagnostics nil))
 
 (use-package flycheck
+  :defer t
   :config
   (flycheck-posframe-configure-pretty-defaults)
   (setopt flycheck-posframe-mode t))
@@ -138,6 +134,7 @@
     (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
 
 (use-package indent-bars
+  :defer t
   :config
   (setopt indent-bars-pattern "."
           indent-bars-width-frac 0.5
@@ -149,8 +146,7 @@
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")
 
-(setopt undo-limit 80000000
-        confirm-kill-emacs nil
+(setopt confirm-kill-emacs nil
         auto-save-default t
         make-backup-files t
         auto-save-default t
@@ -207,11 +203,12 @@
         evil-vsplit-window-right t)
 
 (use-package git-auto-commit-mode
-  :config
-  (setopt gac-automatically-push-p t
-          gac-automatically-add-new-files-p t
-          gac-debounce-interval 60
-          gac-shell-and " ; and "))
+  :defer t
+  :custom
+  (gac-automatically-push-p t)
+  (gac-automatically-add-new-files-p t)
+  (gac-debounce-interval 60)
+  (gac-shell-and " ; and "))
 
 (use-package org-agenda
   :after org
@@ -249,23 +246,27 @@
 
 (use-package org-attach
   :after org
-  :config
-  (setopt org-attach-auto-tag nil
-          org-attach-store-link-p 'file
-          org-attach-id-to-path-function-list '(org-attach-id-ts-folder-format
-                                                org-attach-id-uuid-folder-format
-                                                org-attach-id-fallback-folder-format)))
-(setopt org-id-method 'ts)
-(setopt org-id-ts-format "%Y-%m-%dT%H%M%S.%6N")
+  :custom
+  (org-attach-auto-tag nil)
+  (org-attach-store-link-p 'file)
+  (org-attach-id-to-path-function-list '(org-attach-id-ts-folder-format
+                                         org-attach-id-uuid-folder-format
+                                         org-attach-id-fallback-folder-format))
+  (org-id-method 'ts)
+  (org-id-ts-format "%Y-%m-%dT%H%M%S.%6N"))
 
 (use-package org-download
   :after org
-  :config
-  (setopt org-download-image-org-width '450))
+  :custom
+  (org-download-image-org-width '450))
 
-(add-hook 'org-mode-hook 'org-display-inline-images)
 (add-hook 'org-mode-hook (lambda () (hl-line-mode -1)))
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
+;; disable it.
+(after! evil-org
+  (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
@@ -303,14 +304,14 @@
 
 (use-package org-modern
   :after org
-  :config
-  (setopt org-modern-star 'replace
-          org-modern-replace-stars "◉○✸✿"
-          org-modern-block-name '("‣ " . "‣ ")
-          org-modern-timestamp t
-          org-modern-keyword "‣ "
-          org-modern-table t
-          org-modern-todo t))
+  :custom
+  (org-modern-star 'replace)
+  (org-modern-replace-stars "◉○✸✿")
+  (org-modern-block-name '("‣ " . "‣ "))
+  (org-modern-timestamp t)
+  (org-modern-keyword "‣ ")
+  (org-modern-table t)
+  (org-modern-todo t))
 
 (use-package org-tidy
   :defer t
@@ -319,15 +320,11 @@
 
 (map! "C-c t" #'org-tidy-mode)
 
-(use-package org-repeat-by-cron
-  :config
-  (global-org-repeat-by-cron-mode))
-
 (use-package org-roam
   :after org
-  :config
-  (setopt org-roam-node-default-sort 'file-mtime
-          org-roam-file-exclude-regexp (list "~/org/.attach/")))
+  :custom
+  (org-roam-node-default-sort 'file-mtime)
+  (org-roam-file-exclude-regexp (list "~/org/.attach/")))
 
 (defun my/org-roam-node-find-prof ()
   (interactive)
@@ -394,10 +391,6 @@
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
-(use-package! remember
-  :config
-  (setopt remember-notes-initial-major-mode 'org-mode))
-
 (setopt explicit-shell-file-name
         (cond
          ((eq system-type 'darwin) "/opt/homebrew/bin/fish")
@@ -448,6 +441,7 @@
 ;; Most of this is from *Making TRAMP go Brrrr*
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 (use-package tramp
+  :defer t
   :init
   (with-eval-after-load 'tramp
     (with-eval-after-load 'compile
@@ -503,4 +497,6 @@
   :config
   (vertico-posframe-preview-mode 1))
 
-(use-package vundo)
+(use-package undo-fu
+  :config
+  (setopt undo-limit 80000000))
