@@ -630,7 +630,7 @@ Setting vterm path (if I have to compile manually).
 ** tramp-hlo
 #+begin_src emacs-lisp :tangle yes
 (use-package tramp-hlo
-  :defer t
+  :after tramp
   :config
   (tramp-hlo-setup))
 #+end_src

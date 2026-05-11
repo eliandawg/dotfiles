@@ -434,7 +434,7 @@
 (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
 (use-package tramp-hlo
-  :defer t
+  :after tramp
   :config
   (tramp-hlo-setup))
 
