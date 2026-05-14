@@ -465,12 +465,11 @@ Focus new windows after splitting
 #+begin_src emacs-lisp :tangle yes
 (use-package org-tidy
   :defer t
+  :bind (:map org-mode-map
+              ("C-c t" . org-tidy-mode))
   :config
   (setopt org-tidy-properties-style 'invisible))
-
-(map! "C-c t" #'org-tidy-mode)
 #+end_src
-
 ** ~org-roam~
 #+begin_src emacs-lisp :tangle yes
 (use-package org-roam

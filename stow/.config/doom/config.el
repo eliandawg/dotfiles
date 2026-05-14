@@ -315,10 +315,10 @@
 
 (use-package org-tidy
   :defer t
+  :bind (:map org-mode-map
+              ("C-c t" . org-tidy-mode))
   :config
   (setopt org-tidy-properties-style 'invisible))
-
-(map! "C-c t" #'org-tidy-mode)
 
 (use-package org-roam
   :after org
