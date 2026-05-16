@@ -5,10 +5,6 @@
 
 * Dots
 ** Fish
-#+begin_src fish :tangle ./stow/.config/fish/config.fish
-starship init fish | source
-zoxide init fish | source
-#+end_src
 *** Conf.d
 **** Abbreviations
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
@@ -102,6 +98,14 @@ else if test -d /opt/homebrew
     /opt/homebrew/bin/brew shellenv | source
 end
 #+end_src
+**** Starship
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/starship.fish
+starship init fish | source
+#+end_src
+**** Zoxide
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/zoxide.fish
+zoxide init fish | source
+#+end_src
 **** Bitwarden SSH Agent
 #+begin_src fish :tangle no
 if type -q bitwarden-desktop
@@ -113,7 +117,7 @@ end
 set -U LSP_USE_PLISTS true
 set -U fish_key_bindings fish_vi_key_bindings
 set -gx GUIX_PROFILE "/home/elian/.config/guix/current"
-set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+# set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 #+end_src
 **** Kitty
 #+begin_src fish :tangle ./stow/.config/fish/kitty.fish
