@@ -162,6 +162,7 @@ environment {
 }
 
 spawn-at-startup "kded6"
+spawn-at-startup "qs" "-c" "noctalia-shell"
 
 hotkey-overlay {
     skip-at-startup
