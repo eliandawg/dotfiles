@@ -1,18 +1,8 @@
-(with-eval-after-load 'lsp-mode
-  (lsp-register-custom-settings
-   '(("gopls.hints" ((assignVariableTypes . t)
-                     (compositeLiteralFields . t)
-                     (compositeLiteralTypes . t)
-                     (constantValues . t)
-                     (functionTypeParameters . t)
-                     (parameterNames . t)
-                     (rangeVariableTypes . t))))))
-
 (use-package just-mode
   :defer t
   :mode ("justfile\\'" . just-mode)
-  :config
-  (setopt just-indent-offset 4))
+  :custom
+  (just-indent-offset 4))
 
 (use-package kdl-mode
   :defer t
@@ -21,14 +11,25 @@
 (use-package lsp-mode
   :defer t
   :config
-  (lsp-register-client   (make-lsp-client
-                          :new-connection (lsp-stdio-connection '("fish-lsp" "start"))
-                          :activation-fn (lsp-activate-on "fish")
-                          :server-id 'fish-lsp))
+  (lsp-register-custom-settings
+   ;; Enable inlay hints in Go
+   '(("gopls.hints" ((assignVariableTypes . t)
+                     (compositeLiteralFields . t)
+                     (compositeLiteralTypes . t)
+                     (constantValues . t)
+                     (functionTypeParameters . t)
+                     (parameterNames . t)
+                     (rangeVariableTypes . t)))))
+
+  (lsp-register-client
+   ;; Fish-LSP
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("fish-lsp" "start"))
+    :activation-fn (lsp-activate-on "fish")
+    :server-id 'fish-lsp))
   (add-to-list 'lsp-language-id-configuration '(fish-mode . "fish"))
   (setopt lsp-semantic-tokens-enable t
           lsp-log-io nil))
-
 
 (use-package lsp-ui
   :bind (:map lsp-ui-doc-mode-map
@@ -79,32 +80,25 @@
 (setopt doom-theme 'kaolin-bubblegum)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
-(setopt catppuccin-flavor 'mocha
-        catppuccin-italic-comments t
-        catppuccin-italic-variables t
-        catppuccin-highlight-matches t)
+(use-package modus-themes
+  :custom
+  (modus-themes-italic-constructs t)
+  (modus-themes-bold-constructs t)
+  (modus-themes-headings
+   '((1 . (1.25))
+     (2 . (1.15))
+     (3 . (1.12))
+     (t . (1.05)))))
 
-(setopt modus-themes-italic-constructs t)
-(setopt modus-themes-bold-constructs t)
-(setopt modus-themes-headings
-        '((1 . (1.25))
-          (2 . (1.15))
-          (3 . (1.12))
-          (t . (1.05))))
+(use-package ef-themes)
 
-(setopt ef-themes-headings
-        '((1 . (1.25))
-          (2 . (1.15))
-          (3 . (1.12))
-          (t . (1.05))))
-
-(setopt kaolin-themes-italic-comments t
-        kaolin-themes-modeline-padded t)
+(use-package kaolin-themes
+  :custom
+  (kaolin-themes-italic-comments t)
+  (kaolin-themes-modeline-padded t))
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-(eval-after-load '+doom-dashboard-mode-hook (hl-line-mode -1))
-(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 
 (use-package buffer-to-pdf
   :ensure nil
@@ -121,7 +115,6 @@
   :init
   :config
   (flash-isearch-mode 1)
-  (flash-evil-setup)
   (setopt flash-rainbow t
           flash-char-multi-line t
           flash-char-jump-labels t
@@ -139,7 +132,6 @@
   (setopt indent-bars-pattern "."
           indent-bars-width-frac 0.5
           indent-bars-pad-frac 0.25
-          indent-bars-zigzag 0.1
           indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
           indent-bars-color-by-depth nil))
 
@@ -260,7 +252,6 @@
   :custom
   (org-download-image-org-width '450))
 
-(add-hook 'org-mode-hook (lambda () (hl-line-mode -1)))
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
@@ -282,11 +273,11 @@
           org-agenda-tags-column 0
           org-ellipsis " ▼"
           org-startup-folded 'show2levels
-
           org-appear-autolinks t
           org-appear-autoentities t
           org-appear-autokeywords t
           org-appear-trigger 'on-change
+
 
           org-directory "~/org/"
           org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
@@ -314,11 +305,11 @@
   (org-modern-todo t))
 
 (use-package org-tidy
-  :defer t
+  :after org
   :bind (:map org-mode-map
               ("C-c t" . org-tidy-mode))
-  :config
-  (setopt org-tidy-properties-style 'invisible))
+  :custom
+  (org-tidy-properties-style 'invisible))
 
 (use-package org-roam
   :after org
@@ -403,23 +394,24 @@
 
 (use-package vterm
   :defer t
-  :init
-  (setopt vterm-shell explicit-shell-file-name)
-  (setopt vterm-buffer-name-string "vterm: %s"))
+  :custom
+  (vterm-shell explicit-shell-file-name)
+  (vterm-buffer-name-string "vterm: %s"))
 
 (add-load-path! "~/emacs-libvterm")
 
 (use-package ghostel
   :defer t
-  :config
-  (setopt ghostel-enable-osc52 t
-          ghostel-tramp-sehell-integration t))
+  :custom
+  (ghostel-enable-osc52 t)
+  (ghostel-tramp-shell-integration t))
 
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
 
 (add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
+
 (map! :leader "ot" #'ghostel)
 (map! :leader "oT" #'ghostel-project)
 
@@ -435,7 +427,7 @@
 
 (use-package tramp-hlo
   :after tramp
-  :config
+  :custom
   (tramp-hlo-setup))
 
 ;; Most of this is from *Making TRAMP go Brrrr*
@@ -498,5 +490,5 @@
   (vertico-posframe-preview-mode 1))
 
 (use-package undo-fu
-  :config
-  (setopt undo-limit 80000000))
+  :custom
+  (undo-limit 80000000))

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 509
+personal_ws-1.1 en 510
 aadct
 acl
 acls
@@ -372,6 +372,7 @@ sftp
 shoutout
 skus
 smallstep
+smokeping
 snmp
 snmppoller
 snmpreader
