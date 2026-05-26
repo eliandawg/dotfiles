@@ -25,6 +25,8 @@
 (package! verb)
 (package! vundo)
 (package! org-tidy)
+(package! org-roam-gt
+  :recipe (:host github :repo "dmgerman/org-roam-gt"))
 
 ;; (package! org-supertag
 ;;   :recipe (:host github :repo "yibie/org-supertag"))

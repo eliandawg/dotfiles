@@ -510,6 +510,12 @@ Focus new windows after splitting
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+*** ~org-roam-gt~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-roam-gt
+  :config
+  (org-roam-gt-mode 1))
+#+end_src
 ** ~org-todo-keywords~
 #+begin_src emacs-lisp :tangle yes
 (with-eval-after-load 'org
