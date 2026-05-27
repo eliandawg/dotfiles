@@ -355,10 +355,6 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
-(use-package org-roam-gt
-  :config
-  (org-roam-gt-mode 1))
-
 (with-eval-after-load 'org
   (setopt +org-capture-todo-file "inbox.org")
 
