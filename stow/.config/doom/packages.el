@@ -25,11 +25,6 @@
 (package! verb)
 (package! vundo)
 (package! org-tidy)
-;; (package! org-roam-gt
-;;   :recipe (:host github :repo "dmgerman/org-roam-gt"))
-
-;; (package! org-supertag
-;;   :recipe (:host github :repo "yibie/org-supertag"))
 
 ;;; TRAMP
 (package! tramp-hlo)
@@ -51,16 +46,6 @@
   :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! standard-themes)
 (package! kaolin-themes)
-
-;; Shells
-;; (package! eat
-;;   :recipe (:host codeberg
-;;            :repo "akib/emacs-eat"
-;;            :files ("*.el" ("term" "term/*.el") "*.texi"
-;;                    "*.ti" ("terminfo/e" "terminfo/e/*")
-;;                    ("terminfo/65" "terminfo/65/*")
-;;                    ("integration" "integration/*")
-;;                    (:exclude ".dir-locals.el" "*-tests.el"))))
 
 (package! ghostel)
 (package! evil-ghostel)

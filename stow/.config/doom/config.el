@@ -59,6 +59,7 @@
   :defer t)
 
 (use-package dirvish
+  :defer t
   :config
   (setopt dirvish-attributes
           '(nerd-icons collapse file-size file-time))
@@ -101,6 +102,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (use-package buffer-to-pdf
+  :defer t
   :ensure nil
   :config
   (setq buffer-to-pdf-directory (expand-file-name "~/")))
@@ -111,6 +113,7 @@
 (require 'flash-evil)
 
 (use-package flash
+  :defer t
   :commands (flash-jump flash-treesitter)
   :init
   :config

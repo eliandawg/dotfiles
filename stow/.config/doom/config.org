@@ -156,6 +156,7 @@ Enable inlay hints in Rust
 * ~dirvish~
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package dirvish
+  :defer t
   :config
   (setopt dirvish-attributes
           '(nerd-icons collapse file-size file-time))
@@ -211,6 +212,7 @@ Enable inlay hints in Rust
 * ~buffer-to-pdf~
 #+begin_src emacs-lisp :tangle yes
 (use-package buffer-to-pdf
+  :defer t
   :ensure nil
   :config
   (setq buffer-to-pdf-directory (expand-file-name "~/")))
@@ -225,6 +227,7 @@ Enable inlay hints in Rust
 (require 'flash-evil)
 
 (use-package flash
+  :defer t
   :commands (flash-jump flash-treesitter)
   :init
   :config
@@ -498,7 +501,7 @@ Focus new windows after splitting
              :if-new (file+datetree "work-inbox.org" week)
              :unarrowed t))))
 #+end_src
-*** Org Roam UI
+*** org-roam-ui
 #+begin_src emacs-lisp :tangle yes
 (use-package websocket
   :after org-roam)
@@ -509,12 +512,6 @@ Focus new windows after splitting
   (setopt org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
-#+end_src
-*** ~org-roam-gt~
-#+begin_src emacs-lisp :tangle no
-(use-package org-roam-gt
-  :config
-  (org-roam-gt-mode 1))
 #+end_src
 ** ~org-todo-keywords~
 #+begin_src emacs-lisp :tangle yes
@@ -544,12 +541,6 @@ Focus new windows after splitting
             ("STRT" :inverse-video t :inherit +org-todo-active)
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
-#+end_src
-** ~org-supertag~
-#+begin_src emacs-lisp :tangle no
-(use-package org-supertag
-  :config
-  (setopt org-supertag-sync-directories '("~/org/roam/")))
 #+end_src
 * Shells
 ** ~explicit-shell-file-name~
