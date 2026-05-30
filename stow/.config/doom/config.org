@@ -542,6 +542,10 @@ Focus new windows after splitting
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 #+end_src
+* ~olivetti~
+#+begin_src emacs-lisp :tangle yes
+(use-package! olivetti)
+#+end_src
 * Shells
 ** ~explicit-shell-file-name~
 #+BEGIN_SRC emacs-lisp :tangle yes

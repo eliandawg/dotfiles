@@ -47,6 +47,7 @@
 (package! standard-themes)
 (package! kaolin-themes)
 
+;; Misc
 (package! ghostel)
 (package! evil-ghostel)
 
@@ -57,3 +58,5 @@
 (package! vertico-posframe-preview
   :recipe (:host github
            :repo "kn66/vertico-posframe-preview"))
+
+(package! olivetti)

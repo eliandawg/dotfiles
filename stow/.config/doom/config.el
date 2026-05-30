@@ -385,6 +385,8 @@
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
+(use-package! olivetti)
+
 ;; (setopt explicit-shell-file-name
 ;;         (cond
 ;;          ((eq system-type 'darwin) "/opt/homebrew/bin/fish")
