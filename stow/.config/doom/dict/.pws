@@ -1,4 +1,4 @@
-personal_ws-1.1 en 539
+personal_ws-1.1 en 550
 BDR
 LSA
 LSAs
@@ -137,6 +137,7 @@ downlink
 ebs
 edu
 ef
+eform
 ekahau
 el
 elasticache
@@ -170,6 +171,7 @@ filesystem
 filesystems
 filetags
 firewalld
+fisheye
 flymake
 follet
 follet's
@@ -242,6 +244,7 @@ itddb
 it’s
 jamf
 jitter
+jodrey
 json
 jumpbox
 jumpstation
@@ -395,6 +398,7 @@ rw
 rzredg
 sansymphony
 scalable
+schlegel
 selinux
 sfdata
 sflow
@@ -492,6 +496,7 @@ usr
 utf
 util
 valkey
+varifocal
 vaultwarden
 vcenter
 vciso

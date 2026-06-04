@@ -204,11 +204,6 @@ Enable inlay hints in Rust
   (kaolin-themes-italic-comments t)
   (kaolin-themes-modeline-padded t))
 #+end_src
-** Dashboard
-#+begin_src emacs-lisp :tangle yes
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-#+end_src
 * ~buffer-to-pdf~
 #+begin_src emacs-lisp :tangle yes
 (use-package buffer-to-pdf
@@ -321,7 +316,7 @@ Enable inlay hints in Rust
 (setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
 
-(setopt +doom-dashboard-pwd-policy "~/")
+(setopt +dashboard-pwd-policy "~/")
 #+end_src
 ** Splits
 Focus new windows after splitting

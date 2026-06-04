@@ -98,9 +98,6 @@
   (kaolin-themes-italic-comments t)
   (kaolin-themes-modeline-padded t))
 
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-
 (use-package buffer-to-pdf
   :defer t
   :ensure nil
@@ -192,7 +189,7 @@
 (setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
 
-(setopt +doom-dashboard-pwd-policy "~/")
+(setopt +dashboard-pwd-policy "~/")
 
 (setopt evil-split-window-below t
         evil-vsplit-window-right t)
