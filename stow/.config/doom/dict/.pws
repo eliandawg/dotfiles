@@ -1,4 +1,9 @@
-personal_ws-1.1 en 536
+personal_ws-1.1 en 539
+BDR
+LSA
+LSAs
+LSDB
+OSPF
 aadct
 acl
 acls
@@ -20,9 +25,11 @@ aps
 architected
 arpa
 arpanet
+asbrs
 asn
 asns
 asta
+attr
 auth
 authenticator
 authnopriv
@@ -249,12 +256,14 @@ kms
 kubernetes
 labbing
 lans
+leastconn
 librenms
 lic
 lifecycle
 loadbalancer
 lookups
 loopback
+lsas
 lsp
 lsps
 macie
@@ -321,6 +330,7 @@ openssh
 openssl
 orderless
 oref
+ospf's
 ospfauth
 ous
 over
