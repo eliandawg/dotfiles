@@ -305,7 +305,7 @@
   (org-modern-todo t))
 
 (use-package org-tidy
-  :after org
+  :hook (org-mode . org-tidy-mode)
   :bind (:map org-mode-map
               ("C-c t" . org-tidy-mode))
   :custom
