@@ -4,6 +4,7 @@
 tmp/
 .dir-locals.el
 
+stow/.gitconfig
 stow/.config/fish/fish_variables
 /stow/.config/kitty/dank-tabs.conf
 /stow/.config/kitty/dank-theme.conf
