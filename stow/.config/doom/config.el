@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (use-package just-mode
   :defer t
   :mode ("justfile\\'" . just-mode)
@@ -55,8 +57,7 @@
 (setopt lsp-rust-analyzer-display-closure-return-type-hints t)
 (setopt lsp-rust-analyzer-display-parameter-hints t)
 
-(use-package uv
-  :defer t)
+(use-package uv :defer t)
 
 (use-package dirvish
   :defer t
@@ -132,7 +133,6 @@
   (setopt indent-bars-pattern "."
           indent-bars-width-frac 0.5
           indent-bars-pad-frac 0.25
-          indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
           indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
@@ -252,13 +252,6 @@
   :custom
   (org-download-image-org-width '450))
 
-(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
-
-;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
-;; disable it.
-(after! evil-org
-  (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
-
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
   '(org-verbatim :inherit bold :weight extra-bold))
@@ -271,27 +264,33 @@
           org-auto-align-tags nil
           org-tags-column 0
           org-agenda-tags-column 0
-          org-ellipsis " ▼"
           org-startup-folded 'show2levels
-          org-appear-autolinks t
-          org-appear-autoentities t
-          org-appear-autokeywords t
-          org-appear-trigger 'on-change
-
-
           org-directory "~/org/"
           org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
-          org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)"))
+          org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
+          org-ellipsis " ▼")
 
   ;; Supresses warning I get with setopt
-  (setq org-emphasis-alist '(("*" org-verbatim bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim)
-                             ("~" org-code verbatim) ("+" (:strike-through t))))
+  (setq org-emphasis-alist '(("*" org-verbatim bold)
+                             ("/" italic)
+                             ("_" underline)
+                             ("=" org-verbatim verbatim)
+                             ("~" org-code verbatim)
+                             ("+" (:strike-through t))))
 
   ;; Multi-line emphasis in org-mode
   (setcar (nthcdr 4 org-emphasis-regexp-components) 20)
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
+
+(with-eval-after-load 'org
+  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))))
+
+;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
+;; disable it.
+(with-eval-after-load 'evil-org
+  (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
 (use-package org-modern
   :after org
@@ -304,18 +303,48 @@
   (org-modern-table t)
   (org-modern-todo t))
 
-(use-package org-tidy
-  :hook (org-mode . org-tidy-mode)
-  :bind (:map org-mode-map
-              ("C-c t" . org-tidy-mode))
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
   :custom
-  (org-tidy-properties-style 'invisible))
+  (org-appear-autolinks t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'on-change))
 
 (use-package org-roam
   :after org
   :custom
   (org-roam-node-default-sort 'file-mtime)
-  (org-roam-file-exclude-regexp (list "~/org/.attach/")))
+  (org-roam-file-exclude-regexp (list "~/org/.attach/"))
+
+  (org-roam-capture-templates
+   '(("d" "default" plain (file "~/org/roam/templates/default.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
+      :unnarrowed t)
+     ("s" "study" plain (file "~/org/roam/templates/study.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
+      :unarrowed t)
+
+     ("w" "work" plain (file "~/org/roam/templates/default.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
+      :unarrowed t)
+
+     ("i" "issue" plain (file "~/org/roam/templates/issue.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
+      :unarrowed t)))
+
+  (org-roam-dailies-capture-templates
+   '(("w" "work-todo" plain (file "~/org/roam/templates/work-todo.org")
+      :if-new (file+datetree "work-inbox.org" week)
+      :unarrowed t))))
+
+(use-package websocket :after org-roam)
+(use-package org-roam-ui
+  :after org-roam
+  :config
+  (setopt org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 
 (defun my/org-roam-node-find-prof ()
   (interactive)
@@ -323,37 +352,12 @@
 
 (map! :leader "nrp" 'my/org-roam-node-find-prof)
 
-(setopt org-roam-capture-templates
-        '(("d" "default" plain (file "~/org/roam/templates/default.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
-           :unnarrowed t)
-          ("s" "study" plain (file "~/org/roam/templates/study.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
-           :unarrowed t)
-
-          ("w" "work" plain (file "~/org/roam/templates/default.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
-           :unarrowed t)
-
-          ("i" "issue" plain (file "~/org/roam/templates/issue.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
-           :unarrowed t)))
-
-(with-eval-after-load 'org
-  (setopt org-roam-dailies-capture-templates
-          '(("w" "work-todo" plain (file "~/org/roam/templates/work-todo.org")
-             :if-new (file+datetree "work-inbox.org" week)
-             :unarrowed t))))
-
-(use-package websocket
-  :after org-roam)
-
-(use-package org-roam-ui
-  :after org-roam
-  :config
-  (setopt org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+(use-package org-tidy
+  :hook (org-mode . org-tidy-mode)
+  :bind (:map org-mode-map
+              ("C-c t" . org-tidy-mode))
+  :custom
+  (org-tidy-properties-style 'invisible))
 
 (with-eval-after-load 'org
   (setopt +org-capture-todo-file "inbox.org")
@@ -382,7 +386,7 @@
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
-(use-package! olivetti)
+(use-package olivetti)
 
 ;; (setopt explicit-shell-file-name
 ;;         (cond

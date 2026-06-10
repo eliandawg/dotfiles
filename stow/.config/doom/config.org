@@ -2,6 +2,10 @@
 #+auto_tangle: t
 #+STARTUP: overview
 
+#+begin_src emacs-lisp :tangle yes
+;;; -*- lexical-binding: t; -*-
+#+end_src
+
 * ~avy~
 #+begin_src emacs-lisp :tangle no
 (use-package avy
@@ -150,8 +154,7 @@ Enable inlay hints in Rust
 #+end_src
 ** ~uv~
 #+begin_src emacs-lisp :tangle yes
-(use-package uv
-  :defer t)
+(use-package uv :defer t)
 #+end_src
 * ~dirvish~
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -248,7 +251,6 @@ Enable inlay hints in Rust
   (setopt indent-bars-pattern "."
           indent-bars-width-frac 0.5
           indent-bars-pad-frac 0.25
-          indent-bars-highlight-current-depth '(:face default :blend 0.4 :zigzag 0.2)
           indent-bars-color-by-depth nil))
 #+end_src
 * Misc
@@ -391,15 +393,8 @@ Focus new windows after splitting
   :custom
   (org-download-image-org-width '450))
 #+end_src
-** ~org-mode~ and ~org-modern~
+** ~org-mode~
 #+begin_src emacs-lisp :tangle yes
-(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
-
-;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
-;; disable it.
-(after! evil-org
-  (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
-
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
   '(org-verbatim :inherit bold :weight extra-bold))
@@ -412,28 +407,36 @@ Focus new windows after splitting
           org-auto-align-tags nil
           org-tags-column 0
           org-agenda-tags-column 0
-          org-ellipsis " ▼"
           org-startup-folded 'show2levels
-          org-appear-autolinks t
-          org-appear-autoentities t
-          org-appear-autokeywords t
-          org-appear-trigger 'on-change
-
-
           org-directory "~/org/"
           org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
-          org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)"))
+          org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
+          org-ellipsis " ▼")
 
   ;; Supresses warning I get with setopt
-  (setq org-emphasis-alist '(("*" org-verbatim bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim)
-                             ("~" org-code verbatim) ("+" (:strike-through t))))
+  (setq org-emphasis-alist '(("*" org-verbatim bold)
+                             ("/" italic)
+                             ("_" underline)
+                             ("=" org-verbatim verbatim)
+                             ("~" org-code verbatim)
+                             ("+" (:strike-through t))))
 
   ;; Multi-line emphasis in org-mode
   (setcar (nthcdr 4 org-emphasis-regexp-components) 20)
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
 
+(with-eval-after-load 'org
+  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))))
+
+;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
+;; disable it.
+(with-eval-after-load 'evil-org
+  (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
+#+end_src
+** ~org-modern~
+#+begin_src emacs-lisp :tangle yes
 (use-package org-modern
   :after org
   :custom
@@ -445,6 +448,59 @@ Focus new windows after splitting
   (org-modern-table t)
   (org-modern-todo t))
 #+end_src
+** ~org-appear~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'on-change))
+#+end_src
+** ~org-roam~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-roam
+  :after org
+  :custom
+  (org-roam-node-default-sort 'file-mtime)
+  (org-roam-file-exclude-regexp (list "~/org/.attach/"))
+
+  (org-roam-capture-templates
+   '(("d" "default" plain (file "~/org/roam/templates/default.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
+      :unnarrowed t)
+     ("s" "study" plain (file "~/org/roam/templates/study.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
+      :unarrowed t)
+
+     ("w" "work" plain (file "~/org/roam/templates/default.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
+      :unarrowed t)
+
+     ("i" "issue" plain (file "~/org/roam/templates/issue.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
+      :unarrowed t)))
+
+  (org-roam-dailies-capture-templates
+   '(("w" "work-todo" plain (file "~/org/roam/templates/work-todo.org")
+      :if-new (file+datetree "work-inbox.org" week)
+      :unarrowed t))))
+
+(use-package websocket :after org-roam)
+(use-package org-roam-ui
+  :after org-roam
+  :config
+  (setopt org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+(defun my/org-roam-node-find-prof ()
+  (interactive)
+  (org-roam-node-find nil "@professional " nil))
+
+(map! :leader "nrp" 'my/org-roam-node-find-prof)
+#+end_src
 ** ~org-tidy~
 #+begin_src emacs-lisp :tangle yes
 (use-package org-tidy
@@ -453,60 +509,6 @@ Focus new windows after splitting
               ("C-c t" . org-tidy-mode))
   :custom
   (org-tidy-properties-style 'invisible))
-#+end_src
-** ~org-roam~
-#+begin_src emacs-lisp :tangle yes
-(use-package org-roam
-  :after org
-  :custom
-  (org-roam-node-default-sort 'file-mtime)
-  (org-roam-file-exclude-regexp (list "~/org/.attach/")))
-
-(defun my/org-roam-node-find-prof ()
-  (interactive)
-  (org-roam-node-find nil "@professional " nil))
-
-(map! :leader "nrp" 'my/org-roam-node-find-prof)
-
-#+end_src
-*** Capture templates
-#+begin_src emacs-lisp :tangle yes
-(setopt org-roam-capture-templates
-        '(("d" "default" plain (file "~/org/roam/templates/default.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
-           :unnarrowed t)
-          ("s" "study" plain (file "~/org/roam/templates/study.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
-           :unarrowed t)
-
-          ("w" "work" plain (file "~/org/roam/templates/default.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
-           :unarrowed t)
-
-          ("i" "issue" plain (file "~/org/roam/templates/issue.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
-           :unarrowed t)))
-#+end_src
-
-*** Dailies capture templates
-#+begin_src emacs-lisp :tangle yes
-(with-eval-after-load 'org
-  (setopt org-roam-dailies-capture-templates
-          '(("w" "work-todo" plain (file "~/org/roam/templates/work-todo.org")
-             :if-new (file+datetree "work-inbox.org" week)
-             :unarrowed t))))
-#+end_src
-*** org-roam-ui
-#+begin_src emacs-lisp :tangle yes
-(use-package websocket
-  :after org-roam)
-
-(use-package org-roam-ui
-  :after org-roam
-  :config
-  (setopt org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
 #+end_src
 ** ~org-todo-keywords~
 #+begin_src emacs-lisp :tangle yes
@@ -539,7 +541,7 @@ Focus new windows after splitting
 #+end_src
 * ~olivetti~
 #+begin_src emacs-lisp :tangle yes
-(use-package! olivetti)
+(use-package olivetti)
 #+end_src
 * Shells
 ** ~explicit-shell-file-name~
