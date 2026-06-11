@@ -12,6 +12,12 @@
 
 (use-package lsp-mode
   :defer t
+  :custom
+  (lsp-inlay-hint-enable t)
+  (lsp-eldoc-render-all t)
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-parameter-hints t)
   :config
   (lsp-register-custom-settings
    ;; Enable inlay hints in Go
@@ -51,32 +57,32 @@
   :config
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
 
-(setopt lsp-pyright-langserver-command "basedpyright")
-
-(setopt lsp-rust-analyzer-display-chaining-hints t)
-(setopt lsp-rust-analyzer-display-closure-return-type-hints t)
-(setopt lsp-rust-analyzer-display-parameter-hints t)
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)))
+  :custom (lsp-pyright-langserver-command "basedpyright"))
 
 (use-package uv :defer t)
 
 (use-package dirvish
   :defer t
+  :custom
+  (dirvish-attributes '(nerd-icons collapse file-size file-time))
+  (dirvish-default-layout '(0 0.11 0.55))
+  (dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
+  (dired-use-ls-dired 't)
+  (dirvish-peek-mode 't)
   :config
-  (setopt dirvish-attributes
-          '(nerd-icons collapse file-size file-time))
-  (setopt dirvish-default-layout '(0 0.11 0.55))
-  (setopt dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
-  (setopt dired-use-ls-dired 't)
-  (setopt dirvish-peek-mode 't)
   (when (and (eq system-type 'darwin) (executable-find "gls"))
-    (setopt insert-directory-program "gls")))
+    (setopt insert-directory-program "gls"))
 
-(map! :leader "e" #'dirvish)
+  (map! :leader "e" #'dirvish)
 
-(defun Ex ()
-  "Literally just opens dirvish. Made because I keep doing `:Ex`."
-  (interactive)
-  (dirvish))
+  (defun Ex ()
+    "Literally just opens dirvish. Made because I keep doing `:Ex`."
+    (interactive)
+    (dirvish)))
 
 (setopt doom-font-increment 1)
 (setopt doom-theme 'kaolin-bubblegum)
@@ -113,14 +119,13 @@
 (use-package flash
   :defer t
   :commands (flash-jump flash-treesitter)
-  :init
+  :custom
+  (flash-rainbow t)
+  (flash-char-multi-line t)
+  (flash-char-jump-labels t)
+  (flash-labels ";asdfjklghqwertyuiopzxcvbnm")
   :config
   (flash-isearch-mode 1)
-  (setopt flash-rainbow t
-          flash-char-multi-line t
-          flash-char-jump-labels t
-          flash-labels ";asdfjklghqwertyuiopzxcvbnm")
-
   (with-eval-after-load 'evil
     (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
@@ -129,11 +134,11 @@
 
 (use-package indent-bars
   :defer t
-  :config
-  (setopt indent-bars-pattern "."
-          indent-bars-width-frac 0.5
-          indent-bars-pad-frac 0.25
-          indent-bars-color-by-depth nil))
+  :custom
+  (indent-bars-pattern ".")
+  (indent-bars-width-frac 0.5)
+  (indent-bars-pad-frac 0.25)
+  (indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")
@@ -204,10 +209,10 @@
 
 (use-package org-agenda
   :after org
-  :config
-  (setopt org-agenda-timegrid-use-ampm t
-          org-display-custom-times t
-          org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
+  :custom
+  (org-agenda-timegrid-use-ampm t)
+  (org-display-custom-times t)
+  (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
 
 (use-package org-super-agenda
   :hook (org-agenda . org-super-agenda-mode)
@@ -341,10 +346,10 @@
 (use-package websocket :after org-roam)
 (use-package org-roam-ui
   :after org-roam
-  :config
-  (setopt org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :custom
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t))
 
 (defun my/org-roam-node-find-prof ()
   (interactive)
@@ -353,7 +358,7 @@
 (map! :leader "nrp" 'my/org-roam-node-find-prof)
 
 (use-package org-tidy
-  :hook (org-mode . org-tidy-mode)
+  :after org
   :bind (:map org-mode-map
               ("C-c t" . org-tidy-mode))
   :custom
@@ -478,13 +483,12 @@
 
 (use-package vertico
   :defer t
-  :config
-  (setopt vertico-buffer-display-action '(display-buffer-reuse-window))
+  :custom
+  (vertico-buffer-display-action '(display-buffer-reuse-window))
 
-  (setopt vertico-multiform-categories
-          '((symbol (vertico-sort-function . vertico-sort-alpha))
-            (file (vertico-sort-function . vertico-sort-history-alpha)
-                  ))))
+  (vertico-multiform-categories
+   '((symbol (vertico-sort-function . vertico-sort-alpha))
+     (file (vertico-sort-function . vertico-sort-history-alpha)))))
 
 (use-package vertico-directory
   :after vertico

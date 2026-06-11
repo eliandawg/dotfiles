@@ -24,44 +24,6 @@
   (evil-define-key 'normal 'global (kbd "f") 'avy-goto-char))
 #+end_src
 * Code
-** ~cperl-mode~
-#+begin_src emacs-lisp :tangle no
-(use-package cperl-mode
-  :hook (cperl-mode . flymake-mode)
-  :config
-  (setopt cperl-indent-parens-as-block t
-          cperl-close-paren-offset (- cperl-indent-level)
-          cperl-invalid-face (quote off)
-          cperl-hairy t
-          cperl-electric-keywords t
-          cperl-highlight-variables-indiscriminately t
-          )
-  )
-#+end_src
-** ~eldoc-box~
-#+begin_src emacs-lisp :tangle no
-(defun my/eldoc-box-scroll-up ()
-  "Scroll up in `eldoc-box--frame'."
-  (interactive
-   (with-current-buffer eldoc-box--buffer
-     (with-selected-frame eldoc-box--frame
-       (scroll-down 3)))))
-
-(defun my/eldoc-box-scroll-down ()
-  "Scroll down in `eldoc-box--frame'."
-  (interactive)
-  (with-current-buffer eldoc-box--buffer
-    (with-selected-frame eldoc-box--frame
-      (scroll-up 3))))
-#+end_src
-** ~flyover~
-#+begin_src emacs-lisp :tangle no
-(use-package flyover
-  :config
-  (setopt flyover-virtual-line-type nil
-          flyover-show-at-eol t
-          flyover-base-height 1))
-#+end_src
 ** ~just-mode~
 #+begin_src emacs-lisp :tangle yes
 (use-package just-mode
@@ -80,6 +42,12 @@
 #+begin_src emacs-lisp :tangle yes
 (use-package lsp-mode
   :defer t
+  :custom
+  (lsp-inlay-hint-enable t)
+  (lsp-eldoc-render-all t)
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-parameter-hints t)
   :config
   (lsp-register-custom-settings
    ;; Enable inlay hints in Go
@@ -124,13 +92,6 @@
   (setq flymake-show-diagnostics-at-end-of-line 'fancy
         flymake-popon-mode nil))
 #+end_src
-** ~mason~
-#+begin_src emacs-lisp :tangle no
-(use-package mason
-  :defer t
-  :config
-  (mason-setup))
-#+end_src
 ** ~powershell-ts-mode~
 #+begin_src emacs-lisp :tangle yes
 (use-package powershell
@@ -142,15 +103,11 @@
 ** ~python-mode~
 *** lsp-pyright
 #+begin_src emacs-lisp :tangle yes
-(setopt lsp-pyright-langserver-command "basedpyright")
-#+end_src
-** ~rust-mode~
-*** Inlay hints
-Enable inlay hints in Rust
-#+begin_src emacs-lisp :tangle yes
-(setopt lsp-rust-analyzer-display-chaining-hints t)
-(setopt lsp-rust-analyzer-display-closure-return-type-hints t)
-(setopt lsp-rust-analyzer-display-parameter-hints t)
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)))
+  :custom (lsp-pyright-langserver-command "basedpyright"))
 #+end_src
 ** ~uv~
 #+begin_src emacs-lisp :tangle yes
@@ -160,22 +117,22 @@ Enable inlay hints in Rust
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package dirvish
   :defer t
+  :custom
+  (dirvish-attributes '(nerd-icons collapse file-size file-time))
+  (dirvish-default-layout '(0 0.11 0.55))
+  (dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
+  (dired-use-ls-dired 't)
+  (dirvish-peek-mode 't)
   :config
-  (setopt dirvish-attributes
-          '(nerd-icons collapse file-size file-time))
-  (setopt dirvish-default-layout '(0 0.11 0.55))
-  (setopt dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
-  (setopt dired-use-ls-dired 't)
-  (setopt dirvish-peek-mode 't)
   (when (and (eq system-type 'darwin) (executable-find "gls"))
-    (setopt insert-directory-program "gls")))
+    (setopt insert-directory-program "gls"))
 
-(map! :leader "e" #'dirvish)
+  (map! :leader "e" #'dirvish)
 
-(defun Ex ()
-  "Literally just opens dirvish. Made because I keep doing `:Ex`."
-  (interactive)
-  (dirvish))
+  (defun Ex ()
+    "Literally just opens dirvish. Made because I keep doing `:Ex`."
+    (interactive)
+    (dirvish)))
 #+END_SRC
 * Doom
 #+begin_src emacs-lisp :tangle yes
@@ -227,31 +184,29 @@ Enable inlay hints in Rust
 (use-package flash
   :defer t
   :commands (flash-jump flash-treesitter)
-  :init
+  :custom
+  (flash-rainbow t)
+  (flash-char-multi-line t)
+  (flash-char-jump-labels t)
+  (flash-labels ";asdfjklghqwertyuiopzxcvbnm")
   :config
   (flash-isearch-mode 1)
-  (setopt flash-rainbow t
-          flash-char-multi-line t
-          flash-char-jump-labels t
-          flash-labels ";asdfjklghqwertyuiopzxcvbnm")
-
   (with-eval-after-load 'evil
     (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
     (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
-
 #+end_src
 
 * ~indent-bars~
 #+begin_src emacs-lisp :tangle yes
 (use-package indent-bars
   :defer t
-  :config
-  (setopt indent-bars-pattern "."
-          indent-bars-width-frac 0.5
-          indent-bars-pad-frac 0.25
-          indent-bars-color-by-depth nil))
+  :custom
+  (indent-bars-pattern ".")
+  (indent-bars-width-frac 0.5)
+  (indent-bars-pad-frac 0.25)
+  (indent-bars-color-by-depth nil))
 #+end_src
 * Misc
 #+begin_src emacs-lisp :tangle yes
@@ -341,10 +296,10 @@ Focus new windows after splitting
 #+begin_src emacs-lisp :tangle yes
 (use-package org-agenda
   :after org
-  :config
-  (setopt org-agenda-timegrid-use-ampm t
-          org-display-custom-times t
-          org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
+  :custom
+  (org-agenda-timegrid-use-ampm t)
+  (org-display-custom-times t)
+  (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
 #+end_src
 *** ~org-super-agenda~
 #+begin_src emacs-lisp :tangle yes
@@ -490,10 +445,10 @@ Focus new windows after splitting
 (use-package websocket :after org-roam)
 (use-package org-roam-ui
   :after org-roam
-  :config
-  (setopt org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :custom
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t))
 
 (defun my/org-roam-node-find-prof ()
   (interactive)
@@ -504,7 +459,7 @@ Focus new windows after splitting
 ** ~org-tidy~
 #+begin_src emacs-lisp :tangle yes
 (use-package org-tidy
-  :hook (org-mode . org-tidy-mode)
+  :after org
   :bind (:map org-mode-map
               ("C-c t" . org-tidy-mode))
   :custom
@@ -665,13 +620,12 @@ Setting vterm path (if I have to compile manually).
 #+begin_src emacs-lisp :tangle yes
 (use-package vertico
   :defer t
-  :config
-  (setopt vertico-buffer-display-action '(display-buffer-reuse-window))
+  :custom
+  (vertico-buffer-display-action '(display-buffer-reuse-window))
 
-  (setopt vertico-multiform-categories
-          '((symbol (vertico-sort-function . vertico-sort-alpha))
-            (file (vertico-sort-function . vertico-sort-history-alpha)
-                  ))))
+  (vertico-multiform-categories
+   '((symbol (vertico-sort-function . vertico-sort-alpha))
+     (file (vertico-sort-function . vertico-sort-history-alpha)))))
 
 (use-package vertico-directory
   :after vertico
