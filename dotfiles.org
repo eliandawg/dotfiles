@@ -9,17 +9,21 @@
 **** Abbreviations
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
 if type -q eza
-  abbr -a ls 'eza -lhaF --color=auto --icons=always'
-  abbr -a l 'eza -lhaF --color=auto --icons=always'
-  abbr -a lt 'eza --tree'
+    abbr -a ls 'eza -lhaF --color=auto --icons=always'
+    abbr -a l 'eza -lhaF --color=auto --icons=always'
+    abbr -a lt 'eza --tree'
 end
 
 abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'
 
+if type -q bat
+    abbr -a cat bat
+end
+
 if type -q nvim
-    abbr -a vi 'nvim'
-    abbr -a vim 'nvim'
+    abbr -a vi nvim
+    abbr -a vim nvim
 end
 
 if type -q zoxide
@@ -109,7 +113,7 @@ zoxide init fish | source
 **** Bitwarden SSH Agent
 #+begin_src fish :tangle no
 if type -q bitwarden-desktop
-  set -g SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
+    set -g SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
 end
 #+end_src
 **** Misc
@@ -231,60 +235,60 @@ end
 *** Brewfile
 **** Taps
 #+begin_src ruby :tangle ./Brewfile
-tap "d12frosted/emacs-plus"
+tap d12frosted/emacs-plus
 #+end_src
 **** Casks
 #+begin_src ruby :tangle ./Brewfile
-cask "font-iosevka-term-nerd-font"
-cask "jagex"
-cask "kitty"
-cask "microsoft-auto-update"
-cask "microsoft-outlook"
-cask "microsoft-teams"
-cask "stremio"
-cask "emacs-plus-app"
-cask "floorp"
+cask font-iosevka-term-nerd-font
+cask jagex
+cask kitty
+cask microsoft-auto-update
+cask microsoft-outlook
+cask microsoft-teams
+cask stremio
+cask emacs-plus-app
+cask floorp
 #+end_src
 **** Code
 #+begin_src ruby :tangle ./Brewfile
-brew "fish-lsp"
+brew fish-lsp
 
 # Python
-brew "pyright"
-brew "uv"
+brew pyright
+brew uv
 
 # Go
-brew "go"
-brew "gopls"
+brew go
+brew gopls
 #+end_src
 
 **** Utilities
 ***** Terminal
 #+begin_src ruby :tangle ./Brewfile
-brew "eza"
-brew "fd"
-brew "fish"
-brew "fzf"
-brew "gh"
-brew "just"
-brew "wget"
-brew "ripgrep"
-brew "starship"
-brew "stow"
-brew "vips"
-brew "zoxide"
-brew "bash"
-brew "node"
-brew "imagemagick"
-brew "neovim"
+brew eza
+brew fd
+brew fish
+brew fzf
+brew gh
+brew just
+brew wget
+brew ripgrep
+brew starship
+brew stow
+brew vips
+brew zoxide
+brew bash
+brew node
+brew imagemagick
+brew neovim
 #+end_src
 
 ***** Emacs
 #+begin_src ruby :tangle ./Brewfile
-brew "hunspell"
-brew "aspell"
-brew "libtool"
-brew "cmake"
-brew "coreutils"
-brew "gcc"
+brew hunspell
+brew aspell
+brew libtool
+brew cmake
+brew coreutils
+brew gcc
 #+end_src
