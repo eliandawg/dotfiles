@@ -70,7 +70,7 @@ style = "yellow"
 format = "[$symbol$version]($style) "
 symbol = "rust "
 
-[go]
+[golang]
 symbol = "∩ "
 format = " go [$symbol($version )]($style)"
 
