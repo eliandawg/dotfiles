@@ -75,14 +75,14 @@
   (dirvish-peek-mode 't)
   :config
   (when (and (eq system-type 'darwin) (executable-find "gls"))
-    (setopt insert-directory-program "gls"))
+    (setopt insert-directory-program "gls")))
 
-  (map! :leader "e" #'dirvish)
+(map! :leader "e" #'dirvish)
 
-  (defun Ex ()
-    "Literally just opens dirvish. Made because I keep doing `:Ex`."
-    (interactive)
-    (dirvish)))
+(defun Ex ()
+  "Literally just opens dirvish. Made because I keep doing `:Ex`."
+  (interactive)
+  (dirvish))
 
 (setopt doom-font-increment 1)
 (setopt doom-theme 'kaolin-bubblegum)
