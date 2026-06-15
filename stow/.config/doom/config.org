@@ -70,6 +70,7 @@
           lsp-log-io nil))
 
 (use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
   :bind (:map lsp-ui-doc-mode-map
               ("M-k" . lsp-ui-doc-glance))
   :config
@@ -252,25 +253,17 @@
 #+END_SRC
 ** Spell Check
 #+begin_src emacs-lisp :tangle yes
-(setopt ispell-dictionary "english")
-(setopt ispell-personal-dictionary "~/.config/doom/dict/.pws")
+(use-package ispell
+  :custom
+  (ispell-dictionary "english")
+  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
 
-(use-package! spell-fu
-  :init
+(with-eval-after-load 'spell-fu
   (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1)))
-  :config
-  (setopt spell-fu-ignore-modes '(prog-mode
-                                  yaml-ts-mode
-                                  yaml-mode
-                                  json-ts-mode
-                                  toml-ts-mode
-                                  conf-mode
-                                  json-mode
-                                  ansible-mode)))
+  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1))))
 #+end_src
 ** Scratch buffer
 #+begin_src emacs-lisp :tangle yes
