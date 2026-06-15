@@ -182,6 +182,7 @@
   :init
   (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1)))
   :config
@@ -299,6 +300,8 @@
 ;; disable it.
 (with-eval-after-load 'evil-org
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
+
+(use-package org-repeat-by-cron)
 
 (use-package org-modern
   :after org
