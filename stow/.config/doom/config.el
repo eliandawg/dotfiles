@@ -119,18 +119,19 @@
 (use-package flash
   :defer t
   :commands (flash-jump flash-treesitter)
+  :init
+  (flash-isearch-mode 1)
   :custom
   (flash-rainbow t)
   (flash-char-multi-line t)
   (flash-char-jump-labels t)
-  (flash-labels ";asdfjklghqwertyuiopzxcvbnm")
-  :config
-  (flash-isearch-mode 1)
-  (with-eval-after-load 'evil
-    (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
-    (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
-    (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
-    (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump)))
+  (flash-labels ";asdfjklghqwertyuiopzxcvbnm"))
+
+(with-eval-after-load 'evil
+  (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
 
 (use-package indent-bars
   :defer t
@@ -188,6 +189,8 @@
                                   yaml-ts-mode
                                   yaml-mode
                                   json-ts-mode
+                                  toml-ts-mode
+                                  conf-mode
                                   json-mode
                                   ansible-mode)))
 

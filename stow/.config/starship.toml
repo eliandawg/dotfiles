@@ -1,19 +1,20 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-$username\
-$hostname\
-$directory\
+$cmd_duration\
 $git_branch\
 $git_state\
 $git_status\
-$cmd_duration\
-$line_break\
-$python\
 $rust\
 $golang\
-$status\
+$python\
 $container\
+$line_break\
+$username\
+$hostname\
+$directory\
+$line_break\
+$status\
 $character"""
 
 [directory]
@@ -29,26 +30,26 @@ error_symbol = "[>](red)"
 vimcmd_symbol = "[<](green)"
 
 [git_branch]
-format = "[$branch]($style)"
+format = "branch: [$branch]($style)"
 style = "bright-black"
 
 [hostname]
 ssh_only = false
-format = "[$hostname]($style) "
+format = "[$hostname]($style): "
 
 [username]
-format = "[$user]($style) on "
+format = "[$user]($style)@"
 show_always = true
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+format = " [[($untracked$modified$renamed $conflicted$deleted$staged)](218) ($ahead_behind$stashed)]($style)"
 style = "cyan"
 conflicted = "X${count}​"
 untracked = "?${count}​"
 modified = "​!${count}"
 staged = "​+${count}"
-renamed = "​r${count}"
-deleted = "​✕${count}"
+renamed = "r${count}"
+deleted = "-${count}"
 stashed = "≡${count}"
 
 [git_metrics]
@@ -59,7 +60,7 @@ ignore_submodules = true
 disabled = false
 
 [git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
+format = '\([$state( $progress_current/$progress_total)]($style)\)'
 style = "bright-black"
 
 [cmd_duration]
@@ -67,19 +68,17 @@ format = "[$duration]($style) "
 style = "yellow"
 
 [rust]
+style = "italic red"
 format = "[$symbol$version]($style) "
-symbol = "rust "
+symbol = "rs "
 
 [golang]
-symbol = "∩ "
-format = " go [$symbol($version )]($style)"
+style = "italic"
+format = "[go $version]($style) "
 
 [docker_context]
-symbol = "◧ "
 format = " docker [$symbol$context]($style)"
 
 [python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
-detect_extensions = []
-detect_files = []
+format = "[$virtualenv py:$version]($style) "
+style = "italic green"
