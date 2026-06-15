@@ -294,7 +294,18 @@
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
 
 (with-eval-after-load 'org
-  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))))
+  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+
+  (add-to-list 'org-capture-templates
+               '("m" "Meeting" entry
+                 (file+olp+datetree "~/org/roam/professional/meetings.org")
+                 "* ?\n** Topics\n** Notes"
+                 :prepend t))
+  (add-to-list 'org-capture-templates
+               '("n" "Note" entry
+                 (file+olp+datetree "~/org/roam/professional/note.org")
+                 "* NOTE %?"
+                 :prepend t)))
 
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
 ;; disable it.
@@ -335,13 +346,8 @@
      ("s" "study" plain (file "~/org/roam/templates/study.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
       :unarrowed t)
-
      ("w" "work" plain (file "~/org/roam/templates/default.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
-      :unarrowed t)
-
-     ("i" "issue" plain (file "~/org/roam/templates/issue.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: issue")
       :unarrowed t)))
 
   (org-roam-dailies-capture-templates
