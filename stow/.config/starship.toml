@@ -48,7 +48,7 @@ conflicted = "X${count}​"
 untracked = "?${count}​"
 modified = "​!${count}"
 staged = "​+${count}"
-renamed = "r${count}"
+renamed = "#${count}"
 deleted = "-${count}"
 stashed = "≡${count}"
 
