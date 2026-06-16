@@ -287,23 +287,7 @@
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
 
 (with-eval-after-load 'org
-<<<<<<< HEAD
-  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
-
-  ;; (add-to-list 'org-capture-templates
-  ;;              '("m" "Meeting" entry
-  ;;                (file+olp+datetree "~/org/roam/professional/meetings.org")
-  ;;                "* ?\n** Topics\n** Notes"
-  ;;                :prepend t))
-  ;; (add-to-list 'org-capture-templates
-  ;;              '("n" "Note" entry
-  ;;                (file+olp+datetree "~/org/roam/professional/note.org")
-  ;;                "* NOTE %?"
-  ;;                :prepend t))
-  )
-=======
   (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))))
->>>>>>> a8d5f6d28bbb8bd19f31372aee35da27331df4fa
 
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
 ;; disable it.
