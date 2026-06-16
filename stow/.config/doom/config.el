@@ -40,6 +40,7 @@
           lsp-log-io nil))
 
 (use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
   :bind (:map lsp-ui-doc-mode-map
               ("M-k" . lsp-ui-doc-glance))
   :config
@@ -175,25 +176,17 @@
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
 
-(setopt ispell-dictionary "english")
-(setopt ispell-personal-dictionary "~/.config/doom/dict/.pws")
+(use-package ispell
+  :custom
+  (ispell-dictionary "english")
+  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
 
-(use-package! spell-fu
-  :init
+(with-eval-after-load 'spell-fu
   (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1)))
-  :config
-  (setopt spell-fu-ignore-modes '(prog-mode
-                                  yaml-ts-mode
-                                  yaml-mode
-                                  json-ts-mode
-                                  toml-ts-mode
-                                  conf-mode
-                                  json-mode
-                                  ansible-mode)))
+  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1))))
 
 (setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
@@ -294,6 +287,7 @@
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
 
 (with-eval-after-load 'org
+<<<<<<< HEAD
   (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 
   ;; (add-to-list 'org-capture-templates
@@ -307,6 +301,9 @@
   ;;                "* NOTE %?"
   ;;                :prepend t))
   )
+=======
+  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1))))
+>>>>>>> a8d5f6d28bbb8bd19f31372aee35da27331df4fa
 
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
 ;; disable it.
