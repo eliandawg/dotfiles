@@ -296,16 +296,17 @@
 (with-eval-after-load 'org
   (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 
-  (add-to-list 'org-capture-templates
-               '("m" "Meeting" entry
-                 (file+olp+datetree "~/org/roam/professional/meetings.org")
-                 "* ?\n** Topics\n** Notes"
-                 :prepend t))
-  (add-to-list 'org-capture-templates
-               '("n" "Note" entry
-                 (file+olp+datetree "~/org/roam/professional/note.org")
-                 "* NOTE %?"
-                 :prepend t)))
+  ;; (add-to-list 'org-capture-templates
+  ;;              '("m" "Meeting" entry
+  ;;                (file+olp+datetree "~/org/roam/professional/meetings.org")
+  ;;                "* ?\n** Topics\n** Notes"
+  ;;                :prepend t))
+  ;; (add-to-list 'org-capture-templates
+  ;;              '("n" "Note" entry
+  ;;                (file+olp+datetree "~/org/roam/professional/note.org")
+  ;;                "* NOTE %?"
+  ;;                :prepend t))
+  )
 
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
 ;; disable it.
