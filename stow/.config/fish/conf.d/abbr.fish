@@ -8,7 +8,7 @@ abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'
 
 if type -q bat
-    abbr -a cat bat
+    abbr -a cat bat --no-paging
 end
 
 if type -q nvim

@@ -18,7 +18,7 @@ abbr -a cr 'cargo run'
 abbr -a dc 'docker compose'
 
 if type -q bat
-    abbr -a cat bat
+    abbr -a cat bat --no-paging
 end
 
 if type -q nvim
@@ -50,38 +50,6 @@ if type -q emacsclient
     abbr -a ff vterm_cmd find-file .
 
     abbr -a orgidp git commit --signoff --message ".orgids"
-end
-#+end_src
-**** Functions
-***** upgrade
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
-function upgrade --description "Performs updates on a system."
-    echo "===============UPDATING PACKAGES==============="
-    if type -q pacman
-        if type -q paru
-            paru -Syu
-        else
-            pacman -Syu --noconfirm
-        end
-
-    else if type -q dnf
-        dnf upgrade
-    else if type -q apt
-        apt update
-        apt upgrade -y
-    else if type -q brew
-        brew upgrade
-    end
-
-    if type -q flatpak
-        echo "===============UPDATING FLATPAKS==============="
-        flatpak upgrade -y
-    end
-
-    if type -q doom
-        echo "===============UPDATING DOOM EMACS==============="
-        doom upgrade
-    end
 end
 #+end_src
 **** Homebrew
@@ -120,12 +88,12 @@ end
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
 set -U LSP_USE_PLISTS true
 set -U fish_key_bindings fish_vi_key_bindings
-set -gx GUIX_PROFILE "/home/elian/.config/guix/current"
+# set -gx GUIX_PROFILE "/home/elian/.config/guix/current"
 # set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 #+end_src
 **** Kitty
+Detect if kitty is running, if so use SSH kitten
 #+begin_src fish :tangle ./stow/.config/fish/kitty.fish
-# Detect if kitty is running, if so use SSH kitten
 if test (printenv KITTY_WINDOW_ID)
     abbr -a ssh "kitten ssh"
 end
@@ -223,6 +191,7 @@ end
 
 #+end_src
 **** WSL
+Use ~ssh.exe~ if running in WSL.
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/wsl.fish
 if test -f /proc/sys/fs/binfmt_misc/WSLInterop
     set -x DISPLAY (route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
