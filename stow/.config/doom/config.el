@@ -53,10 +53,11 @@
   (setopt flycheck-posframe-mode t))
 
 (use-package powershell
-  :mode ("\\.ps1\\'" . powershell-ts-mode)
+  :mode ("\\.ps1\\'" . powershell-mode)
   :hook (powershell-mode . lsp-mode)
   :config
-  (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
+  (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
+  (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
