@@ -1,4 +1,4 @@
-personal_ws-1.1 en 558
+personal_ws-1.1 en 562
 BDR
 LSA
 LSAs
@@ -80,6 +80,7 @@ certbot
 certsage
 cgroup
 cgroups
+changelog
 charset
 chatgpt
 chroot
@@ -102,6 +103,7 @@ connectionless
 creds
 crestron
 crestrons
+crls
 cron
 crypto
 cryptographic
@@ -119,6 +121,7 @@ datagram
 datastore
 dbm
 dcef
+decrypt
 deregistration
 desigo
 dest
@@ -463,6 +466,7 @@ system’s
 tac
 tacacs
 tcp's
+telcos
 terraform
 theme
 thinh

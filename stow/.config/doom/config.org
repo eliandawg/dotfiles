@@ -334,7 +334,7 @@ Focus new windows after splitting
   :after org
   :custom
   (org-attach-auto-tag nil)
-  (org-attach-store-link-p 'file)
+  (org-attach-store-link-p 'attached)
   (org-attach-id-to-path-function-list '(org-attach-id-ts-folder-format
                                          org-attach-id-uuid-folder-format
                                          org-attach-id-fallback-folder-format))
@@ -344,7 +344,8 @@ Focus new windows after splitting
 (use-package org-download
   :after org
   :custom
-  (org-download-image-org-width '450))
+  (org-download-image-org-width '450)
+  (org-download-image-dir "~/org/.attach"))
 #+end_src
 ** ~org-mode~
 #+begin_src emacs-lisp :tangle yes
@@ -548,6 +549,20 @@ Setting vterm path (if I have to compile manually).
 
 (map! :leader "ot" #'ghostel)
 (map! :leader "oT" #'ghostel-project)
+#+end_src
+** ~popterm~
+#+begin_src emacs-lisp :tangle yes
+(use-package popterm
+  :bind (("C-`" . popterm-toggle))
+  :custom
+  (popterm-backend 'ghostel)
+  (popterm-scope 'project)
+  (popterm-display-method 'posframe)
+  (popterm-auto-cd t)
+  (popterm-posframe-focus-delay 0.5)
+  (popterm-cd-string (current-buffer))
+  :config
+  (popterm-global-mode 1))
 #+end_src
 * ~ssh-config-mode~
 #+begin_src emacs-lisp :tangle yes

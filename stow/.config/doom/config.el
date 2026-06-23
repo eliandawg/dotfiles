@@ -243,7 +243,7 @@
   :after org
   :custom
   (org-attach-auto-tag nil)
-  (org-attach-store-link-p 'file)
+  (org-attach-store-link-p 'attached)
   (org-attach-id-to-path-function-list '(org-attach-id-ts-folder-format
                                          org-attach-id-uuid-folder-format
                                          org-attach-id-fallback-folder-format))
@@ -253,7 +253,8 @@
 (use-package org-download
   :after org
   :custom
-  (org-download-image-org-width '450))
+  (org-download-image-org-width '450)
+  (org-download-image-dir "~/org/.attach"))
 
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
@@ -420,6 +421,18 @@
 
 (map! :leader "ot" #'ghostel)
 (map! :leader "oT" #'ghostel-project)
+
+(use-package popterm
+  :bind (("C-`" . popterm-toggle))
+  :custom
+  (popterm-backend 'ghostel)
+  (popterm-scope 'project)
+  (popterm-display-method 'posframe)
+  (popterm-auto-cd t)
+  (popterm-posframe-focus-delay 0.5)
+  (popterm-cd-string (current-buffer))
+  :config
+  (popterm-global-mode 1))
 
 (use-package ssh-config-mode
   :defer t
