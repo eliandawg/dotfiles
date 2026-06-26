@@ -18,6 +18,8 @@
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-closure-return-type-hints t)
   (lsp-rust-analyzer-display-parameter-hints t)
+  (lsp-enable-folding t)
+  (lsp-enable-relative-indentation t)
   :config
   (lsp-register-custom-settings
    ;; Enable inlay hints in Go
@@ -36,6 +38,7 @@
     :activation-fn (lsp-activate-on "fish")
     :server-id 'fish-lsp))
   (add-to-list 'lsp-language-id-configuration '(fish-mode . "fish"))
+
   (setopt lsp-semantic-tokens-enable t
           lsp-log-io nil))
 
