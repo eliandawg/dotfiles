@@ -42,8 +42,8 @@ format = "[$user]($style)@"
 show_always = true
 
 [git_status]
-format = " [[($untracked$modified$renamed $conflicted$deleted$staged)](218) ($ahead_behind$stashed)]($style)"
-style = "cyan"
+format = " [[($untracked$modified$renamed $conflicted$deleted$staged)](218 $style) ($ahead_behind$stashed)($style)]($style) "
+style = "blue"
 conflicted = "X${count}​"
 untracked = "?${count}​"
 modified = "​!${count}"
