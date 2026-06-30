@@ -420,7 +420,11 @@
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
 
-(add-hook 'eshell-load-book #'ghostel-eshell-visual-command-mode)
+(use-package ghostel-eshell
+  :hook (eshell-load . ghostel-eshell-visual-command-mode))
+
+(use-package ghostel-comint
+  :hook (after-init . ghostel-comint-global-mode))
 
 (map! :leader "ot" #'ghostel)
 (map! :leader "oT" #'ghostel-project)
