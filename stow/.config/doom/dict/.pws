@@ -1,4 +1,4 @@
-personal_ws-1.1 en 563
+personal_ws-1.1 en 567
 BDR
 LSA
 LSAs
@@ -138,10 +138,12 @@ dockerfile
 dotfiles
 dotnet
 downlink
+ebgp
 ebs
 edu
 ef
 eform
+egps
 ekahau
 el
 elasticache
@@ -223,9 +225,11 @@ hostname
 hostnames
 https
 hurlenko
+ibgp
 idfs
 idk
 idworks
+igps
 igw's
 iis
 imenus
