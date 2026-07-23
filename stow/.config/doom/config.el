@@ -242,6 +242,9 @@
 
 (add-hook 'org-agenda-mode-hook 'org-super-agenda-mode)
 
+(use-package org-block-wrap
+  :hook (org-mode . org-block-wrap-mode))
+
 (use-package org-attach
   :after org
   :custom

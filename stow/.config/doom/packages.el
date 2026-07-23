@@ -25,6 +25,8 @@
 (package! verb)
 (package! vundo)
 (package! org-tidy)
+(package! org-block-wrap
+  :recipe (:host gitlab :repo "vegasharmon/org-block-wrap"))
 
 ;;; TRAMP
 (package! tramp-hlo)

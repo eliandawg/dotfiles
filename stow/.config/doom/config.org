@@ -335,6 +335,11 @@ Focus new windows after splitting
 
 (add-hook 'org-agenda-mode-hook 'org-super-agenda-mode)
 #+end_src
+** ~org-block-wrap~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-block-wrap
+  :hook (org-mode . org-block-wrap-mode))
+#+end_src
 ** ~org-download~ and ~org-attach~
 #+begin_src emacs-lisp :tangle yes
 (use-package org-attach
