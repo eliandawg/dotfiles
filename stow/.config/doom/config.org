@@ -88,8 +88,7 @@
 (use-package flycheck
   :defer t
   :config
-  (flycheck-posframe-configure-pretty-defaults)
-  (setopt flycheck-posframe-mode t))
+  (global-flycheck-annotate-mode))
 #+end_src
 ** ~flymake~
 #+begin_src emacs-lisp :tangle no
@@ -146,7 +145,7 @@
 * Doom
 #+begin_src emacs-lisp :tangle yes
 (setopt doom-font-increment 1)
-(setopt doom-theme 'kaolin-bubblegum)
+(setopt doom-theme 'doom-moonlight)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 #+end_src
 ** Themes
@@ -209,7 +208,7 @@
 #+end_src
 
 * ~indent-bars~
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package indent-bars
   :defer t
   :custom

@@ -52,8 +52,7 @@
 (use-package flycheck
   :defer t
   :config
-  (flycheck-posframe-configure-pretty-defaults)
-  (setopt flycheck-posframe-mode t))
+  (global-flycheck-annotate-mode))
 
 (use-package powershell
   :mode ("\\.ps1\\'" . powershell-mode)
@@ -90,7 +89,7 @@
   (dirvish))
 
 (setopt doom-font-increment 1)
-(setopt doom-theme 'kaolin-bubblegum)
+(setopt doom-theme 'doom-moonlight)
 (setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (use-package modus-themes
@@ -137,14 +136,6 @@
   (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
-
-(use-package indent-bars
-  :defer t
-  :custom
-  (indent-bars-pattern ".")
-  (indent-bars-width-frac 0.5)
-  (indent-bars-pad-frac 0.25)
-  (indent-bars-color-by-depth nil))
 
 (setopt user-full-name "Elian Manzueta")
 (setopt user-mail-address "elianmanzueta@protonmail.com")

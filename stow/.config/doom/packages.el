@@ -14,6 +14,8 @@
 ;; (package! doom-snippets :ignore t)
 ;; (package! yasnippet-snippets)
 
+(unpin! flycheck)
+
 ;;; Org
 (package! org-download)
 (package! org-appear)
