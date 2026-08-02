@@ -1,10 +1,141 @@
 ;;; -*- lexical-binding: t; -*-
 
+(setopt user-full-name "Elian Manzueta"
+        user-mail-address "elianmanzueta@protonmail.com"
+
+        ;; emacs
+        confirm-kill-emacs nil
+        auto-save-default t
+        make-backup-files t
+        auto-save-default t
+        truncate-string-ellipsis "…"
+        delete-by-moving-to-trash t
+        kill-ring-max 200
+        +whitespace-guess-in-projects t
+        magit-show-long-lines-warning nil
+        display-line-numbers-type 'relative
+        projectile-project-search-path '(("~/projects/" . 3))
+
+        ;; evil
+        evil-want-fine-undo t
+        evil-shift-width 2
+        evil-want-C-i-jump t
+        +evil-want-move-window-to-wrap-around t
+
+        ;; evil-vsplit
+        evil-split-window-below t
+        evil-vsplit-window-right t
+
+        ;; which-key
+        which-key-idle-delay 0.3
+        which-key-idle-secondary-delay 0.05
+
+        ;; doom
+        +dashboard-pwd-policy "~/"
+        doom-scratch-initial-major-mode 'lisp-interaction-mode
+        initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n"
+
+        ;; theme
+        doom-font-increment 1
+        doom-theme 'doom-moonlight
+        doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
+
+(add-to-list 'exec-path "/home/elian/.local/bin/")
+
+(map! :leader "y" #'consult-yank-from-kill-ring)
+
+;; For .service files
+(add-to-list 'auto-mode-alist '("\\.service\\'" . conf-mode))
+
+;; auto-fill-mode
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(setq-default fill-column 80)
+
+(map! :leader "wa" #'ace-select-window)
+
+(use-package buffer-to-pdf
+  :defer t
+  :ensure nil
+  :config
+  (setq buffer-to-pdf-directory (expand-file-name "~/")))
+
+(use-package dirvish
+  :defer t
+  :custom
+  (dirvish-attributes '(nerd-icons collapse file-size file-time))
+  (dirvish-default-layout '(0 0.11 0.55))
+  (dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
+  (dired-use-ls-dired 't)
+  (dirvish-peek-mode 't)
+  :config
+  (when (and (eq system-type 'darwin) (executable-find "gls"))
+    (setopt insert-directory-program "gls")))
+
+(map! :leader "e" #'dirvish)
+
+(defun Ex ()
+  "Literally just opens dirvish. Made because I keep doing `:Ex`."
+  (interactive)
+  (dirvish))
+
+(use-package ef-themes)
+
+(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+
+(require 'flash-isearch)
+(require 'flash-evil)
+
+(use-package flash
+  :defer t
+  :commands (flash-jump flash-treesitter)
+  :init
+  (flash-isearch-mode 1)
+  :custom
+  (flash-rainbow t)
+  (flash-char-multi-line t)
+  (flash-char-jump-labels t)
+  (flash-labels ";asdfjklghqwertyuiopzxcvbnm"))
+
+(with-eval-after-load 'evil
+  (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
+  (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
+
+(use-package flycheck
+  :defer t
+  :config
+  (global-flycheck-annotate-mode))
+
+(use-package ghostel
+  :defer t
+  :custom
+  (ghostel-enable-osc52 t)
+  (ghostel-tramp-shell-integration t))
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
+
+(use-package ghostel-eshell
+  :hook (eshell-load . ghostel-eshell-visual-command-mode))
+
+(use-package ghostel-comint
+  :hook (after-init . ghostel-comint-global-mode))
+
+(map! :leader "ot" #'ghostel)
+(map! :leader "oT" #'ghostel-project)
+
 (use-package just-mode
   :defer t
   :mode ("justfile\\'" . just-mode)
   :custom
   (just-indent-offset 4))
+
+(use-package kaolin-themes
+  :custom
+  (kaolin-themes-italic-comments t)
+  (kaolin-themes-modeline-padded t))
 
 (use-package kdl-mode
   :defer t
@@ -49,147 +180,10 @@
   :config
   (setopt lsp-ui-sideline-show-diagnostics nil))
 
-(use-package flycheck
-  :defer t
-  :config
-  (global-flycheck-annotate-mode))
+(use-package markdown-indent-mode
+  :hook (markdown-ts-mode . markdown-indent-mode))
 
-(use-package powershell
-  :mode ("\\.ps1\\'" . powershell-mode)
-  :hook (powershell-mode . lsp-mode)
-  :config
-  (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
-  (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
-
-(use-package lsp-pyright
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp)))
-  :custom (lsp-pyright-langserver-command "basedpyright"))
-
-(use-package uv :defer t)
-
-(use-package dirvish
-  :defer t
-  :custom
-  (dirvish-attributes '(nerd-icons collapse file-size file-time))
-  (dirvish-default-layout '(0 0.11 0.55))
-  (dirvish-time-format-string "%d-%m-%y %I:%S:%p %Z")
-  (dired-use-ls-dired 't)
-  (dirvish-peek-mode 't)
-  :config
-  (when (and (eq system-type 'darwin) (executable-find "gls"))
-    (setopt insert-directory-program "gls")))
-
-(map! :leader "e" #'dirvish)
-
-(defun Ex ()
-  "Literally just opens dirvish. Made because I keep doing `:Ex`."
-  (interactive)
-  (dirvish))
-
-(setopt doom-font-increment 1)
-(setopt doom-theme 'doom-moonlight)
-(setopt doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
-
-(use-package modus-themes
-  :custom
-  (modus-themes-italic-constructs t)
-  (modus-themes-bold-constructs t)
-  (modus-themes-headings
-   '((1 . (1.25))
-     (2 . (1.15))
-     (3 . (1.12))
-     (t . (1.05)))))
-
-(use-package ef-themes)
-
-(use-package kaolin-themes
-  :custom
-  (kaolin-themes-italic-comments t)
-  (kaolin-themes-modeline-padded t))
-
-(use-package buffer-to-pdf
-  :defer t
-  :ensure nil
-  :config
-  (setq buffer-to-pdf-directory (expand-file-name "~/")))
-
-(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
-
-(require 'flash-isearch)
-(require 'flash-evil)
-
-(use-package flash
-  :defer t
-  :commands (flash-jump flash-treesitter)
-  :init
-  (flash-isearch-mode 1)
-  :custom
-  (flash-rainbow t)
-  (flash-char-multi-line t)
-  (flash-char-jump-labels t)
-  (flash-labels ";asdfjklghqwertyuiopzxcvbnm"))
-
-(with-eval-after-load 'evil
-  (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
-  (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
-  (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
-  (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
-
-(setopt user-full-name "Elian Manzueta")
-(setopt user-mail-address "elianmanzueta@protonmail.com")
-
-(setopt confirm-kill-emacs nil
-        auto-save-default t
-        make-backup-files t
-        auto-save-default t
-        truncate-string-ellipsis "…"
-        delete-by-moving-to-trash t
-        kill-ring-max 200
-
-        evil-want-fine-undo t
-        evil-shift-width 2
-        evil-want-C-i-jump t
-
-        +evil-want-move-window-to-wrap-around t
-        display-line-numbers-type 'relative
-        which-key-idle-delay 0.5
-        which-key-idle-secondary-delay 0.05
-        projectile-project-search-path '(("~/projects/" . 3))
-        magit-show-long-lines-warning nil
-        +whitespace-guess-in-projects t)
-
-(add-to-list 'exec-path "/home/elian/.local/bin/")
-(map! :leader "y" #'consult-yank-from-kill-ring)
-
-;; For .service files
-(add-to-list 'auto-mode-alist '("\\.service\\'" . conf-mode))
-
-(map! :leader "wa" #'ace-select-window)
-
-(add-hook 'text-mode-hook #'auto-fill-mode)
-(setq-default fill-column 80)
-
-(use-package ispell
-  :custom
-  (ispell-dictionary "english")
-  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
-
-(with-eval-after-load 'spell-fu
-  (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1))))
-
-(setopt doom-scratch-initial-major-mode 'lisp-interaction-mode)
-(setopt initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n")
-
-(setopt +dashboard-pwd-policy "~/")
-
-(setopt evil-split-window-below t
-        evil-vsplit-window-right t)
+(use-package olivetti)
 
 (use-package git-auto-commit-mode
   :defer t
@@ -384,45 +378,6 @@
             ("NOTE" :inverse-video t :inherit flymake-note-echo)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
-(use-package olivetti)
-
-;; (setopt explicit-shell-file-name
-;;         (cond
-;;          ((eq system-type 'darwin) "/opt/homebrew/bin/fish")
-;;          ((eq system-type 'gnu/linux)
-;;           (let ((cmd (shell-command-to-string "uname -a")))
-;;             (if (string-match "NixOS" cmd)
-;;                 "/run/current-system/sw/bin/fish"
-;;               "/bin/fish")))
-;;          (t "/bin/sh")))  ; Default to bourne shell for other systems
-
-(use-package vterm
-  :defer t
-  :custom
-  (vterm-shell explicit-shell-file-name)
-  (vterm-buffer-name-string "vterm: %s"))
-
-(add-load-path! "~/emacs-libvterm")
-
-(use-package ghostel
-  :defer t
-  :custom
-  (ghostel-enable-osc52 t)
-  (ghostel-tramp-shell-integration t))
-
-(use-package evil-ghostel
-  :after (ghostel evil)
-  :hook (ghostel-mode . evil-ghostel-mode))
-
-(use-package ghostel-eshell
-  :hook (eshell-load . ghostel-eshell-visual-command-mode))
-
-(use-package ghostel-comint
-  :hook (after-init . ghostel-comint-global-mode))
-
-(map! :leader "ot" #'ghostel)
-(map! :leader "oT" #'ghostel-project)
-
 (use-package popterm
   :bind (("C-`" . popterm-toggle))
   :custom
@@ -430,10 +385,35 @@
   (popterm-scope 'project)
   (popterm-display-method 'posframe)
   (popterm-auto-cd t)
-  (popterm-posframe-focus-delay 0.5)
   (popterm-cd-string (current-buffer))
   :config
   (popterm-global-mode 1))
+
+(use-package powershell
+  :mode ("\\.ps1\\'" . powershell-mode)
+  :hook (powershell-mode . lsp-mode)
+  :config
+  (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
+  (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
+
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)))
+  :custom (lsp-pyright-langserver-command "basedpyright"))
+
+(use-package ispell
+  :custom
+  (ispell-dictionary "english")
+  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
+
+(with-eval-after-load 'spell-fu
+  (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'json-ts-mode-hook (lambda () (spell-fu-mode -1)))
+  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1))))
 
 (use-package ssh-config-mode
   :defer t
@@ -444,11 +424,6 @@
   (add-to-list 'auto-mode-alist '("/authorized_keys2?\\'" . ssh-authorized-keys-mode)))
 
 (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
-
-(use-package tramp-hlo
-  :after tramp
-  :custom
-  (tramp-hlo-setup))
 
 ;; Most of this is from *Making TRAMP go Brrrr*
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
@@ -482,6 +457,17 @@
 (with-eval-after-load 'tramp
   (setenv "SHELL" "/bin/bash"))
 
+(use-package tramp-hlo
+  :after tramp
+  :custom
+  (tramp-hlo-setup))
+
+(use-package undo-fu
+  :custom
+  (undo-limit 80000000))
+
+(use-package uv :defer t)
+
 (use-package verb
   :after org
   :init
@@ -508,6 +494,10 @@
   :config
   (vertico-posframe-preview-mode 1))
 
-(use-package undo-fu
+(use-package vterm
+  :defer t
   :custom
-  (undo-limit 80000000))
+  (vterm-shell explicit-shell-file-name)
+  (vterm-buffer-name-string "vterm: %s"))
+
+(add-load-path! "~/emacs-libvterm")

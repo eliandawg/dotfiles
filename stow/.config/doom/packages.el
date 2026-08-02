@@ -64,3 +64,6 @@
 (package! popterm
   :recipe (:host github
            :repo "ChetanKoneru/popterm.el"))
+(package! markdown-indent-mode
+  :recipe (:host github
+           :repo "whhone/markdown-indent-mode"))
