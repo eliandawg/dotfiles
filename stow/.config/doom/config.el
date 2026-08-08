@@ -1,56 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(setopt user-full-name "Elian Manzueta"
-        user-mail-address "elianmanzueta@protonmail.com"
-
-        ;; emacs
-        confirm-kill-emacs nil
-        auto-save-default t
-        make-backup-files t
-        auto-save-default t
-        truncate-string-ellipsis "…"
-        delete-by-moving-to-trash t
-        kill-ring-max 200
-        +whitespace-guess-in-projects t
-        magit-show-long-lines-warning nil
-        display-line-numbers-type 'relative
-        projectile-project-search-path '(("~/projects/" . 3))
-
-        ;; evil
-        evil-want-fine-undo t
-        evil-shift-width 2
-        evil-want-C-i-jump t
-        +evil-want-move-window-to-wrap-around t
-
-        ;; evil-vsplit
-        evil-split-window-below t
-        evil-vsplit-window-right t
-
-        ;; which-key
-        which-key-idle-delay 0.3
-        which-key-idle-secondary-delay 0.05
-
-        ;; doom
-        +dashboard-pwd-policy "~/"
-        doom-scratch-initial-major-mode 'lisp-interaction-mode
-        initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n"
-
-        ;; theme
-        doom-font-increment 1
-        doom-theme 'doom-moonlight
-        doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
-
-(add-to-list 'exec-path "/home/elian/.local/bin/")
-
-(map! :leader "y" #'consult-yank-from-kill-ring)
-
-;; For .service files
-(add-to-list 'auto-mode-alist '("\\.service\\'" . conf-mode))
-
-;; auto-fill-mode
-(add-hook 'text-mode-hook #'auto-fill-mode)
-(setq-default fill-column 80)
-
 (map! :leader "wa" #'ace-select-window)
 
 (use-package buffer-to-pdf
@@ -126,6 +75,12 @@
 (map! :leader "ot" #'ghostel)
 (map! :leader "oT" #'ghostel-project)
 
+(use-package indent-bars
+  :defer t
+  :custom
+  (indent-bars-no-descend-lists 'skip)
+  (indent-bars-treesit-ignore-blank-lines-types '("module")))
+
 (use-package just-mode
   :defer t
   :mode ("justfile\\'" . just-mode)
@@ -182,6 +137,53 @@
 
 (use-package markdown-indent-mode
   :hook (markdown-ts-mode . markdown-indent-mode))
+
+(setopt user-full-name "Elian Manzueta"
+        user-mail-address "elianmanzueta@protonmail.com"
+
+        ;; emacs
+        confirm-kill-emacs nil
+        auto-save-default t
+        make-backup-files t
+        auto-save-default t
+        truncate-string-ellipsis "…"
+        delete-by-moving-to-trash t
+        kill-ring-max 200
+        +whitespace-guess-in-projects t
+        magit-show-long-lines-warning nil
+        display-line-numbers-type 'relative
+        projectile-project-search-path '(("~/projects/" . 3))
+
+        which-key-idle-delay 0.3
+        which-key-idle-secondary-delay 0.05)
+
+(add-to-list 'exec-path "/home/elian/.local/bin/")
+
+(map! :leader "y" #'consult-yank-from-kill-ring)
+
+;; For .service files
+(add-to-list 'auto-mode-alist '("\\.service\\'" . conf-mode))
+
+;; auto-fill-mode
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(setq-default fill-column 80)
+
+(setopt evil-want-fine-undo t
+        evil-shift-width 2
+        evil-want-C-i-jump t
+        +evil-want-move-window-to-wrap-around t
+
+        evil-split-window-below t
+        evil-vsplit-window-right t)
+
+(setopt +dashboard-pwd-policy "~/"
+        doom-scratch-initial-major-mode 'lisp-interaction-mode
+        initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n"
+
+        ;; theme
+        doom-font-increment 1
+        doom-theme 'catppuccin-mocha
+        doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (use-package olivetti)
 

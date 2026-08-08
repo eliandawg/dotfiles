@@ -1,4 +1,4 @@
-personal_ws-1.1 en 567
+personal_ws-1.1 en 570
 BDR
 LSA
 LSAs
@@ -170,6 +170,7 @@ extremecloud
 extremecloudiq
 eza
 facto
+factorytalk
 failover
 ferrilli
 fi
@@ -249,6 +250,7 @@ ipsec
 ipsk
 isdbs
 ise
+ispell
 ists
 itdbwb
 itddb
@@ -276,6 +278,7 @@ leastconn
 librenms
 lic
 lifecycle
+lmtools
 loadbalancer
 lookups
 loopback

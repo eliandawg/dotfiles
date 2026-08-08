@@ -47,10 +47,13 @@
 
 ;; Themes
 (package! ef-themes
-  :recipe (:host github :repo "protesilaos/ef-themes"))
+  :recipe (:host github
+           :repo "protesilaos/ef-themes"))
 (package! standard-themes)
 (package! kaolin-themes)
-
+(package! modus-catppuccin
+  :recipe (:host gitlab
+           :repo "magus/modus-catppuccin"))
 ;; Misc
 (package! ghostel)
 (package! evil-ghostel)
