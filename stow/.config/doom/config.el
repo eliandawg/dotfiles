@@ -39,17 +39,20 @@
   :commands (flash-jump flash-treesitter)
   :init
   (flash-isearch-mode 1)
+  (flash-char-setup-evil-keys)
   :custom
   (flash-rainbow t)
   (flash-char-multi-line t)
-  (flash-char-jump-labels t)
-  (flash-labels ";asdfjklghqwertyuiopzxcvbnm"))
+  (flash-char-jump-labels t))
 
 (with-eval-after-load 'evil
   (evil-global-set-key 'normal (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
+
+(map! :leader "fa" #'consult-org-agenda)
+(map! :leader "fd" #'consult-dir)
 
 (use-package flycheck
   :defer t
