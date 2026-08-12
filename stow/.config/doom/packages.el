@@ -23,13 +23,13 @@
 (package! websocket)
 (package! org-roam-ui)
 (package! org-super-agenda)
-(package! org-repeat-by-cron)
 (package! verb)
 (package! vundo)
 (package! org-tidy)
 (package! org-block-wrap
   :recipe (:host gitlab :repo "vegasharmon/org-block-wrap"))
-
+(package! org-habit-ng
+  :recipe (:host codeberg :repo "Trevoke/org-habit-ng"))
 ;;; TRAMP
 (package! tramp-hlo)
 

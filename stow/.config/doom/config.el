@@ -226,11 +226,19 @@
            :and (:tag "inbox" :todo "TODO"))
           (:name "Projects"
            :ancestor-with-todo "PROJECT")
+          (:name "Recurring"
+           :tag "recurring-work-tasks")
           (:name "Notes"
            :todo "NOTE")
           (:discard (:anything t)))))
 
-(add-hook 'org-agenda-mode-hook 'org-super-agenda-mode)
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'on-change))
 
 (use-package org-block-wrap
   :hook (org-mode . org-block-wrap-mode))
@@ -252,6 +260,9 @@
   (org-download-image-org-width '450)
   (org-download-image-dir "~/org/.attach"))
 
+(use-package org-habit-ng
+  :hook (org-mode . org-habit-ng-mode))
+
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
   '(org-verbatim :inherit bold :weight extra-bold))
@@ -266,7 +277,7 @@
           org-agenda-tags-column 0
           org-startup-folded 'show2levels
           org-directory "~/org/"
-          org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
+          org-agenda-files '("~/org/roam/daily/" "~/org/roam/work/" "~/org/roam/life/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
@@ -292,8 +303,6 @@
 (with-eval-after-load 'evil-org
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
-(use-package org-repeat-by-cron)
-
 (use-package org-modern
   :after org
   :custom
@@ -304,14 +313,6 @@
   (org-modern-keyword "‣ ")
   (org-modern-table t)
   (org-modern-todo t))
-
-(use-package org-appear
-  :hook (org-mode . org-appear-mode)
-  :custom
-  (org-appear-autolinks t)
-  (org-appear-autoentities t)
-  (org-appear-autokeywords t)
-  (org-appear-trigger 'on-change))
 
 (use-package org-roam
   :after org
@@ -360,7 +361,7 @@
   (setopt +org-capture-todo-file "inbox.org")
 
   (setopt org-todo-keywords
-          '((sequence "TODO(t)" "PROJECT(p)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
+          '((sequence "TODO(t)" "PROJECT(p)" "MEETING(m)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")
             (sequence "NOTE(N)" "HOLD(h)" "|")))

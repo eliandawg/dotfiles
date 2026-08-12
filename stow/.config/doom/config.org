@@ -319,11 +319,21 @@
            :and (:tag "inbox" :todo "TODO"))
           (:name "Projects"
            :ancestor-with-todo "PROJECT")
+          (:name "Recurring"
+           :tag "recurring-work-tasks")
           (:name "Notes"
            :todo "NOTE")
           (:discard (:anything t)))))
-
-(add-hook 'org-agenda-mode-hook 'org-super-agenda-mode)
+#+end_src
+** ~org-appear~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'on-change))
 #+end_src
 ** ~org-block-wrap~
 #+begin_src emacs-lisp :tangle yes
@@ -349,6 +359,11 @@
   (org-download-image-org-width '450)
   (org-download-image-dir "~/org/.attach"))
 #+end_src
+** ~org-habit-ng~
+#+begin_src emacs-lisp :tangle yes
+(use-package org-habit-ng
+  :hook (org-mode . org-habit-ng-mode))
+#+end_src
 ** ~org-mode~
 #+begin_src emacs-lisp :tangle yes
 (custom-set-faces!
@@ -365,7 +380,7 @@
           org-agenda-tags-column 0
           org-startup-folded 'show2levels
           org-directory "~/org/"
-          org-agenda-files '("~/org/roam/daily/" "~/org/roam/professional/" "~/org/inbox.org" "~/org/roam/life/")
+          org-agenda-files '("~/org/roam/daily/" "~/org/roam/work/" "~/org/roam/life/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
@@ -391,10 +406,6 @@
 (with-eval-after-load 'evil-org
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 #+end_src
-** ~org-repeat-by-cron~
-#+begin_src emacs-lisp :tangle yes
-(use-package org-repeat-by-cron)
-#+end_src
 ** ~org-modern~
 #+begin_src emacs-lisp :tangle yes
 (use-package org-modern
@@ -407,16 +418,6 @@
   (org-modern-keyword "‣ ")
   (org-modern-table t)
   (org-modern-todo t))
-#+end_src
-** ~org-appear~
-#+begin_src emacs-lisp :tangle yes
-(use-package org-appear
-  :hook (org-mode . org-appear-mode)
-  :custom
-  (org-appear-autolinks t)
-  (org-appear-autoentities t)
-  (org-appear-autokeywords t)
-  (org-appear-trigger 'on-change))
 #+end_src
 ** ~org-roam~
 #+begin_src emacs-lisp :tangle yes
@@ -471,7 +472,7 @@
   (setopt +org-capture-todo-file "inbox.org")
 
   (setopt org-todo-keywords
-          '((sequence "TODO(t)" "PROJECT(p)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
+          '((sequence "TODO(t)" "PROJECT(p)" "MEETING(m)" "IN-PROGRESS(i@/!)" "|" "DONE(d!)" "WONT-DO(w@/!)")
             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")
             (sequence "NOTE(N)" "HOLD(h)" "|")))
