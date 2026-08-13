@@ -2,12 +2,6 @@
 
 (map! :leader "wa" #'ace-select-window)
 
-(use-package buffer-to-pdf
-  :defer t
-  :ensure nil
-  :config
-  (setq buffer-to-pdf-directory (expand-file-name "~/")))
-
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 
@@ -82,6 +76,7 @@
   :defer t
   :custom
   (indent-bars-no-descend-lists 'skip)
+  (indent-bars-pattern ".")
   (indent-bars-treesit-ignore-blank-lines-types '("module")))
 
 (use-package just-mode
@@ -89,11 +84,6 @@
   :mode ("justfile\\'" . just-mode)
   :custom
   (just-indent-offset 4))
-
-(use-package kaolin-themes
-  :custom
-  (kaolin-themes-italic-comments t)
-  (kaolin-themes-modeline-padded t))
 
 (use-package kdl-mode
   :defer t
@@ -187,8 +177,6 @@
         doom-font-increment 1
         doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
-
-(use-package olivetti)
 
 (use-package git-auto-commit-mode
   :defer t
@@ -407,6 +395,7 @@
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
 (use-package popterm
+  :defer t
   :bind (("C-`" . popterm-toggle))
   :custom
   (popterm-backend 'ghostel)
@@ -435,6 +424,7 @@
   (ispell-dictionary "english")
   (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
 
+;; Disable spell-fu in programming modes
 (with-eval-after-load 'spell-fu
   (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
@@ -490,17 +480,17 @@
   :custom
   (tramp-hlo-setup))
 
-(use-package msgpack)
+(use-package msgpack
+  :defer t)
 (use-package tramp-rpc
+  :defer t
   :custom
   (tramp-rpc-deploy-prefer-build t))
 
 (with-eval-after-load 'undo-fu
   (setopt undo-limit 80000000 ;; 80mb
           undo-strong-limit 100000000 ;; 100mb
-          undo-outer-limit  72000000)) ;; 80mb
-
-(use-package uv :defer t)
+          undo-outer-limit  72000000)) ;; 72mb
 
 (use-package verb
   :after org

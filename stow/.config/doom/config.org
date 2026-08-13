@@ -28,7 +28,7 @@
   (evil-define-key 'normal 'global (kbd "f") 'avy-goto-char))
 #+end_src
 * ~buffer-to-pdf~
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package buffer-to-pdf
   :defer t
   :ensure nil
@@ -147,6 +147,7 @@
   :defer t
   :custom
   (indent-bars-no-descend-lists 'skip)
+  (indent-bars-pattern ".")
   (indent-bars-treesit-ignore-blank-lines-types '("module")))
 #+end_src
 * ~just-mode~
@@ -158,7 +159,7 @@
   (just-indent-offset 4))
 #+end_src
 * ~kaolin-themes~
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package kaolin-themes
   :custom
   (kaolin-themes-italic-comments t)
@@ -270,10 +271,6 @@
         doom-font-increment 1
         doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
-#+end_src
-* ~olivetti~
-#+begin_src emacs-lisp :tangle yes
-(use-package olivetti)
 #+end_src
 * ~org-mode~
 ** ~git-auto-commit-and-push~
@@ -521,6 +518,7 @@
 * ~popterm~
 #+begin_src emacs-lisp :tangle yes
 (use-package popterm
+  :defer t
   :bind (("C-`" . popterm-toggle))
   :custom
   (popterm-backend 'ghostel)
@@ -556,6 +554,7 @@
   (ispell-dictionary "english")
   (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
 
+;; Disable spell-fu in programming modes
 (with-eval-after-load 'spell-fu
   (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
   (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
@@ -617,10 +616,12 @@
   :custom
   (tramp-hlo-setup))
 #+end_src
-** ~trapm-rpc~
+** ~tramp-rpc~
 #+begin_src emacs-lisp :tangle yes
-(use-package msgpack)
+(use-package msgpack
+  :defer t)
 (use-package tramp-rpc
+  :defer t
   :custom
   (tramp-rpc-deploy-prefer-build t))
 #+end_src
@@ -629,11 +630,7 @@
 (with-eval-after-load 'undo-fu
   (setopt undo-limit 80000000 ;; 80mb
           undo-strong-limit 100000000 ;; 100mb
-          undo-outer-limit  72000000)) ;; 80mb
-#+end_src
-* ~uv~
-#+begin_src emacs-lisp :tangle yes
-(use-package uv :defer t)
+          undo-outer-limit  72000000)) ;; 72mb
 #+end_src
 * ~verb~
 #+begin_src emacs-lisp :tangle yes
