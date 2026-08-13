@@ -306,11 +306,7 @@
   (defvar +org-capture-work-meetings-file "~/org/work/work-meetings.org")
   (defvar +org-capture-work-scheduled-file "~/org/work/work-scheduled.org")
 
-  (setq org-capture-templates '(("t" "Personal todo"
-                                 entry (file+headline +org-capture-todo-file "Inbox")
-                                 (file "~/org/templates/inbox-entry.org")
-                                 :prepend t)
-                                ("j" "Personal journal"
+  (setq org-capture-templates '(("j" "Personal journal"
                                  entry (file+olp+datetree +org-capture-journal-file)
                                  "* %U %?\n%i"
                                  :prepend t
