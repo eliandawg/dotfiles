@@ -83,7 +83,7 @@
   :defer t
   :mode ("justfile\\'" . just-mode)
   :custom
-  (just-indent-offset 4))
+  (just-indent-offset 2))
 
 (use-package kdl-mode
   :defer t
@@ -250,7 +250,8 @@
 
 (custom-set-faces!
   '(org-document-title :weight extra-bold :height 1.3)
-  '(org-verbatim :inherit bold :weight extra-bold))
+  '(org-verbatim :inherit bold :weight extra-bold)
+  '(org-quote :inherit modus-themes-fixed-pitch :slant italic))
 
 (use-package org
   :defer t
@@ -289,6 +290,8 @@
 ;; org-yas-expand-maybe-h lags the absolute fuck out of Org.
 ;; disable it.
 (with-eval-after-load 'evil-org
+  (map! :map evil-org-mode-map
+        :n "zi" #'org-link-preview)
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
 (map! :leader "nn" #'org-capture-goto-target)
@@ -296,25 +299,27 @@
 
 (use-package org
   :config
-  (defvar +org-capture-work-todo-file "~/org/work/work-inbox.org")
+  (defvar +org-capture-work-inbox-file "~/org/work/work-inbox.org")
   (defvar +org-capture-work-projects-file "~/org/work/work-projects.org")
   (defvar +org-capture-work-meetings-file "~/org/work/work-meetings.org")
   (defvar +org-capture-work-scheduled-file "~/org/work/work-scheduled.org")
 
-  (setq org-capture-templates '(("j" "Personal journal"
+  (map! :leader "nn" #'org-capture-goto-target)
+  (map! :leader "nN" #'org-capture)
+
+  (setq org-capture-templates '(("j" "Journal entry"
                                  entry (file+olp+datetree +org-capture-journal-file)
-                                 "* %U %?\n%i"
+                                 (file "~/org/templates/journal.org")
                                  :prepend t
                                  :tree-type week)
                                 ("w" "Work Templates")
-                                ("wj" "Work journal"
-                                 entry (file+olp+datetree +org-capture-work-todo-file)
-                                 "* %U %?\n%i"
+                                ("wn" "Work note"
+                                 entry (file+olp+datetree +org-capture-work-inbox-file)
+                                 (file "~/org/templates/note.org")
                                  :prepend t
-                                 :tree-type week
-                                 :kill-buffer)
+                                 :tree-type week)
                                 ("wt" "Work inbox entry"
-                                 entry (file+olp+datetree +org-capture-work-todo-file)
+                                 entry (file+olp+datetree +org-capture-work-inbox-file)
                                  (file "~/org/templates/inbox-entry.org")
                                  :prepend t
                                  :tree-type week)
@@ -386,19 +391,19 @@
   (setopt org-todo-keyword-faces
           '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
             ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
-            ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
+            ("HOLD" . +org-todo-onhold) ("PROJECT" . +org-todo-project)
             ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
-            ("NOTE" . flymake-note-echo)))
+            ("NOTE" . +org-todo-project)))
 
   (setopt org-modern-todo-faces
           '(("KILL" :inverse-video t :inherit +org-todo-cancel)
             ("NO" :inverse-video t :inherit +org-todo-cancel)
-            ("PROJ" :inverse-video t :inherit +org-todo-project)
+            ("PROJECT" :inverse-video t :foreground +org-todo-project)
             ("HOLD" :inverse-video t :inherit +org-todo-onhold)
             ("WAIT" :inverse-video t :inherit +org-todo-onhold)
             ("[?]" :inverse-video t :inherit +org-todo-onhold)
             ("STRT" :inverse-video t :inherit +org-todo-active)
-            ("NOTE" :inverse-video t :inherit flymake-note-echo)
+            ("NOTE" :inverse-video t :inherit +org-todo-project)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
 (use-package popterm
@@ -452,13 +457,13 @@
 
 ;; Most of this is from *Making TRAMP go Brrrr*
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
+(with-eval-after-load 'tramp
+  (with-eval-after-load 'compile
+    (remove-hook 'compilation-mode-hook #'tramp-compile-disable-ssh-controlmaster-options)))
+
 (use-package tramp
   :defer t
   :init
-  (with-eval-after-load 'tramp
-    (with-eval-after-load 'compile
-      (remove-hook 'compilation-mode-hook #'tramp-compile-disable-ssh-controlmaster-options)))
-
   (connection-local-set-profile-variables
    'remote-direct-async-process
    '((tramp-direct-async-process . t)))
@@ -471,16 +476,12 @@
    '(:application tramp :protocol "ssh")
    'remote-direct-async-process)
 
-  (setopt magit-tramp-pipe-stty-settings 'pty)
-
-  (setopt vc-ignore-dir-regexp
-          (format "\\(%s\\)\\|\\(%s\\)"
-                  vc-ignore-dir-regexp
-                  tramp-file-name-regexp))
-  (setopt enable-remote-dir-locals t))
-
-(with-eval-after-load 'tramp
-  (setenv "SHELL" "/bin/bash"))
+  (setopt vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)"
+                                       vc-ignore-dir-regexp
+                                       tramp-file-name-regexp)
+          magit-tramp-pipe-stty-settings 'pty
+          enable-remote-dir-locals t
+          tramp-default-remote-shell "/bin/bash"))
 
 (use-package tramp-hlo
   :after tramp
@@ -492,7 +493,7 @@
 (use-package tramp-rpc
   :defer t
   :custom
-  (tramp-rpc-deploy-prefer-build t))
+  (tramp-rpc-deploy-git-build-policy 'release))
 
 (with-eval-after-load 'undo-fu
   (setopt undo-limit 80000000 ;; 80mb
