@@ -355,13 +355,13 @@
 
   (org-roam-capture-templates
    '(("d" "default" plain (file "~/org/roam/templates/default.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n")
+      :if-new (file "%<%Y%m%d%H%M%S>-${slug}.org")
       :unnarrowed t)
      ("s" "study" plain (file "~/org/roam/templates/study.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
+      :if-new (file "%<%Y%m%d%H%M%S>-${slug}.org")
       :unarrowed t)
      ("w" "work" plain (file "~/org/roam/templates/default.org")
-      :if-new (file+head "work/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
+      :if-new (file "work/%<%Y%m%d%H%M%S>-${slug}.org")
       :unarrowed t))))
 
 (use-package websocket :after org-roam)
@@ -495,9 +495,10 @@
   :custom
   (tramp-rpc-deploy-prefer-build t))
 
-(use-package undo-fu
-  :custom
-  (undo-limit 80000000))
+(with-eval-after-load 'undo-fu
+  (setopt undo-limit 80000000 ;; 80mb
+          undo-strong-limit 100000000 ;; 100mb
+          undo-outer-limit  72000000)) ;; 80mb
 
 (use-package uv :defer t)
 
