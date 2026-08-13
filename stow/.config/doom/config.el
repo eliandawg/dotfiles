@@ -214,7 +214,8 @@
           (:name "Projects"
            :todo "PROJECT")
           (:name "Notes"
-           :todo "NOTE"))))
+           :todo "NOTE")
+          (:discard (:anything t)))))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
@@ -261,7 +262,10 @@
           org-agenda-tags-column 0
           org-startup-folded 'show2levels
           org-directory "~/org/"
-          org-agenda-files '("~/org/work/" "~/org/roam/work/")
+          org-agenda-files '("~/org/work/work-inbox.org"
+                             "~/org/work/work-projects.org"
+                             "~/org/work/work-scheduled.org"
+                             "~/org/journal.org")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
@@ -286,6 +290,9 @@
 ;; disable it.
 (with-eval-after-load 'evil-org
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
+
+(map! :leader "nn" #'org-capture-goto-target)
+(map! :leader "nN" #'org-capture)
 
 (use-package org
   :config
