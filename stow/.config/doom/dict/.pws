@@ -1,4 +1,4 @@
-personal_ws-1.1 en 570
+personal_ws-1.1 en 572
 BDR
 LSA
 LSAs
@@ -327,6 +327,7 @@ netftp
 netjump
 netlgdb
 netplan
+netspot
 netstat
 nexthop
 nfsen
@@ -433,6 +434,7 @@ snrs
 softmax
 solarwinds
 solidworks
+sorenson
 spbm
 spfs
 splunk
