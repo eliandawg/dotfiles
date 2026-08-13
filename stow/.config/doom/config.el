@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(map! :leader "wa" #'ace-select-window)
-
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 
@@ -168,6 +166,17 @@
 
         evil-split-window-below t
         evil-vsplit-window-right t)
+
+;; From ~/.config/emacs/sources/doom+/modules/editor/evil/config.el
+(with-eval-after-load 'evil-easymotion
+  (map! :m "gs" (cons "Easymotion" evilem-map)
+    ;; TODO: Use named functions
+    (:map evilem-map
+          "a" (evilem-create #'evil-forward-arg)
+          "A" (evilem-create #'evil-backward-arg)
+          "s" #'flash-jump
+          "SPC" (cmd! (let ((current-prefix-arg t)) (evil-avy-goto-char-timer)))
+          "/" #'evil-avy-goto-char-timer)))
 
 (setopt +dashboard-pwd-policy "~/"
         doom-scratch-initial-major-mode 'lisp-interaction-mode
