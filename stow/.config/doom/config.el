@@ -8,6 +8,9 @@
   :config
   (setq buffer-to-pdf-directory (expand-file-name "~/")))
 
+(map! :leader "fa" #'consult-org-agenda)
+(map! :leader "fd" #'consult-dir)
+
 (use-package dirvish
   :defer t
   :custom
@@ -50,9 +53,6 @@
   (evil-global-set-key 'operator (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'motion (kbd "s") #'flash-evil-jump)
   (evil-global-set-key 'visual (kbd "s") #'flash-evil-jump))
-
-(map! :leader "fa" #'consult-org-agenda)
-(map! :leader "fd" #'consult-dir)
 
 (use-package flycheck
   :defer t
@@ -206,9 +206,8 @@
   (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
 
 (use-package org-super-agenda
-  :hook (org-agenda . org-super-agenda-mode)
+  :hook (org-agenda-mode . org-super-agenda-mode)
   :config
-  (setopt org-agenda-start-on-weekday 0)
   (setopt org-super-agenda-header-map (make-sparse-keymap))
   (setopt org-agenda-skip-scheduled-if-done t)
   (setopt org-agenda-skip-deadline-if-done t)
@@ -225,12 +224,9 @@
           (:name "Inbox"
            :and (:tag "inbox" :todo "TODO"))
           (:name "Projects"
-           :ancestor-with-todo "PROJECT")
-          (:name "Recurring"
-           :tag "recurring-work-tasks")
+           :todo "PROJECT")
           (:name "Notes"
-           :todo "NOTE")
-          (:discard (:anything t)))))
+           :todo "NOTE"))))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
@@ -277,7 +273,7 @@
           org-agenda-tags-column 0
           org-startup-folded 'show2levels
           org-directory "~/org/"
-          org-agenda-files '("~/org/roam/daily/" "~/org/roam/work/" "~/org/roam/life/")
+          org-agenda-files '("~/org/work/" "~/org/roam/work/")
           org-log-done 'time
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
@@ -302,6 +298,47 @@
 ;; disable it.
 (with-eval-after-load 'evil-org
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
+
+(use-package org
+  :config
+  (defvar +org-capture-work-todo-file "~/org/work/work-inbox.org")
+  (defvar +org-capture-work-projects-file "~/org/work/work-projects.org")
+  (defvar +org-capture-work-meetings-file "~/org/work/work-meetings.org")
+  (defvar +org-capture-work-scheduled-file "~/org/work/work-scheduled.org")
+
+  (setq org-capture-templates '(("t" "Personal todo"
+                                 entry (file+headline +org-capture-todo-file "Inbox")
+                                 (file "~/org/templates/inbox-entry.org")
+                                 :prepend t)
+                                ("j" "Personal journal"
+                                 entry (file+olp+datetree +org-capture-journal-file)
+                                 "* %U %?\n%i"
+                                 :prepend t
+                                 :tree-type week)
+                                ("w" "Work Templates")
+                                ("wj" "Work journal"
+                                 entry (file+olp+datetree +org-capture-work-todo-file)
+                                 "* %U %?\n%i"
+                                 :prepend t
+                                 :tree-type week
+                                 :kill-buffer)
+                                ("wt" "Work inbox entry"
+                                 entry (file+olp+datetree +org-capture-work-todo-file)
+                                 (file "~/org/templates/inbox-entry.org")
+                                 :prepend t
+                                 :tree-type week)
+                                ("wp" "Work projects"
+                                 entry (file+headline +org-capture-work-projects-file "Work Projects")
+                                 (file "~/org/templates/project.org")
+                                 :prepend t)
+                                ("wm" "Work meeting"
+                                 entry (file+headline +org-capture-work-scheduled-file "Meetings")
+                                 (file "~/org/templates/meeting.org")
+                                 :prepend t)
+                                ("ws" "Scheduled work inbox entry"
+                                 entry (file+headline +org-capture-work-scheduled-file "Scheduled")
+                                 (file "~/org/templates/scheduled-entry.org")
+                                 :prepend t))))
 
 (use-package org-modern
   :after org
@@ -329,11 +366,6 @@
       :unarrowed t)
      ("w" "work" plain (file "~/org/roam/templates/default.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
-      :unarrowed t)))
-
-  (org-roam-dailies-capture-templates
-   '(("w" "work-todo" plain (file "~/org/roam/templates/work-todo.org")
-      :if-new (file+datetree "work-inbox.org" week)
       :unarrowed t))))
 
 (use-package websocket :after org-roam)
@@ -343,12 +375,6 @@
   (org-roam-ui-follow t)
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
-
-(defun my/org-roam-node-find-prof ()
-  (interactive)
-  (org-roam-node-find nil "@professional " nil))
-
-(map! :leader "nrp" 'my/org-roam-node-find-prof)
 
 (use-package org-tidy
   :after org
@@ -467,6 +493,11 @@
   :after tramp
   :custom
   (tramp-hlo-setup))
+
+(use-package msgpack)
+(use-package tramp-rpc
+  :custom
+  (tramp-rpc-deploy-prefer-build t))
 
 (use-package undo-fu
   :custom

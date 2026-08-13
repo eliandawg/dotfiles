@@ -30,8 +30,11 @@
   :recipe (:host gitlab :repo "vegasharmon/org-block-wrap"))
 (package! org-habit-ng
   :recipe (:host codeberg :repo "Trevoke/org-habit-ng"))
+
 ;;; TRAMP
 (package! tramp-hlo)
+(package! msgpack)
+(package! tramp-rpc :recipe (:host github :repo "ArthurHeymans/emacs-tramp-rpc" :files ("lisp/*.el")))
 
 ;; Code
 (package! just-mode)
