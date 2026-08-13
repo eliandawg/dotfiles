@@ -294,9 +294,6 @@
         :n "zi" #'org-link-preview)
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
-(map! :leader "nn" #'org-capture-goto-target)
-(map! :leader "nN" #'org-capture)
-
 (use-package org
   :config
   (defvar +org-capture-work-inbox-file "~/org/work/work-inbox.org")

@@ -407,9 +407,6 @@
 #+end_src
 ** ~org-capture~
 #+begin_src emacs-lisp :tangle yes
-(map! :leader "nn" #'org-capture-goto-target)
-(map! :leader "nN" #'org-capture)
-
 (use-package org
   :config
   (defvar +org-capture-work-inbox-file "~/org/work/work-inbox.org")
