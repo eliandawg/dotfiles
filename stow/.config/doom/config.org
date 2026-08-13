@@ -432,6 +432,10 @@
                                  (file "~/org/templates/inbox-entry.org")
                                  :prepend t
                                  :tree-type week)
+                                ("ws" "Scheduled work inbox entry"
+                                 entry (file+headline +org-capture-work-scheduled-file "Scheduled")
+                                 (file "~/org/templates/scheduled-entry.org")
+                                 :prepend t)
                                 ("wp" "Work projects"
                                  entry (file+headline +org-capture-work-projects-file "Work Projects")
                                  (file "~/org/templates/project.org")
@@ -439,10 +443,6 @@
                                 ("wm" "Work meeting"
                                  entry (file+headline +org-capture-work-scheduled-file "Meetings")
                                  (file "~/org/templates/meeting.org")
-                                 :prepend t)
-                                ("ws" "Scheduled work inbox entry"
-                                 entry (file+headline +org-capture-work-scheduled-file "Scheduled")
-                                 (file "~/org/templates/scheduled-entry.org")
                                  :prepend t))))
 #+end_src
 ** ~org-modern~
@@ -474,7 +474,7 @@
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: study:%^{topics}")
       :unarrowed t)
      ("w" "work" plain (file "~/org/roam/templates/default.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
+      :if-new (file+head "work/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+author: %n\n#+date: %t\n#+filetags: work")
       :unarrowed t))))
 
 (use-package websocket :after org-roam)
