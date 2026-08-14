@@ -3,7 +3,7 @@ Description=Run proton-drive-org-sync
 
 [Timer]
 OnBootSec=60
-OnUnitActiveSec=5min
+OnUnitActiveSec=30min
 Persistent=True
 
 [Install]

@@ -11,3 +11,6 @@ get-brew:
 
 get-doomemacs:
     @git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+
+enable-org-sync:
+    @systemctl --user enable --now proton-drive-org-sync.timer
