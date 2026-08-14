@@ -152,8 +152,9 @@
 
 (map! :leader "y" #'consult-yank-from-kill-ring)
 
-;; For .service files
+;; For systemd files
 (add-to-list 'auto-mode-alist '("\\.service\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.timer\\'" . conf-mode))
 
 ;; auto-fill-mode
 (add-hook 'text-mode-hook #'auto-fill-mode)
