@@ -176,7 +176,7 @@
           "a" (evilem-create #'evil-forward-arg)
           "A" (evilem-create #'evil-backward-arg)
           "s" #'flash-jump
-          "SPC" (cmd! (let ((current-prefix-arg t)) (evil-avy-goto-char-timer)))
+          "SPC" #'flash-treesitter
           "/" #'evil-avy-goto-char-timer)))
 
 (setopt +dashboard-pwd-policy "~/"

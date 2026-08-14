@@ -20,6 +20,10 @@ if type -q zoxide
     abbr -a cd z
 end
 
+if type -q trash-put
+    abbr rm trash-put
+end
+
 abbr -a gst git status
 abbr -a gcsm git commit --signoff --message
 abbr -a gp git push
