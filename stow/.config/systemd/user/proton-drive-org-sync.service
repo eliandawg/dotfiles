@@ -1,0 +1,5 @@
+[Unit]
+Description=Sync org directory with Proton Drive
+
+[Service]
+ExecStart=/home/elian/org/proton-drive-sync.fish

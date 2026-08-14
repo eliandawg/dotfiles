@@ -1,0 +1,10 @@
+[Unit]
+Description=Run proton-drive-org-sync
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=5min
+Persistent=True
+
+[Install]
+WantedBy=timers.target
