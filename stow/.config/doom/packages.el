@@ -22,7 +22,6 @@
 (package! git-auto-commit-mode)
 (package! websocket)
 (package! org-roam-ui)
-(package! org-super-agenda)
 (package! verb)
 (package! vundo)
 (package! org-tidy)

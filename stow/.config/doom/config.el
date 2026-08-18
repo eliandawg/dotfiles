@@ -194,6 +194,11 @@
           completion-eager-update t
           completion-eager-display 'auto))
 
+(defun my/proton-drive-sync ()
+  (interactive)
+  (when (file-exists-p "~/org/proton-drive-sync.fish")
+    (async-shell-command "fish ~/org/proton-drive-sync.fish" "Org Proton Drive Sync")))
+
 (use-package git-auto-commit-mode
   :defer t
   :custom
@@ -207,31 +212,34 @@
   :custom
   (org-agenda-timegrid-use-ampm t)
   (org-display-custom-times t)
-  (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>")))
+  (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>"))
+  (org-agenda-custom-commands '(("j" "Journal" todo "" ((org-agenda-files '("~/org/journal.org"))))
+                                ("w" . "Work-related")
+                                ("wo" "Overview" ((agenda ""
+                                                          ((org-agenda-overriding-header "Weekly Agenda\n")
+                                                           (org-agenda-span 'week)
+                                                           (org-agenda-show-log t)
+                                                           (org-agenda-files '("~/org/work/"))))
+                                                  (todo ""
+                                                        ((org-agenda-overriding-header "Inbox\n")
+                                                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("NOTE")))
+                                                         (org-agenda-files '("~/org/work/work-inbox.org"))))
+                                                  (todo "PROJECT"
+                                                        ((org-agenda-overriding-header "Projects\n")
+                                                         (org-agenda-sorting-strategy)
+                                                         (org-agenda-files '("~/org/work/work-projects.org"))))
+                                                  (todo ""
+                                                        ((org-agenda-overriding-header "Scheduled\n")
+                                                         (org-agenda-files '("~/org/work/work-scheduled.org"))
+                                                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'unscheduled))))
+                                                  (todo "NOTE"
+                                                        ((org-agenda-overriding-header "Notes\n")
+                                                         (org-agenda-files '("~/org/work"))))))
+                                ("wp" "Projects" todo "PROJECT")
+                                ("ws" "Scheduled" tags-todo "scheduled")
+                                ("wi" "Inbox" tags-todo "inbox"))))
 
-(use-package org-super-agenda
-  :hook (org-agenda-mode . org-super-agenda-mode)
-  :config
-  (setopt org-super-agenda-header-map (make-sparse-keymap))
-  (setopt org-agenda-skip-scheduled-if-done t)
-  (setopt org-agenda-skip-deadline-if-done t)
-  (setopt org-agenda-overriding-header "")
-  (setopt org-agenda-span 14)
-
-  (setq org-super-agenda-groups
-        '((:name ""
-           :time-grid t)
-          (:name "Inbox - Important"
-           :and (:tag "inbox" :priority>= "B"))
-          (:name "Inbox - In progress"
-           :and (:tag "inbox" :todo "IN-PROGRESS"))
-          (:name "Inbox"
-           :and (:tag "inbox" :todo "TODO"))
-          (:name "Projects"
-           :todo "PROJECT")
-          (:name "Notes"
-           :todo "NOTE")
-          (:discard (:anything t)))))
+(add-to-list 'display-buffer-alist '("\\*Org Agenda\\*" (display-buffer-in-side-window) (side . left) (window-width . 0.5)))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
@@ -247,8 +255,9 @@
 (use-package org-attach
   :after org
   :custom
+  (org-attach-id-dir "~/org/.attach")
   (org-attach-auto-tag nil)
-  (org-attach-store-link-p 'attached)
+  (org-attach-store-link-p 'file)
   (org-attach-id-to-path-function-list '(org-attach-id-ts-folder-format
                                          org-attach-id-uuid-folder-format
                                          org-attach-id-fallback-folder-format))
@@ -277,14 +286,14 @@
           org-auto-align-tags nil
           org-tags-column 0
           org-agenda-tags-column 0
-          org-startup-folded 'show2levels
+          org-startup-folded 'content
           org-directory "~/org/"
           org-agenda-files '("~/org/work/work-inbox.org"
                              "~/org/work/work-projects.org"
                              "~/org/work/work-scheduled.org"
                              "~/org/journal.org")
           org-log-done 'time
-          org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily"
+          org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily\\|scheduled"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
           org-ellipsis " ▼")
 
@@ -331,7 +340,7 @@
                                  (file "~/org/templates/note.org")
                                  :prepend t
                                  :tree-type week)
-                                ("wt" "Work inbox entry"
+                                ("wi" "Work inbox entry"
                                  entry (file+olp+datetree +org-capture-work-inbox-file)
                                  (file "~/org/templates/inbox-entry.org")
                                  :prepend t
@@ -418,6 +427,10 @@
             ("STRT" :inverse-video t :inherit +org-todo-active)
             ("NOTE" :inverse-video t :inherit +org-todo-project)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
+
+(use-package eglot
+  :custom
+  (eglot-code-action-indications '(left-fringe)))
 
 (use-package popterm
   :defer t
