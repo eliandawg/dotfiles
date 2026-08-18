@@ -70,54 +70,63 @@ else if test -d /opt/homebrew
     /opt/homebrew/bin/brew shellenv | source
 end
 #+end_src
-**** Starship
+**** ~starship~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/starship.fish
 starship init fish | source
 #+end_src
-**** Zoxide
+**** ~zoxide~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/zoxide.fish
 zoxide init fish | source
-#+end_src
-**** Bitwarden SSH Agent
-#+begin_src fish :tangle no
-if type -q bitwarden-desktop
-    set -g SSH_AUTH_SOCK "/home/elian/.bitwarden-ssh-agent.sock"
-end
 #+end_src
 **** Misc
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
 set -U LSP_USE_PLISTS true
 set -U fish_key_bindings fish_vi_key_bindings
-# set -gx GUIX_PROFILE "/home/elian/.config/guix/current"
-# set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-#+end_src
-**** Kitty
-Detect if kitty is running, if so use SSH kitten
-#+begin_src fish :tangle ./stow/.config/fish/kitty.fish
-if test (printenv KITTY_WINDOW_ID)
-    abbr -a ssh "kitten ssh"
+
+function upgrade --description "Performs updates on a system."
+    echo "===============UPDATING PACKAGES==============="
+    if type -q pacman
+        if type -q paru
+            paru -Syu
+        else
+            pacman -Syu --noconfirm
+        end
+
+    else if type -q dnf
+        dnf upgrade
+    else if type -q apt
+        apt update
+        apt upgrade -y
+    else if type -q brew
+        brew upgrade
+    end
+
+    if type -q flatpak
+        echo "===============UPDATING FLATPAKS==============="
+        flatpak upgrade -y
+    end
+
+    if type -q doom
+        echo "===============UPDATING DOOM EMACS==============="
+        doom upgrade
+    end
 end
 #+end_src
 **** Paths
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
 switch (uname)
-    case Darwin
-        fish_add_path "/Users/elian/.local/bin"
-        fish_add_path "/Users/elian/.config/emacs/bin"
-
-    case Linux
-        fish_add_path "/home/elian/.local/bin"
-        fish_add_path "/home/elian/.config/emacs/bin/"
-        fish_add_path "/home/elian/.cargo/bin/"
+        fish_add_path "~/.local/bin"
+        fish_add_path "~/.config/emacs/bin/"
+        fish_add_path "~/.cargo/bin/"
 end
 #+end_src
-**** trash-put
+**** ~trash-put~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
 if type -q trash-put
     abbr rm trash-put
 end
 #+end_src
-**** Vterm
+**** ~vterm~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/vterm.fish
 # Some of the most useful features in emacs-libvterm require shell-side
 # configurations. The main goal of these additional functions is to enable the
@@ -251,7 +260,6 @@ brew node
 brew imagemagick
 brew neovim
 #+end_src
-
 ***** Emacs
 #+begin_src ruby :tangle ./Brewfile
 brew hunspell
