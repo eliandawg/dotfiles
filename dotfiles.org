@@ -114,11 +114,9 @@ end
 #+end_src
 **** Paths
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
-switch (uname)
-        fish_add_path "~/.local/bin"
-        fish_add_path "~/.config/emacs/bin/"
-        fish_add_path "~/.cargo/bin/"
-end
+fish_add_path "~/.local/bin"
+fish_add_path "~/.config/emacs/bin/"
+fish_add_path "~/.cargo/bin/"
 #+end_src
 **** ~trash-put~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
