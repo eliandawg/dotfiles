@@ -299,6 +299,7 @@ Misc things introduced in Emacs 31
 ** functions
 #+begin_src emacs-lisp :tangle yes
 (defun my/proton-drive-sync ()
+  "Syncs org-mode directory to Proton Drive."
   (interactive)
   (when (file-exists-p "~/org/proton-drive-sync.fish")
     (async-shell-command "fish ~/org/proton-drive-sync.fish" "Org Proton Drive Sync")))

@@ -195,6 +195,7 @@
           completion-eager-display 'auto))
 
 (defun my/proton-drive-sync ()
+  "Syncs org-mode directory to Proton Drive."
   (interactive)
   (when (file-exists-p "~/org/proton-drive-sync.fish")
     (async-shell-command "fish ~/org/proton-drive-sync.fish" "Org Proton Drive Sync")))
