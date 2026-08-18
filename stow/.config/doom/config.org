@@ -287,6 +287,16 @@
         doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 #+end_src
+** emacs-31
+Misc things introduced in Emacs 31
+
+#+begin_src emacs-lisp :tangle yes
+(when (>= emacs-major-version 31)
+  (setopt treesit-enabled-modes t
+          ibuffer-human-readable-size t
+          completion-eager-update t
+          completion-eager-display 'auto))
+#+end_src
 * ~org-mode~
 ** ~git-auto-commit-and-push~
 #+begin_src emacs-lisp :tangle yes
@@ -539,6 +549,7 @@
             ("NOTE" :inverse-video t :inherit +org-todo-project)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 #+end_src
+* ~eglot~
 * ~popterm~
 #+begin_src emacs-lisp :tangle yes
 (use-package popterm
@@ -564,7 +575,7 @@
 #+end_src
 * ~python-mode~
 ** ~lsp-pyright~
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)

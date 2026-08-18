@@ -188,6 +188,12 @@
         doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
+(when (>= emacs-major-version 31)
+  (setopt treesit-enabled-modes t
+          ibuffer-human-readable-size t
+          completion-eager-update t
+          completion-eager-display 'auto))
+
 (use-package git-auto-commit-mode
   :defer t
   :custom
@@ -431,12 +437,6 @@
   :config
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
   (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
-
-(use-package lsp-pyright
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp)))
-  :custom (lsp-pyright-langserver-command "basedpyright"))
 
 (use-package ispell
   :custom
