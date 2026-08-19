@@ -218,8 +218,9 @@
                                 ("w" . "Work-related")
                                 ("wo" "Overview" ((agenda ""
                                                           ((org-agenda-overriding-header "Weekly Agenda\n")
-                                                           (org-agenda-span 'week)
+                                                           (org-agenda-span 'fortnight)
                                                            (org-agenda-show-log t)
+                                                           (org-agenda-start-on-weekday 1)
                                                            (org-agenda-files '("~/org/work/"))))
                                                   (todo ""
                                                         ((org-agenda-overriding-header "Inbox\n")
