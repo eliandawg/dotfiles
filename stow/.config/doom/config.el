@@ -322,6 +322,7 @@
   (remove-hook 'org-tab-first-hook #'+org-yas-expand-maybe-h))
 
 (use-package org
+  :defer t
   :config
   (defvar +org-capture-work-inbox-file "~/org/work/work-inbox.org")
   (defvar +org-capture-work-projects-file "~/org/work/work-projects.org")

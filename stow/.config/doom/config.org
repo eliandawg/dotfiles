@@ -443,6 +443,7 @@ Misc things introduced in Emacs 31
 ** ~org-capture~
 #+begin_src emacs-lisp :tangle yes
 (use-package org
+  :defer t
   :config
   (defvar +org-capture-work-inbox-file "~/org/work/work-inbox.org")
   (defvar +org-capture-work-projects-file "~/org/work/work-projects.org")
