@@ -36,17 +36,19 @@ abbr -a gp git push
 abbr -a ga git add
 abbr -a gc git clone
 
-if systemctl --user is-active emacs.service
-    abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
-    abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
-    abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"
-
+if type -q emacs
+    if type -q systemctl
+        if systemctl --user is-active emacs.service
+            abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
+            abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
+            abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"
+        end
+    end
+    abbr -a ed "emacs --daemon"
     abbr -a em "emacsclient -c"
     abbr -a et "emacsclient -nw"
+    abbr -a killemacs "emacsclient -e \"(kill-emacs)"\"
 
     abbr -a ff vterm_cmd find-file .
     abbr -a orgidp git commit --signoff --message ".orgids"
-else
-    abbr -a killemacs "emacsclient -e \"(kill-emacs)"\"
-    abbr -a ed "emacs --daemon"
 end
