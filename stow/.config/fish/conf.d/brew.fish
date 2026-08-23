@@ -10,6 +10,6 @@ if test -d /home/linuxbrew/.linuxbrew
     set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
 
 else if test -d /opt/homebrew
-    # Homebrew is installed on MacOS
+    # If Homebrew is installed on MacOS
     /opt/homebrew/bin/brew shellenv | source
 end

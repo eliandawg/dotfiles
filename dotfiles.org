@@ -68,7 +68,6 @@ if type -q emacs
     end
 end
 #+end_src
-
 **** Homebrew
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/brew.fish
 if test -d /home/linuxbrew/.linuxbrew
@@ -83,7 +82,7 @@ if test -d /home/linuxbrew/.linuxbrew
     set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
 
 else if test -d /opt/homebrew
-    # Homebrew is installed on MacOS
+    # If Homebrew is installed on MacOS
     /opt/homebrew/bin/brew shellenv | source
 end
 #+end_src
