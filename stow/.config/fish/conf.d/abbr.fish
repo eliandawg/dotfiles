@@ -21,11 +21,13 @@ if type -q zoxide
 end
 
 if type -q systemctl
-    abbr -a sysctl "systemctl"
+    abbr -a sysctl systemctl
     abbr -a usysctl "systemctl --user"
 
-    abbr -a jctl "journalctl"
+    abbr -a jctl journalctl
+    abbr -a js "journalctl status -xeu"
     abbr -a ujctl "journalctl --user"
+    abbr -a ujs "journalctl --user status -xeu"
 end
 
 abbr -a gst git status

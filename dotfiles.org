@@ -31,11 +31,13 @@ if type -q zoxide
 end
 
 if type -q systemctl
-    abbr -a sysctl "systemctl"
+    abbr -a sysctl systemctl
     abbr -a usysctl "systemctl --user"
 
-    abbr -a jctl "journalctl"
+    abbr -a jctl journalctl
+    abbr -a js "journalctl status -xeu"
     abbr -a ujctl "journalctl --user"
+    abbr -a ujs "journalctl --user status -xeu"
 end
 #+end_src
 ***** Git
@@ -84,11 +86,15 @@ end
 #+end_src
 **** ~starship~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/starship.fish
-starship init fish | source
+if type -q starship
+    starship init fish | source
+end
 #+end_src
 **** ~zoxide~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/zoxide.fish
-zoxide init fish | source
+if type -q zoxide
+  zoxide init fish | source
+end
 #+end_src
 **** Misc
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
