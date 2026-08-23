@@ -37,9 +37,9 @@ abbr -a ga git add
 abbr -a gc git clone
 
 if systemctl --user is-active emacs.service
-    abbr -a ed "systemctl --user start emacs"
-    abbr -a red "systemctl --user restart emacs"
-    abbr -a killemacs "systemctl --user kill emacs"
+    abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
+    abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
+    abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"
 
     abbr -a em "emacsclient -c"
     abbr -a et "emacsclient -nw"
