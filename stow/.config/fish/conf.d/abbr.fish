@@ -25,9 +25,9 @@ if type -q systemctl
     abbr -a usysctl "systemctl --user"
 
     abbr -a jctl journalctl
-    abbr -a js "journalctl status -xeu"
+    abbr -a js "journalctl -xeu"
     abbr -a ujctl "journalctl --user"
-    abbr -a ujs "journalctl --user status -xeu"
+    abbr -a ujs "journalctl --user -xeu"
 end
 
 abbr -a gst git status

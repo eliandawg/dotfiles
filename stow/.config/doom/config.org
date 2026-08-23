@@ -126,7 +126,8 @@
   :defer t
   :custom
   (ghostel-enable-osc52 t)
-  (ghostel-tramp-shell-integration t))
+  (ghostel-tramp-shell-integration t)
+  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t))
 
 (use-package evil-ghostel
   :after (ghostel evil)
