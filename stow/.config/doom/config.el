@@ -96,8 +96,8 @@
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-closure-return-type-hints t)
   (lsp-rust-analyzer-display-parameter-hints t)
+  (lsp-headerline-breadcrumb-enable t)
   (lsp-enable-folding t)
-  (lsp-enable-relative-indentation t)
   :config
   (lsp-register-custom-settings
    ;; Enable inlay hints in Go
@@ -118,6 +118,7 @@
   (add-to-list 'lsp-language-id-configuration '(fish-mode . "fish"))
 
   (setopt lsp-semantic-tokens-enable t
+          lsp-enable-relative-indentation t
           lsp-log-io nil))
 
 (use-package lsp-ui
@@ -172,13 +173,13 @@
 ;; From ~/.config/emacs/sources/doom+/modules/editor/evil/config.el
 (with-eval-after-load 'evil-easymotion
   (map! :m "gs" (cons "Easymotion" evilem-map)
-    ;; TODO: Use named functions
-    (:map evilem-map
-          "a" (evilem-create #'evil-forward-arg)
-          "A" (evilem-create #'evil-backward-arg)
-          "s" #'flash-jump
-          "SPC" #'flash-treesitter
-          "/" #'evil-avy-goto-char-timer)))
+        ;; TODO: Use named functions
+        (:map evilem-map
+              "a" (evilem-create #'evil-forward-arg)
+              "A" (evilem-create #'evil-backward-arg)
+              "s" #'flash-jump
+              "SPC" #'flash-treesitter
+              "/" #'evil-avy-goto-char-timer)))
 
 (setopt +dashboard-pwd-policy "~/"
         doom-scratch-initial-major-mode 'lisp-interaction-mode
@@ -455,19 +456,48 @@
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
   (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
 
+(defun my/flyspell-prog-mode (&rest _args)
+  "Enable `flyspell-prog-mode' with buffer-local Aspell arguments."
+  ;; The --run-together flag instructs Aspell to accept words formed by
+  ;; combining two or more valid dictionary words without spaces, treating the
+  ;; resulting string as valid.
+  ;;
+  ;; This is excellent for source code. Code is heavily populated with
+  ;; compound variable names and technical terms (e.g., filepath, buffername,
+  ;; checkbox).
+  ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
+  (make-local-variable 'ispell-extra-args)
+  (dolist (item '("--run-together"
+                  "--ignore=2"
+                  "--run-together-min=3"
+                  ;; "--run-together-limit=4"
+                  "--camel-case"))
+    (add-to-list 'ispell-extra-args item))
+  (flyspell-prog-mode))
+
+(defun my/flyspell-enable-appropriate-mode ()
+  "Enable the appropriate Flyspell mode based on the current major mode."
+  (if (or (derived-mode-p 'conf-mode)
+          (derived-mode-p 'yaml-mode)
+          (derived-mode-p 'yaml-ts-mode)
+          (derived-mode-p 'ansible-mode)
+          (derived-mode-p 'toml-ts-mode)
+          (derived-mode-p 'json-mode)
+          (derived-mode-p 'json-ts-mode))
+      (my/flyspell-prog-mode)
+    (flyspell-mode 1)))
+
+(add-hook 'prog-mode-hook #'my/flyspell-prog-mode)
+(add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
+(add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode)
+
 (use-package ispell
   :custom
-  (ispell-dictionary "english")
+  (ispell-dictionary "en_US")
+  (ispell-program-name "aspell")
+  (ispell-extra-args '("--sug-mode=ultra"))
+  (ispell-quietly t)
   (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
-
-;; Disable spell-fu in programming modes
-(with-eval-after-load 'spell-fu
-  (add-hook 'ansible-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'yaml-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'yaml-ts-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'json-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'json-ts-mode-hook (lambda () (spell-fu-mode -1)))
-  (add-hook 'prog-mode-hook (lambda () (spell-fu-mode -1))))
 
 (use-package ssh-config-mode
   :defer t

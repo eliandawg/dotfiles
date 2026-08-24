@@ -1,4 +1,4 @@
-personal_ws-1.1 en 572
+personal_ws-1.1 en 558
 BDR
 LSA
 LSAs
@@ -48,9 +48,7 @@ backplane
 bacnet
 balancer
 balancers
-bcb's
 bcbs
-beb's
 bebs
 bitlocker
 bitrate
@@ -69,7 +67,6 @@ brewfile
 broadcasted
 broadcom
 caddy
-caddy's
 caddyfile
 capsulate
 cas
@@ -126,7 +123,6 @@ deregistration
 desigo
 dest
 dev
-device’s
 dhcp
 dirvish
 distro
@@ -148,9 +144,7 @@ ekahau
 el
 elasticache
 elian
-elian's
 elisp
-encrypt's
 entapp
 entra
 eor
@@ -182,7 +176,6 @@ firewalld
 fisheye
 flymake
 follet
-follet's
 formlabs
 fortianalyzer
 forticare
@@ -231,7 +224,6 @@ idfs
 idk
 idworks
 igps
-igw's
 iis
 imenus
 imgur
@@ -254,7 +246,6 @@ ispell
 ists
 itdbwb
 itddb
-it’s
 jamf
 jank
 jemma
@@ -294,7 +285,6 @@ mbps
 mdfs
 meds
 meraki
-meraki's
 mgmt
 mgt
 minitab
@@ -320,7 +310,6 @@ neighborship
 neovim
 netbios
 netbox
-netbox's
 netdisco
 netflow
 netftp
@@ -343,14 +332,12 @@ odata
 ofc
 okta
 omnissa
-omnissa's
 onboarding
 oob
 openssh
 openssl
 orderless
 oref
-ospf's
 ospfauth
 ous
 over
@@ -402,7 +389,6 @@ rekey
 remoting
 repcli
 repo
-resolver's
 resolvers
 retranmissions
 retransmission
@@ -472,10 +458,8 @@ syslog
 sysname
 sysprep
 systemd
-system’s
 tac
 tacacs
-tcp's
 telcos
 terraform
 theme
@@ -513,7 +497,6 @@ uplinked
 uplinkfast
 uplinks
 uptime
-user’s
 usr
 utf
 util
@@ -538,7 +521,6 @@ virt
 virtualized
 vist
 vlan
-vlan's
 vlans
 vlcm
 vm
