@@ -491,11 +491,14 @@
 (add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
 (add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode)
 
+(with-eval-after-load 'flycheck
+    (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
+
 (use-package ispell
   :custom
   (ispell-dictionary "en_US")
   (ispell-program-name "aspell")
-  (ispell-extra-args '("--sug-mode=ultra"))
+  (ispell-extra-args '("--sug-mode=ultra" "--ignore=3"))
   (ispell-quietly t)
   (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
 
