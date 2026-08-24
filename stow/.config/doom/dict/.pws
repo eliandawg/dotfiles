@@ -1,9 +1,10 @@
-personal_ws-1.1 en 558
+personal_ws-1.1 en 558 
 BDR
 LSA
 LSAs
 LSDB
 OSPF
+WSL
 aadct
 acl
 acls
@@ -333,6 +334,7 @@ ofc
 okta
 omnissa
 onboarding
+onhold
 oob
 openssh
 openssl
@@ -470,6 +472,7 @@ timesheet
 tld
 tlds
 tlvs
+todo
 todos
 tos
 traceroute
@@ -547,12 +550,10 @@ websockets
 wireshark
 wlans
 work
+ws
 wsus
 xargs
 yaml
 yml
 yubikey
 zoxide
-ws
-todo
-onhold

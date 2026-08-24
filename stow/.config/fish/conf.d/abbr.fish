@@ -1,7 +1,7 @@
 if type -q eza
     abbr -a ls 'eza -lhaF --color=auto --icons=always'
     abbr -a l 'eza -lhaF --color=auto --icons=always'
-    abbr -a lt 'eza --tree'
+    abbr -a lt 'eza --tree -F'
 end
 
 abbr -a cr 'cargo run'
@@ -46,7 +46,7 @@ if type -q emacs
     abbr -a orgidp git commit --signoff --message ".orgids"
 
     if type -q systemctl
-        if systemctl --user is-active emacs.service
+        if systemctl --user is-enabled emacs.service > /dev/null
             abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
             abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
             abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"

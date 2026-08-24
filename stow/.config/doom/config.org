@@ -600,7 +600,7 @@ Misc things introduced in Emacs 31
                          (lsp)))
   :custom (lsp-pyright-langserver-command "basedpyright"))
 #+end_src
-* ~spell-fu~
+* ~flyspell~
 #+begin_src emacs-lisp :tangle yes
 (defun my/flyspell-prog-mode (&rest _args)
   "Enable `flyspell-prog-mode' with buffer-local Aspell arguments."
@@ -614,7 +614,7 @@ Misc things introduced in Emacs 31
   ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
   (make-local-variable 'ispell-extra-args)
   (dolist (item '("--run-together"
-                  "--ignore=2"
+                  "--ignore=3"
                   "--run-together-min=3"
                   ;; "--run-together-limit=4"
                   "--camel-case"))

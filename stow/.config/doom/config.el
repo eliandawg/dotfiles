@@ -468,7 +468,7 @@
   ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
   (make-local-variable 'ispell-extra-args)
   (dolist (item '("--run-together"
-                  "--ignore=2"
+                  "--ignore=3"
                   "--run-together-min=3"
                   ;; "--run-together-limit=4"
                   "--camel-case"))
