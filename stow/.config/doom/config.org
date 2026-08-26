@@ -74,10 +74,6 @@
 (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode)
 (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 #+end_src
-* ~ef-themes~
-#+begin_src emacs-lisp :tangle yes
-(use-package ef-themes)
-#+end_src
 * ~eshell~
 #+begin_src emacs-lisp :tangle yes
 (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
@@ -159,13 +155,6 @@
   :custom
   (just-indent-offset 2))
 #+end_src
-* ~kaolin-themes~
-#+begin_src emacs-lisp :tangle no
-(use-package kaolin-themes
-  :custom
-  (kaolin-themes-italic-comments t)
-  (kaolin-themes-modeline-padded t))
-#+end_src
 * ~kdl-mode~
 #+begin_src emacs-lisp :tangle yes
 (use-package kdl-mode
@@ -219,6 +208,11 @@
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-indent-mode
   :hook (markdown-ts-mode . markdown-indent-mode))
+#+end_src
+** ~markdown-ts-mode~
+#+begin_src emacs-lisp :tangle yes
+(use-package markdown-ts-mode
+  :mode ("\\.md\\'" . markdown-ts-mode))
 #+end_src
 * misc
 ** emacs
@@ -285,8 +279,15 @@
 
         ;; theme
         doom-font-increment 1
-        doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
+#+end_src
+*** themes
+#+begin_src emacs-lisp :tangle yes
+(setopt doom-theme 'modus-vivendi)
+#+end_src
+**** ~ef-themes~
+#+begin_src emacs-lisp :tangle yes
+(use-package ef-themes)
 #+end_src
 ** emacs-31
 Misc things introduced in Emacs 31
@@ -416,6 +417,7 @@ Misc things introduced in Emacs 31
                              "~/org/work/work-scheduled.org"
                              "~/org/journal.org")
           org-log-done 'time
+          org-log-into-drawer t
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily\\|scheduled"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
           org-ellipsis " ▼")

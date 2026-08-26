@@ -22,8 +22,6 @@
   (interactive)
   (dirvish))
 
-(use-package ef-themes)
-
 (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 
 (require 'flash-isearch)
@@ -131,6 +129,9 @@
 (use-package markdown-indent-mode
   :hook (markdown-ts-mode . markdown-indent-mode))
 
+(use-package markdown-ts-mode
+  :mode ("\\.md\\'" . markdown-ts-mode))
+
 (setopt user-full-name "Elian Manzueta"
         user-mail-address "elianmanzueta@protonmail.com"
 
@@ -187,8 +188,11 @@
 
         ;; theme
         doom-font-increment 1
-        doom-theme 'catppuccin-mocha
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
+
+(setopt doom-theme 'modus-vivendi)
+
+(use-package ef-themes)
 
 (when (>= emacs-major-version 31)
   (setopt treesit-enabled-modes t
@@ -297,6 +301,7 @@
                              "~/org/work/work-scheduled.org"
                              "~/org/journal.org")
           org-log-done 'time
+          org-log-into-drawer t
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily\\|scheduled"
           org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)")
           org-ellipsis " ▼")
