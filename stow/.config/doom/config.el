@@ -479,6 +479,7 @@
   "Enable the appropriate Flyspell mode based on the current major mode."
   (if (or (derived-mode-p 'conf-mode)
           (derived-mode-p 'yaml-mode)
+          (derived-mode-p 'prog-mode)
           (derived-mode-p 'yaml-ts-mode)
           (derived-mode-p 'ansible-mode)
           (derived-mode-p 'toml-ts-mode)
@@ -487,9 +488,10 @@
       (my/flyspell-prog-mode)
     (flyspell-mode 1)))
 
-(add-hook 'prog-mode-hook #'my/flyspell-prog-mode)
-(add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
-(add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode)
+(with-eval-after-load 'flyspell
+  (add-hook 'prog-mode-hook #'my/flyspell-prog-mode)
+  (add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
+  (add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode))
 
 (with-eval-after-load 'flycheck
     (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
