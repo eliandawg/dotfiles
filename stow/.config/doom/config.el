@@ -190,9 +190,9 @@
         doom-font-increment 1
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
-(setopt doom-theme 'modus-vivendi)
-
 (use-package ef-themes)
+
+(setopt doom-theme 'ef-eagle)
 
 (when (>= emacs-major-version 31)
   (setopt treesit-enabled-modes t
@@ -461,7 +461,12 @@
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
   (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
 
+(with-eval-after-load 'apheleia
+  (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
+  (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
+
 (defun my/flyspell-prog-mode (&rest _args)
+
   "Enable `flyspell-prog-mode' with buffer-local Aspell arguments."
   ;; The --run-together flag instructs Aspell to accept words formed by
   ;; combining two or more valid dictionary words without spaces, treating the
@@ -471,13 +476,9 @@
   ;; compound variable names and technical terms (e.g., filepath, buffername,
   ;; checkbox).
   ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
-  (make-local-variable 'ispell-extra-args)
-  (dolist (item '("--run-together"
-                  "--ignore=3"
-                  "--run-together-min=3"
-                  ;; "--run-together-limit=4"
-                  "--camel-case"))
-    (add-to-list 'ispell-extra-args item))
+  (setopt ispell-extra-args '("--sug-mode=ultra"
+                              "--camel-case"
+                              "--ignore=3"))
   (flyspell-prog-mode))
 
 (defun my/flyspell-enable-appropriate-mode ()
@@ -488,6 +489,7 @@
           (derived-mode-p 'yaml-ts-mode)
           (derived-mode-p 'ansible-mode)
           (derived-mode-p 'toml-ts-mode)
+          (derived-mode-p 'lisp-interaction-mode)
           (derived-mode-p 'json-mode)
           (derived-mode-p 'json-ts-mode))
       (my/flyspell-prog-mode)
@@ -499,15 +501,19 @@
   (add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode))
 
 (with-eval-after-load 'flycheck
-    (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
+  (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
 
 (use-package ispell
   :custom
   (ispell-dictionary "en_US")
   (ispell-program-name "aspell")
-  (ispell-extra-args '("--sug-mode=ultra" "--ignore=3"))
   (ispell-quietly t)
   (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
+
+(with-eval-after-load 'ispell
+  (setopt ispell-extra-args '("--sug-mode=ultra"
+                              "--camel-case"
+                              "--ignore=3")))
 
 (use-package ssh-config-mode
   :defer t
