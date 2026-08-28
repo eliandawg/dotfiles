@@ -270,9 +270,7 @@
 #+end_src
 *** themes
 #+begin_src emacs-lisp :tangle yes
-(use-package ef-themes)
-
-(setopt doom-theme 'ef-eagle)
+(setq doom-theme 'catppuccin-mocha)
 #+end_src
 ** emacs-31
 Misc things introduced in Emacs 31

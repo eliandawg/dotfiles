@@ -190,9 +190,7 @@
         doom-font-increment 1
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
-(use-package ef-themes)
-
-(setopt doom-theme 'ef-eagle)
+(setq doom-theme 'catppuccin-mocha)
 
 (when (>= emacs-major-version 31)
   (setopt treesit-enabled-modes t
