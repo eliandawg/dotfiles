@@ -439,9 +439,14 @@
   :custom
   (eglot-code-action-indications '(left-fringe)))
 
+(defun my/popterm-toggle ()
+  "Toggle the terminal popup."
+  (interactive)
+  (popterm-toggle "scratch-term"))
+
 (use-package popterm
   :defer t
-  :bind (("C-|" . popterm-toggle))
+  :bind (("C-|" . my/popterm-toggle))
   :custom
   (popterm-backend 'ghostel)
   (popterm-scope 'project)

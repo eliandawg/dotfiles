@@ -554,9 +554,14 @@ Misc things introduced in Emacs 31
 #+end_src
 * ~popterm~
 #+begin_src emacs-lisp :tangle yes
+(defun my/popterm-toggle ()
+  "Toggle the terminal popup."
+  (interactive)
+  (popterm-toggle "scratch-term"))
+
 (use-package popterm
   :defer t
-  :bind (("C-|" . popterm-toggle))
+  :bind (("C-|" . my/popterm-toggle))
   :custom
   (popterm-backend 'ghostel)
   (popterm-scope 'project)
