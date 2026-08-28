@@ -442,7 +442,7 @@
 
 (use-package popterm
   :defer t
-  :bind (("C-`" . popterm-toggle))
+  :bind (("C-|" . popterm-toggle))
   :custom
   (popterm-backend 'ghostel)
   (popterm-scope 'project)

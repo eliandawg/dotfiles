@@ -21,8 +21,8 @@ if type -q zoxide
 end
 
 if type -q systemctl
-    abbr -a sysctl systemctl
-    abbr -a usysctl "systemctl --user"
+    abbr -a sys systemctl
+    abbr -a usys "systemctl --user"
 
     abbr -a jctl journalctl
     abbr -a js "journalctl -xeu"
