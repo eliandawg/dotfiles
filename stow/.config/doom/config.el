@@ -296,8 +296,7 @@
           org-directory "~/org/"
           org-agenda-files '("~/org/work/work-inbox.org"
                              "~/org/work/work-projects.org"
-                             "~/org/work/work-scheduled.org"
-                             "~/org/journal.org")
+                             "~/org/work/work-scheduled.org")
           org-log-done 'time
           org-log-into-drawer t
           org-agenda-hide-tags-regexp "todo\\|work\\|workinfo\\|daily\\|scheduled"
