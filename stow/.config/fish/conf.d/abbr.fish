@@ -30,6 +30,8 @@ if type -q systemctl
     abbr -a ujs "journalctl --user -xeu"
 end
 
+abbr -a remvenv "set -e VIRTUAL_ENV"
+
 abbr -a gst git status
 abbr -a gcsm git commit --signoff --message
 abbr -a gp git push

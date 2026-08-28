@@ -28,7 +28,6 @@ brew gh
 brew just
 brew wget
 brew ripgrep
-brew starship
 brew stow
 brew vips
 brew zoxide

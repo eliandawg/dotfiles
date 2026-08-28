@@ -260,7 +260,6 @@ smartmontools
 snapper
 sof-firmware
 spectacle
-starship
 stow
 sudo
 swaylock

@@ -22,7 +22,7 @@
   (interactive)
   (dirvish))
 
-(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+(add-hook! 'eshell-mode-hook (setenv "TERM" "xterm-256color"))
 
 (require 'flash-isearch)
 (require 'flash-evil)
@@ -252,7 +252,9 @@
                                 ("ws" "Scheduled" tags-todo "scheduled")
                                 ("wi" "Inbox" tags-todo "inbox"))))
 
-(add-to-list 'display-buffer-alist '("\\*Org Agenda\\*" (display-buffer-in-side-window) (side . left) (window-width . 0.5)))
+(add-hook! 'org-mode-hook
+  (set-popup-rules!
+   '(("^\\*Org Agenda" :size 0.5 :side left))))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
@@ -469,10 +471,6 @@
   :config
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
   (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
-
-(with-eval-after-load 'apheleia
-  (add-to-list 'apheleia-mode-alist '(python-mode . ruff))
-  (add-to-list 'apheleia-mode-alist '(python-ts-mode . ruff)))
 
 (defun my/flyspell-prog-mode (&rest _args)
 
