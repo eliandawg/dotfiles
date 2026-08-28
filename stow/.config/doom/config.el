@@ -218,10 +218,17 @@
   (org-agenda-timegrid-use-ampm t)
   (org-display-custom-times t)
   (org-time-stamp-custom-formats '("<%m/%d/%y %a>" . "<%m/%d/%y %a %I:%M %p>"))
-  (org-agenda-custom-commands '(("j" "Journal" todo "" ((org-agenda-files '("~/org/journal.org"))))
+  (org-agenda-custom-commands '(("j" "Journal" ((agenda ""
+                                                        ((org-agenda-overriding-header "Agenda"\n)
+                                                         (org-agenda-files '("~/org/journal.org"))
+                                                         (org-agenda-show-log t)
+                                                         (org-agenda-files '("~/org/journal.org"))))
+                                                (todo ""
+                                                      ((org-agenda-files '("~/org/journal.org"))))))
+
                                 ("w" . "Work-related")
                                 ("wo" "Overview" ((agenda ""
-                                                          ((org-agenda-overriding-header "Weekly Agenda\n")
+                                                          ((org-agenda-overriding-header "Agenda\n")
                                                            (org-agenda-span 'fortnight)
                                                            (org-agenda-show-log t)
                                                            (org-agenda-start-on-weekday 1)
