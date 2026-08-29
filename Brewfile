@@ -1,5 +1,3 @@
-tap d12frosted/emacs-plus
-
 cask font-iosevka-term-nerd-font
 cask jagex
 cask kitty
@@ -19,6 +17,8 @@ brew uv
 # Go
 brew go
 brew gopls
+
+tap d12frosted/emacs-plus
 
 brew eza
 brew fd

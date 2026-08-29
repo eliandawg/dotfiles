@@ -22,6 +22,10 @@
   (interactive)
   (dirvish))
 
+(use-package eglot
+  :custom
+  (eglot-code-action-indications '(left-fringe)))
+
 (add-hook! 'eshell-mode-hook (setenv "TERM" "xterm-256color"))
 
 (require 'flash-isearch)
@@ -48,6 +52,56 @@
   :defer t
   :config
   (global-flycheck-annotate-mode))
+
+(defun my/flyspell-prog-mode (&rest _args)
+
+  "Enable `flyspell-prog-mode' with buffer-local Aspell arguments."
+  ;; The --run-together flag instructs Aspell to accept words formed by
+  ;; combining two or more valid dictionary words without spaces, treating the
+  ;; resulting string as valid.
+  ;;
+  ;; This is excellent for source code. Code is heavily populated with
+  ;; compound variable names and technical terms (e.g., filepath, buffername,
+  ;; checkbox).
+  ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
+  (setopt ispell-extra-args '("--sug-mode=ultra"
+                              "--camel-case"
+                              "--ignore=3"))
+  (flyspell-prog-mode))
+
+(defun my/flyspell-enable-appropriate-mode ()
+  "Enable the appropriate Flyspell mode based on the current major mode."
+  (if (or (derived-mode-p 'conf-mode)
+          (derived-mode-p 'yaml-mode)
+          (derived-mode-p 'prog-mode)
+          (derived-mode-p 'yaml-ts-mode)
+          (derived-mode-p 'ansible-mode)
+          (derived-mode-p 'toml-ts-mode)
+          (derived-mode-p 'lisp-interaction-mode)
+          (derived-mode-p 'json-mode)
+          (derived-mode-p 'json-ts-mode))
+      (my/flyspell-prog-mode)
+    (flyspell-mode 1)))
+
+(with-eval-after-load 'flyspell
+  (add-hook 'prog-mode-hook #'my/flyspell-prog-mode)
+  (add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
+  (add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode))
+
+(with-eval-after-load 'flycheck
+  (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
+
+(use-package ispell
+  :custom
+  (ispell-dictionary "en_US")
+  (ispell-program-name "aspell")
+  (ispell-quietly t)
+  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
+
+(with-eval-after-load 'ispell
+  (setopt ispell-extra-args '("--sug-mode=ultra"
+                              "--camel-case"
+                              "--ignore=3")))
 
 (use-package ghostel
   :defer t
@@ -444,10 +498,6 @@
             ("NOTE" :inverse-video t :inherit +org-todo-project)
             ("[-]" :inverse-video t :inherit +org-todo-active))))
 
-(use-package eglot
-  :custom
-  (eglot-code-action-indications '(left-fringe)))
-
 (defun my/popterm-toggle ()
   "Toggle the terminal popup."
   (interactive)
@@ -471,56 +521,6 @@
   :config
   (setopt powershell-location-of-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe")
   (setopt lsp-pwsh-exe "/mnt/c/Program Files/Powershell/7/pwsh.exe"))
-
-(defun my/flyspell-prog-mode (&rest _args)
-
-  "Enable `flyspell-prog-mode' with buffer-local Aspell arguments."
-  ;; The --run-together flag instructs Aspell to accept words formed by
-  ;; combining two or more valid dictionary words without spaces, treating the
-  ;; resulting string as valid.
-  ;;
-  ;; This is excellent for source code. Code is heavily populated with
-  ;; compound variable names and technical terms (e.g., filepath, buffername,
-  ;; checkbox).
-  ;; URL: https://www.jamescherti.com/emacs-spell-checker-flyspell-ispell-aspell/
-  (setopt ispell-extra-args '("--sug-mode=ultra"
-                              "--camel-case"
-                              "--ignore=3"))
-  (flyspell-prog-mode))
-
-(defun my/flyspell-enable-appropriate-mode ()
-  "Enable the appropriate Flyspell mode based on the current major mode."
-  (if (or (derived-mode-p 'conf-mode)
-          (derived-mode-p 'yaml-mode)
-          (derived-mode-p 'prog-mode)
-          (derived-mode-p 'yaml-ts-mode)
-          (derived-mode-p 'ansible-mode)
-          (derived-mode-p 'toml-ts-mode)
-          (derived-mode-p 'lisp-interaction-mode)
-          (derived-mode-p 'json-mode)
-          (derived-mode-p 'json-ts-mode))
-      (my/flyspell-prog-mode)
-    (flyspell-mode 1)))
-
-(with-eval-after-load 'flyspell
-  (add-hook 'prog-mode-hook #'my/flyspell-prog-mode)
-  (add-hook 'conf-mode-hook #'my/flyspell-enable-appropriate-mode)
-  (add-hook 'text-mode-hook #'my/flyspell-enable-appropriate-mode))
-
-(with-eval-after-load 'flycheck
-  (add-to-list 'flycheck-org-lint-disabled-checkers `missing-language-in-src-block))
-
-(use-package ispell
-  :custom
-  (ispell-dictionary "en_US")
-  (ispell-program-name "aspell")
-  (ispell-quietly t)
-  (ispell-personal-dictionary "~/.config/doom/dict/.pws"))
-
-(with-eval-after-load 'ispell
-  (setopt ispell-extra-args '("--sug-mode=ultra"
-                              "--camel-case"
-                              "--ignore=3")))
 
 (use-package ssh-config-mode
   :defer t

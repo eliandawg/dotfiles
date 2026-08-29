@@ -42,14 +42,6 @@ end
 
 abbr -a remvenv "set -e VIRTUAL_ENV"
 #+end_src
-***** Git
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
-abbr -a gst git status
-abbr -a gcsm git commit --signoff --message
-abbr -a gp git push
-abbr -a ga git add
-abbr -a gc git clone
-#+end_src
 ***** Emacs
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
 if type -q emacs
@@ -62,13 +54,21 @@ if type -q emacs
     abbr -a orgidp git commit --signoff --message ".orgids"
 
     if type -q systemctl
-        if systemctl --user is-enabled emacs.service > /dev/null
+        if systemctl --user is-enabled emacs.service >/dev/null
             abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
             abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
             abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"
         end
     end
 end
+#+end_src
+***** Git
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/abbr.fish
+abbr -a gst git status
+abbr -a gcsm git commit --signoff --message
+abbr -a gp git push
+abbr -a ga git add
+abbr -a gc git clone
 #+end_src
 **** Homebrew
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/brew.fish
@@ -88,17 +88,9 @@ else if test -d /opt/homebrew
     /opt/homebrew/bin/brew shellenv | source
 end
 #+end_src
-**** ~zoxide~
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/zoxide.fish
-if type -q zoxide
-  zoxide init fish | source
-end
-#+end_src
 **** Misc
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
-set -U LSP_USE_PLISTS true
-set -U fish_key_bindings fish_vi_key_bindings
-
+***** Functions
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/functions.fish
 function upgrade --description "Performs updates on a system."
     echo "===============UPDATING PACKAGES==============="
     if type -q pacman
@@ -127,14 +119,27 @@ function upgrade --description "Performs updates on a system."
         doom upgrade
     end
 end
+
 #+end_src
-**** Paths
+***** Paths
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
 fish_add_path "~/.local/bin"
 fish_add_path "~/.config/emacs/bin/"
 fish_add_path "~/.cargo/bin/"
 #+end_src
-**** Tide
+***** Variables
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/misc.fish
+set -Ux LSP_USE_PLISTS true # For emacs lsp-mode
+
+set -U fish_key_bindings fish_vi_key_bindings
+#+end_src
+**** ~ssh-agent~
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/ssh-agent.fish
+if systemctl --user is-active ssh-agent > /dev/null
+    set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+end
+#+end_src
+**** Tide prompt
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/tide.fish
 # [prompt]
 set --universal tide_left_prompt_items context pwd git newline character
@@ -143,17 +148,17 @@ set --universal tide_right_prompt_items status cmd_duration jobs direnv bun node
 # [character]
 set --universal tide_character_icon ">"
 set --universal tide_character_vi_icon_default "<"
-set --universal tide_character_vi_icon_visual "v"
-set --universal tide_character_vi_icon_replace "x"
+set --universal tide_character_vi_icon_visual v
+set --universal tide_character_vi_icon_replace x
 
 # [python]
-set --universal tide_python_icon "py"
+set --universal tide_python_icon py
 
 # [context]
 set --universal tide_context_always_display true
 #+end_src
 **** ~trash-put~
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/path.fish
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/trash-put.fish
 if type -q trash-put
     abbr rm trash-put
 end
@@ -241,12 +246,14 @@ if test -f /proc/sys/fs/binfmt_misc/WSLInterop
     abbr winscp 'scp.exe'
 end
 #+end_src
+**** ~zoxide~
+#+begin_src fish :tangle ./stow/.config/fish/conf.d/zoxide.fish
+if type -q zoxide
+    zoxide init fish | source
+end
+#+end_src
 ** Homebrew
 *** Brewfile
-**** Taps
-#+begin_src ruby :tangle ./Brewfile
-tap d12frosted/emacs-plus
-#+end_src
 **** Casks
 #+begin_src ruby :tangle ./Brewfile
 cask font-iosevka-term-nerd-font
@@ -272,6 +279,10 @@ brew go
 brew gopls
 #+end_src
 
+**** Taps
+#+begin_src ruby :tangle ./Brewfile
+tap d12frosted/emacs-plus
+#+end_src
 **** Utilities
 ***** Terminal
 #+begin_src ruby :tangle ./Brewfile
