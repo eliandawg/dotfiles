@@ -135,8 +135,10 @@ set -U fish_key_bindings fish_vi_key_bindings
 #+end_src
 **** ~ssh-agent~
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/ssh-agent.fish
-if systemctl --user is-active ssh-agent > /dev/null
-    set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+if type -q systemctl
+    if systemctl --user is-active ssh-agent >/dev/null
+        set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+    end
 end
 #+end_src
 **** Tide prompt
