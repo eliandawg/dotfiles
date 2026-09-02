@@ -3,6 +3,16 @@
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 
+(use-package dired
+  ;; Most from
+  ;; https://www.jamescherti.com/emacs-dired-configuration/
+  :custom
+  (dired-auto-revert-buffer 'dired-directory-changed-p)
+  (dired-kill-when-opening-new-dired-buffer t)
+  (dired-movement-style 'bounded-files)
+  (dired-do-revert-buffer (lambda (dir)
+                            (not (file-remote-p dir)))))
+
 (use-package dirvish
   :defer t
   :custom
@@ -184,7 +194,9 @@
   :hook (markdown-ts-mode . markdown-indent-mode))
 
 (use-package markdown-ts-mode
-  :mode ("\\.md\\'" . markdown-ts-mode))
+  :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+  :config
+  (require 'markdown-ts-mode-x))
 
 (setopt user-full-name "Elian Manzueta"
         user-mail-address "elianmanzueta@protonmail.com"

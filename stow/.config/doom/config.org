@@ -40,7 +40,19 @@
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 #+end_src
-* ~dirvish~
+* ~Dired~
+#+begin_src emacs-lisp :tangle yes
+(use-package dired
+  ;; Most from
+  ;; https://www.jamescherti.com/emacs-dired-configuration/
+  :custom
+  (dired-auto-revert-buffer 'dired-directory-changed-p)
+  (dired-kill-when-opening-new-dired-buffer t)
+  (dired-movement-style 'bounded-files)
+  (dired-do-revert-buffer (lambda (dir)
+                            (not (file-remote-p dir)))))
+#+end_src
+** ~dirvish~
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package dirvish
   :defer t
@@ -257,7 +269,9 @@
 ** ~markdown-ts-mode~
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-ts-mode
-  :mode ("\\.md\\'" . markdown-ts-mode))
+  :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+  :config
+  (require 'markdown-ts-mode-x))
 #+end_src
 * misc
 ** emacs
