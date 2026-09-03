@@ -40,7 +40,15 @@
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 #+end_src
-* ~Dired~
+* ~completion-preview~
+#+begin_src emacs-lisp :tangle yes
+(use-package completion-preview
+  :demand t
+  :config
+  (setq completion-preview-minimum-symbol-length 2)
+  (global-completion-preview-mode 1))
+#+end_src
+* ~dired~
 #+begin_src emacs-lisp :tangle yes
 (use-package dired
   ;; Most from

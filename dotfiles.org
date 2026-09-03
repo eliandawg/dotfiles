@@ -166,7 +166,7 @@ if type -q trash-put
 end
 #+end_src
 **** ~vterm~
-#+begin_src fish :tangle ./stow/.config/fish/conf.d/vterm.fish
+#+begin_src fish :tangle no
 # Some of the most useful features in emacs-libvterm require shell-side
 # configurations. The main goal of these additional functions is to enable the
 # shell to send information to `vterm` via properly escaped sequences. A
@@ -239,7 +239,7 @@ end
 
 #+end_src
 **** WSL
-Use ~ssh.exe~ if running in WSL.
+Use ~ssh.exe~ if running in WSL. Sets DISPLAY to use X server on Windows.
 #+begin_src fish :tangle ./stow/.config/fish/conf.d/wsl.fish
 if test -f /proc/sys/fs/binfmt_misc/WSLInterop
     set -x DISPLAY (route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0

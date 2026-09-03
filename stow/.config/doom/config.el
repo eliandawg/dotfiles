@@ -3,6 +3,12 @@
 (map! :leader "fa" #'consult-org-agenda)
 (map! :leader "fd" #'consult-dir)
 
+(use-package completion-preview
+  :demand t
+  :config
+  (setq completion-preview-minimum-symbol-length 2)
+  (global-completion-preview-mode 1))
+
 (use-package dired
   ;; Most from
   ;; https://www.jamescherti.com/emacs-dired-configuration/
