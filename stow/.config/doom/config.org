@@ -306,6 +306,9 @@
 ;; auto-fill-mode
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
+
+;; Remove white screen on start
+(add-to-list 'initial-frame-alist '(background-color . "#000000"))
 #+end_src
 ** evil
 #+begin_src emacs-lisp :tangle yes

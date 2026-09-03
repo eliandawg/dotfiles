@@ -229,6 +229,9 @@
 (add-hook 'text-mode-hook #'auto-fill-mode)
 (setq-default fill-column 80)
 
+;; Remove white screen on start
+(add-to-list 'initial-frame-alist '(background-color . "#000000"))
+
 (setopt evil-want-fine-undo t
         evil-shift-width 2
         evil-want-C-i-jump t
