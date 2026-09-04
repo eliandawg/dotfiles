@@ -72,3 +72,4 @@
 (package! markdown-indent-mode
   :recipe (:host github
            :repo "whhone/markdown-indent-mode"))
+(package! easysession)
