@@ -5,6 +5,13 @@
 config-notification {
     disable-failed
 }
+// Outputs from existing configuration
+/-output "eDP-2" {
+    mode "2560x1600@239.998993"
+    position x=2560 y=0
+    variable-refresh-rate
+}
+
 
 gestures {
     hot-corners {
@@ -46,7 +53,7 @@ input {
         // drag-lock
         natural-scroll
         // accel-speed 0.2
-        accel-profile "flat"
+        // accel-profile "flat"
         // scroll-method "two-finger"
         // disabled-on-external-mouse
     }
@@ -140,15 +147,13 @@ layout {
     struts {
     }
 }
-
 layer-rule {
     match namespace="^quickshell$"
     place-within-backdrop true
 }
-
 overview {
     workspace-shadow {
-        on
+        off
     }
 }
 // Add lines like this to spawn processes at startup.
@@ -157,13 +162,8 @@ overview {
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
 environment {
-    XDG_CURRENT_DESKTOP "niri"
-    XDG_MENU_PREFIX "plasma-"
+  XDG_CURRENT_DESKTOP "niri"
 }
-
-spawn-at-startup "kded6"
-spawn-at-startup "qs" "-c" "noctalia-shell"
-
 hotkey-overlay {
     skip-at-startup
 }
@@ -227,6 +227,7 @@ window-rule {
     open-floating false
 }
 window-rule {
+    match app-id=r#"^org\.gnome\.Calculator$"#
     match app-id=r#"^gnome-calculator$"#
     match app-id=r#"^galculator$"#
     match app-id=r#"^blueman-manager$"#
@@ -252,12 +253,6 @@ window-rule {
     match app-id="zoom"
     open-floating true
 }
-// Open dms windows as floating by default
-window-rule {
-    match app-id=r#"org.quickshell$"#
-    match app-id=r#"com.danklinux.dms$"#
-    open-floating true
-}
 debug {
     honor-xdg-activation-with-invalid-serial
 }
@@ -273,11 +268,12 @@ recent-windows {
 }
 
 // Include dms files
-include "dms/colors.kdl"
-include "dms/layout.kdl"
-include "dms/alttab.kdl"
-include "dms/binds.kdl"
-include "dms/outputs.kdl"
-include "dms/cursor.kdl"
+include optional=true "dms/colors.kdl"
+include optional=true "dms/layout.kdl"
+include optional=true "dms/alttab.kdl"
+include optional=true "dms/binds.kdl"
+include optional=true "dms/outputs.kdl"
+include optional=true "dms/cursor.kdl"
 include "dms/windowrules.kdl"
-include "dms/wpblur.kdl"
+
+include "dms-theme-sync.kdl"
