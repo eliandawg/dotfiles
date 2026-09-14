@@ -56,6 +56,8 @@
 (package! modus-catppuccin
   :recipe (:host gitlab
            :repo "magus/modus-catppuccin"))
+(package! vulkanite-theme
+  :recipe (:host github :repo "Meskour/vulkanite-theme-emacs"))
 
 ;; Misc
 (package! ghostel)
@@ -74,3 +76,5 @@
   :recipe (:host github
            :repo "whhone/markdown-indent-mode"))
 (package! easysession)
+(package! reviewer
+  :recipe (:host github :repo "SreenivasVRao/reviewer.el"))

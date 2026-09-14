@@ -271,7 +271,8 @@
         doom-font-increment 1
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
-(setq doom-theme 'catppuccin-mocha)
+(use-package vulkanite-theme)
+(setq doom-theme 'vulkanite-aether)
 
 (when (>= emacs-major-version 31)
   (setopt treesit-enabled-modes t
@@ -421,7 +422,10 @@
   :hook (org-mode . org-habit-ng-mode))
 
 (custom-set-faces!
-  '(org-document-title :weight extra-bold :height 1.3)
+  '(org-document-title :weight extra-bold :height 1.2)
+  '(org-level-1 :height 1.15)
+  '(org-level-2 :height 1.1)
+  '(org-level-3 :height 1.08)
   '(org-verbatim :inherit bold :weight extra-bold)
   '(org-quote :inherit modus-themes-fixed-pitch :slant italic))
 
@@ -617,6 +621,9 @@
   (setopt undo-limit 80000000 ;; 80mb
           undo-strong-limit 100000000 ;; 100mb
           undo-outer-limit  72000000)) ;; 72mb
+
+(use-package reviewer
+  :hook (after-init . reviewer-global-mode))
 
 (use-package verb
   :after org
