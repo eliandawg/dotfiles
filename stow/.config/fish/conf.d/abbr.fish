@@ -32,11 +32,17 @@ end
 
 abbr -a remvenv "set -e VIRTUAL_ENV"
 
+if type -q doom
+    abbr -a dsu "doom sync -u"
+end
+
 if type -q emacs
     abbr -a ed "emacs --daemon"
     abbr -a em "emacsclient -c"
     abbr -a et "emacsclient -nw"
     abbr -a killemacs "emacsclient -e \"(kill-emacs)"\"
+
+    abbr -a dsu "doom sync -u"
 
     abbr -a ff vterm_cmd find-file .
     abbr -a orgidp git commit --signoff --message ".orgids"
