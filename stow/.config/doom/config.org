@@ -258,7 +258,8 @@
 
   (setopt lsp-semantic-tokens-enable t
           lsp-enable-relative-indentation t
-          lsp-log-io nil))
+          lsp-log-io nil
+          lsp-auto-register-remote-clients nil))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
