@@ -315,7 +315,7 @@
         which-key-idle-delay 0.3
         which-key-idle-secondary-delay 0.05)
 
-(add-to-list 'exec-path "/home/elian/.local/bin/")
+(add-to-list 'exec-path (expand-file-name "/home/elian/.local/bin/"))
 
 (map! :leader "y" #'consult-yank-from-kill-ring)
 
