@@ -22,7 +22,6 @@
 (package! git-auto-commit-mode)
 (package! websocket)
 (package! org-roam-ui)
-(package! verb)
 (package! vundo)
 (package! org-tidy)
 (package! org-block-wrap
@@ -33,7 +32,10 @@
 ;;; TRAMP
 (package! tramp-hlo)
 (package! msgpack)
-(package! tramp-rpc :recipe (:host github :repo "ArthurHeymans/emacs-tramp-rpc" :files ("lisp/*.el")))
+(package! tramp-rpc
+  :recipe (:host github
+           :repo "ArthurHeymans/emacs-tramp-rpc"
+           :files ("lisp/*.el")))
 
 ;; Code
 (package! just-mode)
@@ -45,37 +47,33 @@
   :recipe (:host github :repo "johannes-mueller/uv.el"))
 (package! flyover
   :recipe (:host github :repo "konrad1977/flyover"))
-(package! mason)
 
 ;; Themes
 (package! ef-themes
-  :recipe (:host github
-           :repo "protesilaos/ef-themes"))
+  :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! standard-themes)
 (package! kaolin-themes)
 (package! modus-catppuccin
-  :recipe (:host gitlab
-           :repo "magus/modus-catppuccin"))
+  :recipe (:host gitlab :repo "magus/modus-catppuccin"))
 (package! vulkanite-theme
   :recipe (:host github :repo "Meskour/vulkanite-theme-emacs"))
 
-;; Misc
+;; Ghostel
 (package! ghostel
   :recipe (:host github :repo "dakra/ghostel"))
 (package! consult-ghostel
-  :recipe (:host github :repo "dakra/ghostel" :files ("extensions/consult-ghostel/*.el")))
+  :recipe (:host github
+           :repo "dakra/ghostel"
+           :files ("extensions/consult-ghostel/*.el")))
 (package! evil-ghostel)
-(package! buffer-to-pdf
-  :recipe (:host github
-           :repo "protesilaos/buffer-to-pdf"))
+
+;; Misc
 (package! vertico-posframe-preview
-  :recipe (:host github
-           :repo "kn66/vertico-posframe-preview"))
+  :recipe (:host github :repo "kn66/vertico-posframe-preview"))
 (package! olivetti)
-(package! popterm
-  :recipe (:host github
-           :repo "ChetanKoneru/popterm.el"))
 (package! markdown-indent-mode
   :recipe (:host github
            :repo "whhone/markdown-indent-mode"))
-(package! easysession)
+;; Don't install easysession on WSL
+(package! easysession
+  :ignore (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop"))
