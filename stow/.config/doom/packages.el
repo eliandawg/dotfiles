@@ -60,7 +60,10 @@
   :recipe (:host github :repo "Meskour/vulkanite-theme-emacs"))
 
 ;; Misc
-(package! ghostel)
+(package! ghostel
+  :recipe (:host github :repo "dakra/ghostel"))
+(package! consult-ghostel
+  :recipe (:host github :repo "dakra/ghostel" :files ("extensions/consult-ghostel/*.el")))
 (package! evil-ghostel)
 (package! buffer-to-pdf
   :recipe (:host github
@@ -76,5 +79,3 @@
   :recipe (:host github
            :repo "whhone/markdown-indent-mode"))
 (package! easysession)
-(package! reviewer
-  :recipe (:host github :repo "SreenivasVRao/reviewer.el"))

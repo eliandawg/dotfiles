@@ -130,11 +130,23 @@
   :custom
   (ghostel-enable-osc52 t)
   (ghostel-tramp-shell-integration t)
-  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t))
+  (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t)
+  (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers") t))
+
+(use-package consult-ghostel
+  :after (ghostel consult)
+  :demand t
+  :bind (:map project-prefix-map
+         ("m" . consult-ghostel-project)
+         :map ghostel-semi-char-mode-map
+         ("C-c h" . consult-ghostel-history)))
 
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
+
+(use-package ghostel-compile
+  :hook (after-init . ghostel-compile-global-mode))
 
 (use-package ghostel-eshell
   :hook (eshell-load . ghostel-eshell-visual-command-mode))
@@ -142,8 +154,8 @@
 (use-package ghostel-comint
   :hook (after-init . ghostel-comint-global-mode))
 
-(map! :leader "ot" #'ghostel)
-(map! :leader "oT" #'ghostel-project)
+(map! :leader "ot" #'consult-ghostel)
+(map! :leader "oT" #'consult-ghostel-project)
 
 (use-package indent-bars
   :defer t
@@ -624,9 +636,6 @@
   (setopt undo-limit 80000000 ;; 80mb
           undo-strong-limit 100000000 ;; 100mb
           undo-outer-limit  72000000)) ;; 72mb
-
-(use-package reviewer
-  :hook (after-init . reviewer-global-mode))
 
 (use-package verb
   :after org
