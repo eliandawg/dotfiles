@@ -49,9 +49,9 @@ if type -q emacs
 
     if type -q systemctl
         if systemctl --user is-enabled emacs.service >/dev/null
-            abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --follow"
-            abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --follow"
-            abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --follow"
+            abbr -a ed "systemctl --user start emacs; journalctl --user -eu emacs --since=\"5 seconds ago\" --no-pager"
+            abbr -a red "systemctl --user restart emacs; journalctl --user -eu emacs --since=\"5 seconds ago\" --no-pager"
+            abbr -a killemacs "systemctl --user kill emacs; journalctl --user -eu emacs --since=\"5 seconds ago\" --no-pager"
         end
     end
 end
