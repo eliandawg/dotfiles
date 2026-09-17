@@ -604,7 +604,7 @@
           enable-remote-dir-locals t
           tramp-default-remote-shell "/bin/bash"))
 
-(use-package tramp-hldo
+(use-package tramp-hlo
   :after tramp
   :custom
   (tramp-hlo-setup))
