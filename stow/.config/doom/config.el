@@ -31,12 +31,12 @@
   (when (and (eq system-type 'darwin) (executable-find "gls"))
     (setopt insert-directory-program "gls")))
 
-(map! :leader "e" #'dirvish)
+(map! :leader "e" #'dirvish-dwim)
 
 (defun Ex ()
   "Literally just opens dirvish. Made because I keep doing `:Ex`."
   (interactive)
-  (dirvish))
+  (dirvish-dwim))
 
 (use-package easysession
   ;; ':demand t' ensures the package is loaded immediately upon startup
@@ -252,6 +252,8 @@
 
         evil-split-window-below t
         evil-vsplit-window-right t)
+
+(evil-define-key 'normal 'global (kbd "zz") 'recenter-top-bottom)
 
 ;; From ~/.config/emacs/sources/doom+/modules/editor/evil/config.el
 (with-eval-after-load 'evil-easymotion
