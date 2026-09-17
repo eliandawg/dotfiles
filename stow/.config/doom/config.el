@@ -243,7 +243,7 @@
         which-key-idle-delay 0.3
         which-key-idle-secondary-delay 0.05)
 
-(add-to-list 'exec-path (expand-file-name "/home/elian/.local/bin/"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 
 (map! :leader "y" #'consult-yank-from-kill-ring)
 
@@ -604,7 +604,7 @@
           enable-remote-dir-locals t
           tramp-default-remote-shell "/bin/bash"))
 
-(use-package tramp-hlo
+(use-package tramp-hldo
   :after tramp
   :custom
   (tramp-hlo-setup))
