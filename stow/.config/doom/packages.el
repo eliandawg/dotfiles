@@ -74,6 +74,6 @@
 (package! markdown-indent-mode
   :recipe (:host github
            :repo "whhone/markdown-indent-mode"))
-;; Don't install easysession on WSL
+;;; Don't install easysession on WSL
 (package! easysession
   :ignore (file-exists-p "/proc/sys/fs/binfmt_misc/WSLInterop"))
