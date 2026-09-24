@@ -5,4 +5,4 @@
 # condition: t
 # --
 ${1:}
-- /Created/ `(let ((time (current-time))) (format-time-string "[%Y-%m-%d %a %H:%M]" time))`
+- :Created: `(let ((time (current-time))) (format-time-string "[%Y-%m-%d %a %H:%M]" time))`
