@@ -15,7 +15,7 @@
   :custom
   (dired-auto-revert-buffer 'dired-directory-changed-p)
   (dired-kill-when-opening-new-dired-buffer t)
-  (dired-movement-style 'bounded-files)
+  (dired-movement-style 'cycle-files)
   (dired-do-revert-buffer (lambda (dir)
                             (not (file-remote-p dir)))))
 
