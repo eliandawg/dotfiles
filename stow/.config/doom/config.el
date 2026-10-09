@@ -201,7 +201,7 @@
         display-line-numbers-type 'relative
         projectile-project-search-path '(("~/projects/" . 3))
 
-        which-key-idle-delay 0.3
+        which-key-idle-delay 0.2
         which-key-idle-secondary-delay 0.05)
 
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
@@ -218,6 +218,16 @@
 
 ;; Remove white screen on start
 (add-to-list 'initial-frame-alist '(background-color . "#000000"))
+
+(when (>= emacs-major-version 31)
+  (setopt treesit-enabled-modes t
+          ibuffer-human-readable-size t
+          treesit-auto-install-grammar 'always
+          completion-eager-update t
+          completion-eager-display 'auto))
+
+(when (>= emacs-major-version 32)
+  (setopt strike-through-line-scaling-flag t))
 
 (setopt evil-want-fine-undo t
         evil-shift-width 2
@@ -243,6 +253,9 @@
 (setopt +dashboard-pwd-policy "~/"
         doom-scratch-initial-major-mode 'lisp-interaction-mode
         initial-scratch-message ";;; scratch-buffer -*- lexical-binding: t; -*-\n"
+        doom-modeline-persp-name t
+        doom-modeline-height 35
+        doom-modeline-major-mode-icon t
 
         ;; theme
         doom-font-increment 1
@@ -250,13 +263,6 @@
 
 (use-package vulkanite-theme)
 (setq doom-theme 'vulkanite-aether)
-
-(when (>= emacs-major-version 31)
-  (setopt treesit-enabled-modes t
-          ibuffer-human-readable-size t
-          treesit-auto-install-grammar 'always
-          completion-eager-update t
-          completion-eager-display 'auto))
 
 (defun my/proton-drive-sync ()
   "Syncs org-mode directory to Proton Drive."
