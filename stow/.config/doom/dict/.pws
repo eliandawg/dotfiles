@@ -1,4 +1,4 @@
-personal_ws-1.1 en 600 
+personal_ws-1.1 en 604 
 ADCS
 AIA
 ATLC
@@ -16,9 +16,11 @@ ECHTLS
 EIGRP
 ENCOR
 FQDN
+FortiClient
 FortiGate
 FortiGates
 FortiGuard
+FortiOS
 Fortinet
 GPOs
 ICMP
@@ -42,7 +44,9 @@ RSSI
 SCEP
 SERS
 SSID
+VOSS
 WSL
+ZTNA
 aadct
 acl
 acls
