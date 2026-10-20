@@ -262,6 +262,8 @@
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
 (use-package vulkanite-theme)
+(use-package au-themes)
+(use-package foxglove-themes)
 (setq doom-theme 'vulkanite-aether)
 
 (defun my/proton-drive-sync ()

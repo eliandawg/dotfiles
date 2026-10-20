@@ -334,6 +334,8 @@
 *** themes
 #+begin_src emacs-lisp :tangle yes
 (use-package vulkanite-theme)
+(use-package au-themes)
+(use-package foxglove-themes)
 (setq doom-theme 'vulkanite-aether)
 #+end_src
 ** functions

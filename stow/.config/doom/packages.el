@@ -52,12 +52,12 @@
 (package! ef-themes
   :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! standard-themes)
-(package! kaolin-themes)
-(package! modus-catppuccin
-  :recipe (:host gitlab :repo "magus/modus-catppuccin"))
 (package! vulkanite-theme
   :recipe (:host github :repo "Meskour/vulkanite-theme-emacs"))
-
+(package! au-themes
+  :recipe (:host github :repo "szymonwilczek/au-themes"))
+(package! foxglove-themes
+  :recipe (:host gitlab :repo "vegasharmon/foxglove-themes"))
 ;; Ghostel
 (package! ghostel
   :recipe (:host github :repo "dakra/ghostel"))
