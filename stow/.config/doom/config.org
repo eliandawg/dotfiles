@@ -336,7 +336,8 @@
 (use-package vulkanite-theme)
 (use-package au-themes)
 (use-package foxglove-themes)
-(setq doom-theme 'vulkanite-aether)
+
+(setq doom-theme 'au-aurum-day)
 #+end_src
 ** functions
 #+begin_src emacs-lisp :tangle yes

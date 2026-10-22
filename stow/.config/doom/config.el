@@ -264,7 +264,8 @@
 (use-package vulkanite-theme)
 (use-package au-themes)
 (use-package foxglove-themes)
-(setq doom-theme 'vulkanite-aether)
+
+(setq doom-theme 'au-aurum-day)
 
 (defun my/proton-drive-sync ()
   "Syncs org-mode directory to Proton Drive."
