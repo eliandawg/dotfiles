@@ -277,3 +277,4 @@ include optional=true "dms/cursor.kdl"
 include "dms/windowrules.kdl"
 
 include "dms-theme-sync.kdl"
+include "dms/input.kdl"
