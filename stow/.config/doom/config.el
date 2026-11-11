@@ -261,25 +261,10 @@
         doom-font-increment 1
         doom-font (font-spec :family "IosevkaTerm Nerd Font Mono" :size 18 :weight 'regular))
 
-(use-package vulkanite-theme)
 (use-package au-themes)
 (use-package foxglove-themes)
 
-(setq doom-theme 'au-aurum-day)
-
-(defun my/proton-drive-sync ()
-  "Syncs org-mode directory to Proton Drive."
-  (interactive)
-  (when (file-exists-p "~/org/proton-drive-sync.fish")
-    (async-shell-command "fish ~/org/proton-drive-sync.fish" "Org Proton Drive Sync")))
-
-(use-package git-auto-commit-mode
-  :defer t
-  :custom
-  (gac-automatically-push-p t)
-  (gac-automatically-add-new-files-p t)
-  (gac-debounce-interval 60)
-  (gac-shell-and " ; and "))
+(setq doom-theme 'au-herbarium-night)
 
 (use-package org-agenda
   :after org
@@ -466,6 +451,14 @@
   (org-modern-keyword "‣ ")
   (org-modern-table t)
   (org-modern-todo t))
+
+(use-package git-auto-commit-mode
+  :defer t
+  :custom
+  (gac-automatically-push-p t)
+  (gac-automatically-add-new-files-p t)
+  (gac-debounce-interval 60)
+  (gac-shell-and " ; and "))
 
 (setopt org-pandoc-options-for-docx
         '((reference-doc . "~/.pandoc/templates/word-reference.docx")))

@@ -333,30 +333,10 @@
 #+end_src
 *** themes
 #+begin_src emacs-lisp :tangle yes
-(use-package vulkanite-theme)
 (use-package au-themes)
 (use-package foxglove-themes)
 
-(setq doom-theme 'au-aurum-day)
-#+end_src
-** functions
-#+begin_src emacs-lisp :tangle yes
-(defun my/proton-drive-sync ()
-  "Syncs org-mode directory to Proton Drive."
-  (interactive)
-  (when (file-exists-p "~/org/proton-drive-sync.fish")
-    (async-shell-command "fish ~/org/proton-drive-sync.fish" "Org Proton Drive Sync")))
-#+end_src
-* ~org-mode~
-** ~git-auto-commit-and-push~
-#+begin_src emacs-lisp :tangle yes
-(use-package git-auto-commit-mode
-  :defer t
-  :custom
-  (gac-automatically-push-p t)
-  (gac-automatically-add-new-files-p t)
-  (gac-debounce-interval 60)
-  (gac-shell-and " ; and "))
+(setq doom-theme 'au-herbarium-night)
 #+end_src
 ** ~org-agenda~
 #+begin_src emacs-lisp :tangle yes
@@ -559,6 +539,16 @@
   (org-modern-keyword "‣ ")
   (org-modern-table t)
   (org-modern-todo t))
+#+end_src
+** ~git-auto-commit-and-push~
+#+begin_src emacs-lisp :tangle yes
+(use-package git-auto-commit-mode
+  :defer t
+  :custom
+  (gac-automatically-push-p t)
+  (gac-automatically-add-new-files-p t)
+  (gac-debounce-interval 60)
+  (gac-shell-and " ; and "))
 #+end_src
 ** ~org-pandoc~
 #+begin_src emacs-lisp :tangle yes
