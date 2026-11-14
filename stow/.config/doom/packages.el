@@ -14,7 +14,7 @@
 ;; (package! doom-snippets :ignore t)
 ;; (package! yasnippet-snippets)
 
-(unpin! flycheck)
+(unpin! :completion :editor (:ui modeline doom dashboard) :emacs (:lang org) :tools)
 
 ;;; Org
 (package! org-download)
