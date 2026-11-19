@@ -134,6 +134,7 @@ binds {
     Mod+WheelScrollRight { focus-column-right; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Shift+E { quit; }
+    Mod+B hotkey-overlay-title="Open Floorp" { spawn "floorp"; }
     Mod+E repeat=false hotkey-overlay-title="Open Emacs (client)" { spawn "sh" "-c" "emacsclient -c"; }
     Mod+Return hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }

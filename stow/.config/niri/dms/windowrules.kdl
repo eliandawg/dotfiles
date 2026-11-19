@@ -15,7 +15,6 @@ window-rule {
 // @id=wr_1793195078050366109 @name=Horizon-client
 window-rule {
     match app-id="^Horizon-client$"
-    open-floating true
 }
 
 // @id=wr_1794107580150864934 @name=Steam Games
